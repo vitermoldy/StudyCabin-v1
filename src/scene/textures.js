@@ -109,3 +109,27 @@ export function deckTexture() {
   grain(ctx, 256, 256, rand, 1600, 0.06);
   return finish(c, { repeat: [1 / 1.15, 1 / 1.15] });
 }
+
+/** Warm interior floorboards. */
+export function floorTexture() {
+  const [c, ctx] = canvas(256, 256);
+  const rand = rng(41);
+  const rows = 6;
+  const rh = 256 / rows;
+  for (let r = 0; r < rows; r++) {
+    let x = -rand() * 200;
+    while (x < 256) {
+      const len = 140 + rand() * 180;
+      const tone = 0.85 + rand() * 0.2;
+      ctx.fillStyle = `rgb(${Math.round(176 * tone)},${Math.round(136 * tone)},${Math.round(98 * tone)})`;
+      ctx.fillRect(x, r * rh, len, rh);
+      ctx.fillStyle = 'rgba(60,40,24,0.5)';
+      ctx.fillRect(x + len - 1, r * rh, 1, rh);
+      x += len;
+    }
+    ctx.fillStyle = 'rgba(50,32,20,0.55)';
+    ctx.fillRect(0, r * rh + rh - 1, 256, 1);
+  }
+  grain(ctx, 256, 256, rand, 1300, 0.05);
+  return finish(c, { repeat: [1 / 1.1, 1 / 1.1] });
+}
