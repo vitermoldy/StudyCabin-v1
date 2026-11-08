@@ -222,4 +222,30 @@ export class Climate extends Emitter {
   get badWeather() {
     return this.params.rain > 0.35 || this.params.snow > 0.4 || this.params.storm > 0.3 || this.weather === 'rain' || this.weather === 'storm' || this.weather === 'snow';
   }
+
+  describe() {
+    const w = this.weather;
+    const t = this.temperature();
+    const words = {
+      clear: 'Clear sky',
+      cloudy: 'Low cloud',
+      fog: 'Fog over the water',
+      rain: 'Rain',
+      storm: 'Storm off the sea',
+      snow: 'Snow falling',
+    }[w];
+    return `${words}, ${t}°`;
+  }
+
+  persist() {
+    save('climate', {
+      season: this.season,
+      autoSeason: this.autoSeason,
+      weatherMode: this.weatherMode,
+      weather: this.weather,
+      nextChange: this.nextChange,
+    });
+  }
 }
+
+export { clamp, lerp };
