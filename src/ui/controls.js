@@ -183,4 +183,24 @@ export function mountFocus({ focus }) {
   $('focus-reset').addEventListener('click', () => focus.reset());
   const dockLabel = $('dock-focus-label');
   const baseTitle = document.title;
+  const render = () => {
+    setPreset(focus.preset);
+    const remaining = formatDuration(focus.remaining() / 1000);
+    $('focus-time').textContent = remaining;
+    const round = focus.phase === 'focus' ? `, round ${focus.round} of ${focus.config.rounds}` : '';
+    $('focus-phase').textContent = `${focus.phaseLabel}${round}`;
+    const fresh = !focus.running && focus.remaining() === focus.lengthMs();
+    const what = focus.phase === 'focus' ? 'focus' : 'break';
+    const label = focus.running ? `Pause ${what}` : fresh ? `Start ${what}` : `Resume ${what}`;
+    if (startBtn.textContent !== label) startBtn.textContent = label;
+    if (heroBtn.textContent !== label) heroBtn.textContent = label;
+    $('focus-done').textContent = focus.done
+      ? `${focus.done} focus ${focus.done === 1 ? 'block' : 'blocks'} finished today.`
+      : 'No focus blocks finished today.';
+    dockLabel.textContent = focus.running ? remaining : 'Focus';
+    document.title = focus.running ? `${remaining} ${focus.phaseLabel.toLowerCase()} · StudyCabin` : baseTitle;
+  };
+  focus.on('change', render);
+  render();
+  return render;
 }
