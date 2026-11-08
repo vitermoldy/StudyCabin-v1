@@ -199,3 +199,22 @@ export function printTexture() {
   t.repeat.set(1, 1);
   return t;
 }
+
+/** Spines of books on a shelf. */
+export function booksTexture() {
+  const [c, ctx] = canvas(256, 64);
+  const rand = rng(71);
+  const palette = ['#7d4a36', '#3f5560', '#c9b48e', '#6b6f4b', '#a7643c', '#2f3a3f', '#d8cdb8', '#8a7a62'];
+  let x = 0;
+  while (x < 256) {
+    const w = 6 + rand() * 10;
+    const h = 40 + rand() * 24;
+    ctx.fillStyle = palette[Math.floor(rand() * palette.length)];
+    ctx.fillRect(x, 64 - h, w - 1, h);
+    x += w;
+  }
+  const t = finish(c);
+  t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+  t.repeat.set(1, 1);
+  return t;
+}
