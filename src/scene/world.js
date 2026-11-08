@@ -246,4 +246,48 @@ export class World {
     this.ripples.drop(hit.x, hit.z, 0.7, strength);
     return true;
   }
+
+  render(frameMs = 16) {
+    this.renderer.render(this.scene, this.camera);
+    this._adapt(frameMs);
+  }
+
+  /**
+   * Mean relative luminance (0..1) of the rendered pixels under each CSS-pixel
+   * rectangle. Called right after render, so the drawing buffer is still there.
+   */
+  sampleLuminance(rects) {
+    const gl = this.renderer.getContext();
+    const ratio = this.renderer.getPixelRatio();
+    const H = gl.drawingBufferHeight;
+    const out = [];
+    const buf = new Uint8Array(4 * 12 * 6);
+    for (const r of rects) {
+      let sum = 0;
+      let max = 0;
+      let min = 1;
+      let n = 0;
+      // Sample a 4 x 3 grid of small blocks across the rectangle.
+      for (let gy = 0; gy < 3; gy++) {
+        for (let gx = 0; gx < 4; gx++) {
+          const cx = Math.round((r.x + (r.w * (gx + 0.5)) / 4) * ratio);
+          const cy = Math.round(H - (r.y + (r.h * (gy + 0.5)) / 3) * ratio);
+          const x = clamp(cx - 6, 0, gl.drawingBufferWidth - 12);
+          const y = clamp(cy - 3, 0, H - 6);
+          gl.readPixels(x, y, 12, 6, gl.RGBA, gl.UNSIGNED_BYTE, buf);
+          let blk = 0;
+          for (let i = 0; i < buf.length; i += 4) {
+            blk += 0.2126 * lin(buf[i]) + 0.7152 * lin(buf[i + 1]) + 0.0722 * lin(buf[i + 2]);
+          }
+          blk /= buf.length / 4;
+          sum += blk;
+          max = Math.max(max, blk);
+          min = Math.min(min, blk);
+          n++;
+        }
+      }
+      out.push({ mean: sum / n, max, min });
+    }
+    return out;
+  }
 }
