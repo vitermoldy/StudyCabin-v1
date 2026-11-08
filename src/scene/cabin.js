@@ -34,4 +34,24 @@ export class Cabin {
     this.state = { kitchen: 0, living: 0, bed: 0, desk: 0, stove: 0, fire: 0, porch: 0, screen: 0, door: 0, sleeping: 0 };
     this.target = { ...this.state };
   }
+
+  // ------------------------------------------------------------ helpers
+  _m(geo, mat, { cast = true, receive = true, parent = this.group } = {}) {
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.castShadow = cast;
+    mesh.receiveShadow = receive;
+    parent.add(mesh);
+    return mesh;
+  }
+
+  /** Axis-aligned box from bounds, UVs in metres. */
+  _bx(mat, x0, x1, y0, y1, z0, z1, opts) {
+    const w = x1 - x0;
+    const h = y1 - y0;
+    const d = z1 - z0;
+    const geo = metricBoxUV(new THREE.BoxGeometry(w, h, d), w, h, d);
+    const mesh = this._m(geo, mat, opts);
+    mesh.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
+    return mesh;
+  }
 }
