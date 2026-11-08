@@ -233,4 +233,24 @@ export class Ambient extends Emitter {
       this._nextCrackle = now + 0.03 + Math.random() * 0.22;
     }
   }
+
+  _bird(level) {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const notes = 2 + Math.floor(Math.random() * 4);
+    const base = 2600 + Math.random() * 1500;
+    for (let i = 0; i < notes; i++) {
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      const t0 = now + i * (0.11 + Math.random() * 0.05);
+      o.frequency.setValueAtTime(base * (0.9 + Math.random() * 0.25), t0);
+      o.frequency.exponentialRampToValueAtTime(base * (1.15 + Math.random() * 0.3), t0 + 0.07);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(0.045 * level, t0 + 0.015);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+      o.connect(g).connect(this.g.wildlife);
+      o.start(t0);
+      o.stop(t0 + 0.1);
+    }
+  }
 }
