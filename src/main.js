@@ -109,3 +109,30 @@ function setScenePaused(on, { announce = false } = {}) {
 pauseBtn.addEventListener('click', () => setScenePaused(!scenePaused, { announce: true }));
 setScenePaused(scenePaused);
 if (reduced) setTimeout(() => toast('The scene is still because your system asks for less motion. Press play at the top right to start it.', 7000), 1200);
+
+function setWords(on) {
+  wordsShown = on;
+  html.classList.toggle('is-clear', !on);
+  save('view', { ...load('view', {}), words: on });
+}
+
+let viewApi = null;
+function toggleFullscreen() {
+  if (!document.fullscreenEnabled) return;
+  if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+  else document.documentElement.requestFullscreen().catch(() => toast('Full screen is not available here.'));
+}
+
+focus.on('finished', (phase) => {
+  ambient.chime();
+  toast(phase === 'focus' ? 'Focus block done. Time for a break.' : 'Break over. Back to the desk.');
+  refreshActivity();
+});
+focus.on('change', () => refreshActivity());
+climate.on('season', (id) => {
+  if (world) world.resident.setSeason(id);
+});
+climate.on('season', (id) => {
+  if (climate.autoSeason) toast(`${SEASONS[id].label} has come to the cabin.`);
+});
+climate.on('weather', () => refreshActivity());
