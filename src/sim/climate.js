@@ -154,4 +154,23 @@ export class Climate extends Emitter {
     if (changed) this.emit('season', id);
     this.persist();
   }
+
+  setAutoSeason(on) {
+    this.autoSeason = !!on;
+    this.emit('auto-season', this.autoSeason);
+    this.persist();
+  }
+
+  setWeatherMode(mode) {
+    if (mode !== 'auto' && !(mode in WEATHERS)) return;
+    this.weatherMode = mode;
+    if (mode === 'auto') {
+      this._setWeather(this._roll());
+      this.nextChange = this._now() + this._span();
+    } else {
+      this._setWeather(mode);
+    }
+    this.emit('weather-mode', mode);
+    this.persist();
+  }
 }
