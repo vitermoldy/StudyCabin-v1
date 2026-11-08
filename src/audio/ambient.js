@@ -183,4 +183,54 @@ export class Ambient extends Emitter {
     const v = this.enabled ? this.volume * this.volume * duck : 0;
     this.master.gain.setTargetAtTime(v, this.ctx.currentTime, tc);
   }
+
+  /** env: { waves, rain, wind, storm, day, night, season, fire } all 0..1. */
+  update(dt, env) {
+    this.env = env;
+    if (!this.ctx || !this.enabled || this.ctx.state !== 'running') return;
+    const now = this.ctx.currentTime;
+    this._t += dt;
+    const t = this._t;
+    const m = this.mix;
+    const set = (g, v, tc = 0.6) => g.gain.setTargetAtTime(v, now, tc);
+
+    // Waves: swells about every nine seconds, louder with bigger sea.
+    const swell = Math.pow(0.5 + 0.5 * Math.sin((t / 9) * Math.PI * 2), 1.6);
+    const sea = 0.35 + env.waves * 0.65;
+    set(this.g.waves, m.waves * sea * (0.35 + swell * 0.65) * 0.9, 0.3);
+    set(this.g.surf, m.waves * sea * Math.pow(Math.max(0, Math.sin((t / 9) * Math.PI * 2 - 0.7)), 3) * 0.32, 0.25);
+    this.surfFilter.frequency.setTargetAtTime(1100 + swell * 900, now, 0.4);
+
+    set(this.g.rain, m.rain * env.rain * 0.55);
+    set(this.g.rainLow, m.rain * (env.rain * 0.25 + env.storm * 0.35));
+
+    const gust = 0.6 + 0.4 * Math.sin(t * 0.23) * Math.sin(t * 0.61 + 1);
+    set(this.g.wind, m.wind * (0.08 + env.wind * 0.5) * gust, 0.8);
+    this.windFilter.frequency.setTargetAtTime(300 + gust * 380 + env.wind * 200, now, 0.8);
+
+    const seasonBirds = { spring: 1, summer: 0.8, autumn: 0.45, rainy: 0.35, winter: 0.2 }[env.season] ?? 0.5;
+    const seasonCrickets = { spring: 0.5, summer: 1, autumn: 0.55, rainy: 0.7, winter: 0 }[env.season] ?? 0.5;
+    const birds = m.wildlife * env.day * seasonBirds * (1 - env.rain * 0.85) * (env.morning ? 1 : 0.45);
+    const crickets = m.wildlife * env.night * seasonCrickets * (1 - env.rain * 0.8);
+    set(this.g.wildlife, 1, 0.3);
+    set(this.cricketLevel, crickets * 0.018, 1.2);
+    this._cricketGate -= dt;
+    if (this._cricketGate <= 0) {
+      const onFor = 0.25 + Math.random() * 0.5;
+      this.cricketGate.gain.setTargetAtTime(1, now, 0.02);
+      this.cricketGate.gain.setTargetAtTime(0, now + onFor, 0.03);
+      this._cricketGate = onFor + 0.3 + Math.random() * 0.9;
+    }
+    if (birds > 0.05 && now > this._nextBird) {
+      this._bird(birds);
+      this._nextBird = now + 1.2 + Math.random() * 4 / (0.4 + birds);
+    }
+
+    set(this.g.fireLow, m.fire * env.fire * 0.22);
+    set(this.g.fire, m.fire * env.fire, 0.3);
+    if (env.fire > 0.1 && now > this._nextCrackle) {
+      this._crackle();
+      this._nextCrackle = now + 0.03 + Math.random() * 0.22;
+    }
+  }
 }
