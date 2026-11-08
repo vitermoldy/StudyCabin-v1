@@ -180,4 +180,38 @@ export class Cabin {
     this._bx(trim, 1.15, 1.31, GLASS_TOP + 0.08, GLASS_TOP + 0.3, 3.13, 3.2);
     this._bx(this.shades.porch, 1.17, 1.29, GLASS_TOP + 0.1, GLASS_TOP + 0.2, 3.2, 3.24, { cast: false });
   }
+
+  _roof() {
+    const { roof, trim } = this.mat;
+    const run = 3.15;
+    const rise = RIDGE - WALL_TOP;
+    const alpha = Math.atan2(rise, run);
+    const over = 0.55;
+    const hRun = run + over;
+    const len = hRun / Math.cos(alpha);
+    const w = 15.3;
+    for (const side of [1, -1]) {
+      const geo = metricBoxUV(new THREE.BoxGeometry(w, 0.12, len), w, 0.12, len);
+      const slab = this._m(geo, roof);
+      const zc = side * hRun / 2;
+      slab.position.set(0, RIDGE - Math.tan(alpha) * (hRun / 2) + 0.07, zc);
+      slab.rotation.x = side * alpha;
+      // barge boards on both gable ends
+      for (const ex of [-1, 1]) {
+        const bg = new THREE.BoxGeometry(0.06, 0.22, len);
+        const b = this._m(bg, trim);
+        b.position.set(ex * (w / 2 + 0.02), slab.position.y - 0.03, zc);
+        b.rotation.x = side * alpha;
+      }
+      // fascia along the eave
+      const eaveY = RIDGE - Math.tan(alpha) * hRun;
+      this._cb(trim, w + 0.1, 0.18, 0.06, 0, eaveY - 0.02, side * (hRun + 0.02));
+    }
+    this._cb(roof, 15.4, 0.1, 0.32, 0, RIDGE + 0.12, 0);
+    // stove flue through the roof
+    const { stove } = F;
+    this._cyl(this.mat.metal, 0.085, 0.085, RIDGE + 1.0 - (FLOOR + 0.62), stove.x, (FLOOR + 0.62 + RIDGE + 1.0) / 2, stove.z);
+    this._cyl(this.mat.metal, 0.16, 0.16, 0.08, stove.x, RIDGE + 1.04, stove.z);
+    this.flueTop = new THREE.Vector3(stove.x, RIDGE + 1.1, stove.z);
+  }
 }
