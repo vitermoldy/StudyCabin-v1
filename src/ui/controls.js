@@ -101,3 +101,23 @@ export function mountDay({ clock, onJump }) {
     }
   };
 }
+
+export function mountWeather({ climate }) {
+  const setSeason = radios($('season-group'), 'season', SEASON_ORDER.map((k) => [k, SEASONS[k].label]), climate.season, (v) => climate.setSeason(v));
+  const setWeather = radios(
+    $('weather-group'),
+    'weather',
+    [['auto', 'Follow the season'], ...WEATHER_ORDER.map((k) => [k, WEATHERS[k].label])],
+    climate.weatherMode,
+    (v) => climate.setWeatherMode(v),
+  );
+  const syncAuto = bindSwitch($('auto-season'), () => climate.autoSeason, (v) => climate.setAutoSeason(v));
+  climate.on('season', setSeason);
+  climate.on('weather-mode', setWeather);
+  climate.on('auto-season', syncAuto);
+  return function update() {
+    $('season-line').textContent = SEASONS[climate.season].line;
+    const now = `${climate.describe()}${climate.weatherMode === 'auto' ? ', following the season' : ''}`;
+    if ($('weather-now').textContent !== now) $('weather-now').textContent = now;
+  };
+}
