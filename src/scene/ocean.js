@@ -127,3 +127,34 @@ const FRAG = /* glsl */ `
     #include <colorspace_fragment>
     #include <fog_fragment>
   }`;
+
+function buildGeometry() {
+  // Dense near the shore, coarse toward the horizon.
+  const NX = 200;
+  const NZ = 120;
+  const pos = [];
+  for (let j = 0; j <= NZ; j++) {
+    const v = j / NZ;
+    const z = SHORE_Z - 1.4 + Math.pow(v, 2.2) * 700;
+    for (let i = 0; i <= NX; i++) {
+      const u = (i / NX) * 2 - 1;
+      const x = Math.sign(u) * (0.12 * Math.abs(u) + 0.88 * u * u) * 700;
+      pos.push(x, -0.04, z);
+    }
+  }
+  const idx = [];
+  for (let j = 0; j < NZ; j++) {
+    for (let i = 0; i < NX; i++) {
+      const a = j * (NX + 1) + i;
+      const b = a + 1;
+      const c = a + NX + 1;
+      const d = c + 1;
+      idx.push(a, c, b, b, c, d);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setIndex(idx);
+  geo.computeBoundingSphere();
+  return geo;
+}
