@@ -66,3 +66,26 @@ function conditions() {
   const cold = climate.season === 'winter' || climate.temperature() < 9;
   return { badWeather: climate.badWeather, cold };
 }
+
+function refreshActivity({ teleport = false } = {}) {
+  const next = activityAt(clock.minutes, conditions(), focus.residentPhase);
+  if (next.key !== activity.key || teleport) {
+    activity = next;
+    if (world) world.resident.setActivity(activity, { teleport });
+  }
+  overlay.setWord(activity.word);
+}
+
+function storyText() {
+  const s = SEASONS[climate.season].label;
+  const line = `${activity.line}. ${climate.describe()}.`;
+  const meta = `Day ${clock.day} · ${s} · ${SPEED_LABELS[clock.speed].toLowerCase()}`;
+  return { line, meta };
+}
+
+function jumpTo(minutes, sameDay) {
+  clock.jumpTo(minutes, { sameDay });
+}
+clock.on('jump', () => {
+  jumped = true;
+});
