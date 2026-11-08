@@ -29,4 +29,22 @@ export class FocusTimer extends Emitter {
       this._advancePhase(false);
     }
   }
+
+  get config() {
+    return PRESETS[this.preset];
+  }
+
+  get phaseLabel() {
+    return PHASE_LABEL[this.phase];
+  }
+
+  /** 'focus' or 'break' while running, else null: the resident reads this. */
+  get residentPhase() {
+    if (!this.running && this.remainingMs === this.lengthMs()) return null;
+    return this.phase === 'focus' ? 'focus' : 'break';
+  }
+
+  get active() {
+    return this.running || this.remainingMs !== this.lengthMs();
+  }
 }
