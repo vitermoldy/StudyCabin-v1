@@ -87,4 +87,25 @@ export class CameraRig {
     this.user.panX = clamp(this.user.panX - dx * k * rx - dy * k * fx, -60, 60);
     this.user.panZ = clamp(this.user.panZ - dx * k * rz - dy * k * fz, -45, 60);
   }
+
+  /** factor > 1 moves away, < 1 moves closer. */
+  zoomBy(factor) {
+    this.user.zoom = clamp(this.user.zoom * factor, 0.22, 3);
+  }
+
+  resetUser() {
+    Object.assign(this.user, { yaw: 0, tilt: 0, zoom: 1, panX: 0, panZ: 0 });
+  }
+
+  get userMoved() {
+    const u = this.user;
+    return Math.abs(u.yaw) > 0.001 || Math.abs(u.tilt) > 0.001 || Math.abs(u.zoom - 1) > 0.001 || Math.abs(u.panX) > 0.01 || Math.abs(u.panZ) > 0.01;
+  }
+
+  /** True while the camera is still easing toward where the visitor put it. */
+  get settling() {
+    const a = this.user;
+    const b = this.userS;
+    return Math.abs(a.yaw - b.yaw) + Math.abs(a.tilt - b.tilt) + Math.abs(a.zoom - b.zoom) + Math.abs(a.panX - b.panX) * 0.1 + Math.abs(a.panZ - b.panZ) * 0.1 > 0.0005 || this.travel < 1;
+  }
 }
