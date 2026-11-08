@@ -220,4 +220,30 @@ export class World {
     }
     push.z += (want - push.z) * (1 - Math.exp(-6 * dt));
   }
+
+  /** Raindrops ring the water in front of the cabin. */
+  _rain(dt, rain) {
+    if (!this.ripples.ok || rain < 0.05) return;
+    this._rainDrops += dt * rain * 40;
+    while (this._rainDrops >= 1) {
+      this._rainDrops -= 1;
+      const x = (Math.random() - 0.5) * 50;
+      const z = 12.5 + Math.random() * 30;
+      this.ripples.drop(x, z, 0.3 + Math.random() * 0.25, 0.2 + Math.random() * 0.15);
+    }
+  }
+
+  /**
+   * A press or drag on the screen: where it meets the water, drop a ripple.
+   * x, y in CSS pixels. Returns true when it touched water.
+   */
+  poke(x, y, strength = 0.55) {
+    if (!this.ripples.ok) return false;
+    const ndc = new THREE.Vector2((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
+    this.raycaster.setFromCamera(ndc, this.camera);
+    const hit = this.raycaster.ray.intersectPlane(this.waterPlane, tmpHit);
+    if (!hit || hit.z < 11.6) return false;
+    this.ripples.drop(hit.x, hit.z, 0.7, strength);
+    return true;
+  }
 }
