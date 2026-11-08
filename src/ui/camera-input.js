@@ -82,4 +82,38 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
     else if (mode === 'pan') w.rig.pan(dx, dy);
     onRender();
   });
+
+  const end = (e) => {
+    if (!pointers.has(e.pointerId)) return;
+    const tap = pointers.size === 1 && moved < 5 && mode !== 'pinch' && mode !== 'ripple';
+    pointers.delete(e.pointerId);
+    if (pointers.size === 0) {
+      html.classList.remove('is-dragging');
+      const w = getWorld();
+      if (tap && e.type === 'pointerup' && w) w.poke(e.clientX, e.clientY, 0.7);
+      mode = null;
+    } else if (pointers.size === 1) {
+      mode = 'orbit';
+      moved = 5;
+    }
+  };
+  canvas.addEventListener('pointerup', end);
+  canvas.addEventListener('pointercancel', end);
+
+  canvas.addEventListener('wheel', (e) => {
+    const w = getWorld();
+    if (!w) return;
+    e.preventDefault();
+    const delta = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
+    w.rig.zoomBy(Math.exp(Math.max(-200, Math.min(200, delta)) * 0.0011));
+    onRender();
+  }, { passive: false });
+
+  canvas.addEventListener('dblclick', () => {
+    const w = getWorld();
+    if (w) {
+      w.rig.resetUser();
+      onRender();
+    }
+  });
 }
