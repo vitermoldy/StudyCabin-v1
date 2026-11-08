@@ -258,4 +258,55 @@ export class MusicPlayer extends Emitter {
     if (next < 0) next = this.loop ? n - 1 : 0;
     this.play(next);
   }
+
+  seek(seconds) {
+    if (this._ready) this.player.seekTo(seconds, true);
+  }
+
+  progress() {
+    if (!this._ready || !this.player.getDuration) return { time: 0, duration: 0 };
+    return { time: this.player.getCurrentTime() || 0, duration: this.player.getDuration() || 0 };
+  }
+
+  _stop() {
+    this.status = 'idle';
+    this.nowTitle = '';
+    if (this._ready) this.player.stopVideo();
+  }
+
+  _onState(s) {
+    const YT = window.YT;
+    const item = this.item;
+    if (s === YT.PlayerState.PLAYING) {
+      this.status = 'playing';
+      const data = this.player.getVideoData?.() || {};
+      this.nowTitle = data.title || '';
+      if (item && item.kind === 'video' && !item.title && data.title) {
+        item.title = data.title;
+        item.author = data.author || '';
+        this.persist();
+      }
+      if (this._seekToVideo) {
+        const list = this.player.getPlaylist?.() || [];
+        const k = list.indexOf(this._seekToVideo);
+        this._seekToVideo = null;
+        if (k > 0) this.player.playVideoAt(k);
+      }
+    } else if (s === YT.PlayerState.PAUSED) {
+      this.status = 'paused';
+    } else if (s === YT.PlayerState.BUFFERING) {
+      this.status = 'buffering';
+    } else if (s === YT.PlayerState.CUED) {
+      this.status = 'paused';
+    } else if (s === YT.PlayerState.ENDED) {
+      if (item && item.kind === 'playlist') {
+        const list = this.player.getPlaylist?.() || [];
+        const at = this.player.getPlaylistIndex?.() ?? -1;
+        if (list.length && at >= 0 && at < list.length - 1) return; // YouTube moves to the next song itself
+      }
+      this._advance(1);
+      return;
+    }
+    this.emit('change');
+  }
 }
