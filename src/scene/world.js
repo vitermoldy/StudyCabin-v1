@@ -19,3 +19,56 @@ export function webglAvailable() {
     return false;
   }
 }
+
+export class World {
+  constructor(canvas, { reducedMotion = false } = {}) {
+    this.canvas = canvas;
+    this.renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+    this.renderer.shadowMap.enabled = true;
+    this.renderer.shadowMap.type = THREE.PCFShadowMap;
+    this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    this.renderer.outputColorSpace = THREE.SRGBColorSpace;
+    // A GPU that rejects a shader would leave a black canvas: fall back to the still picture.
+    this.onShaderFail = null;
+    this.renderer.debug.onShaderError = (gl, program, vs, fs) => {
+      console.warn('StudyCabin: a shader did not compile; showing the still picture.', gl.getProgramInfoLog(program) || '');
+      if (this.onShaderFail) this.onShaderFail();
+    };
+    this.maxDpr = Math.min(window.devicePixelRatio || 1, 1.5);
+    this.dpr = this.maxDpr;
+    this.renderer.setPixelRatio(this.dpr);
+
+    this.scene = new THREE.Scene();
+    this.camera = new THREE.PerspectiveCamera(42, 1, 0.1, 2600);
+    this.rig = new CameraRig(this.camera);
+    this.rig.reduced = reducedMotion;
+    this.reduced = reducedMotion;
+
+    this.atmo = new Atmosphere(this.scene, this.renderer);
+    const lowPower = matchMedia('(max-width: 700px), (pointer: coarse)').matches;
+    this.terrain = new Terrain(this.scene, { lowPower });
+    this.trees = new Trees(this.scene, { lowPower });
+    this.ocean = new Ocean(this.scene);
+    this.ripples = new Ripples(this.renderer);
+    this.ocean.setRipples(this.ripples.texture, RIPPLE_AREA);
+    this.raycaster = new THREE.Raycaster();
+    this.waterPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0.04);
+    this._rainDrops = 0;
+    this.groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), -0.35);
+    this.pointerNdc = new THREE.Vector2();
+    this.pointerOn = false;
+    this._push = new THREE.Vector3();
+    this.cabin = new Cabin(this.scene);
+    this.resident = new Resident(this.scene);
+    this.fx = new WeatherFX(this.scene, this.cabin.flueTop);
+
+    this.flash = 0;
+    this._nextBolt = 6;
+    this._boltSeq = [];
+    this.onThunder = null;
+    this._frameAvg = 16;
+    this._dprCheck = 0;
+    this._cooldown = 0;
+    this.resize();
+  }
+}
