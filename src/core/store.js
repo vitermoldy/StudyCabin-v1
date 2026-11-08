@@ -17,3 +17,21 @@ function readAll() {
 }
 
 let timer = 0;
+function flush() {
+  timer = 0;
+  try {
+    localStorage.setItem(KEY, JSON.stringify(cache));
+  } catch {
+    /* storage unavailable: settings live for this visit only */
+  }
+}
+
+export function load(section, fallback) {
+  const all = readAll();
+  const value = all[section];
+  if (value === undefined || value === null) return fallback;
+  if (fallback && typeof fallback === 'object' && !Array.isArray(fallback)) {
+    return { ...fallback, ...value };
+  }
+  return value;
+}
