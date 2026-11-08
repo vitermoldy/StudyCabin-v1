@@ -300,4 +300,65 @@ export class Cabin {
     const bulb = this._m(new THREE.SphereGeometry(0.05, 12, 8), shade, { cast: false });
     bulb.position.set(x, FLOOR + 2.04, z);
   }
+
+  _living() {
+    const { sofa, cushion, rug, wood, woodDark, metal, ceramic, print, books, trim, stoveGlass } = this.mat;
+    this._bx(rug, -2.9, 0.2, FLOOR, FLOOR + 0.012, -2.2, 0.35, { cast: false });
+    // sofa facing the glass
+    const S = F.sofa;
+    const sx0 = S.x - S.w / 2;
+    const sx1 = S.x + S.w / 2;
+    this._soft(sofa, S.w, 0.36, S.d, 0.06, S.x, FLOOR + 0.2, S.z);
+    this._soft(sofa, S.w, 0.5, 0.26, 0.08, S.x, FLOOR + 0.6, S.z - S.d / 2 + 0.13);
+    this._soft(sofa, 0.22, 0.6, S.d, 0.07, sx0 + 0.11, FLOOR + 0.32, S.z);
+    this._soft(sofa, 0.22, 0.6, S.d, 0.07, sx1 - 0.11, FLOOR + 0.32, S.z);
+    for (const dx of [-0.42, 0.42]) this._soft(cushion, 0.8, 0.12, 0.62, 0.05, S.x + dx, FLOOR + 0.44, S.z + 0.1);
+    this._soft(cushion, 0.42, 0.36, 0.12, 0.05, sx0 + 0.42, FLOOR + 0.68, S.z - 0.22).rotation.z = 0.15;
+    // coffee table with books and a mug
+    const C = F.coffeeTable;
+    this._bx(wood, C.x - C.w / 2, C.x + C.w / 2, FLOOR + 0.36, FLOOR + 0.42, C.z - C.d / 2, C.z + C.d / 2);
+    this._bx(woodDark, C.x - C.w / 2 + 0.06, C.x + C.w / 2 - 0.06, FLOOR, FLOOR + 0.36, C.z - 0.12, C.z + 0.12);
+    this._cb(this.mat.books, 0.3, 0.05, 0.22, C.x - 0.25, FLOOR + 0.445, C.z);
+    this._cb(trim, 0.26, 0.04, 0.2, C.x - 0.25, FLOOR + 0.49, C.z + 0.01).rotation.y = 0.2;
+    this._cyl(ceramic, 0.045, 0.04, 0.09, C.x + 0.28, FLOOR + 0.465, C.z + 0.05, 12);
+    // armchair angled toward the glass
+    const A = F.armchair;
+    const ag = new THREE.Group();
+    ag.position.set(A.x, 0, A.z);
+    ag.rotation.y = A.rot;
+    this.group.add(ag);
+    this._soft(cushion, 0.78, 0.3, 0.74, 0.06, 0, FLOOR + 0.24, 0, { parent: ag });
+    this._soft(cushion, 0.78, 0.55, 0.18, 0.06, 0, FLOOR + 0.62, -0.32, { parent: ag });
+    for (const ex of [-0.36, 0.36]) this._soft(cushion, 0.12, 0.42, 0.7, 0.05, ex, FLOOR + 0.38, 0, { parent: ag });
+    this._legs(woodDark, 0, 0, 0.7, 0.66, 0.1, FLOOR, 0.04, ag);
+    // bookcase
+    const B = F.shelf;
+    const bx0 = B.x - B.w / 2;
+    const bx1 = B.x + B.w / 2;
+    this._bx(woodDark, bx0, bx1, FLOOR, FLOOR + 2.0, -3.0, -3.0 + B.d - 0.32);
+    this._bx(woodDark, bx0, bx0 + 0.03, FLOOR, FLOOR + 2.0, -3.0, -3.0 + B.d);
+    this._bx(woodDark, bx1 - 0.03, bx1, FLOOR, FLOOR + 2.0, -3.0, -3.0 + B.d);
+    for (let i = 0; i < 5; i++) {
+      const y = FLOOR + 0.05 + i * 0.48;
+      this._bx(woodDark, bx0, bx1, y - 0.03, y, -3.0, -3.0 + B.d);
+      if (i < 4) this._bx(books, bx0 + 0.04, bx1 - 0.04, y, y + 0.32, -2.96, -2.72, { cast: false });
+    }
+    // print above the sofa
+    this._bx(trim, S.x - 0.66, S.x + 0.66, FLOOR + 1.45, FLOOR + 2.45, -3.0, -2.97);
+    this._bx(print, S.x - 0.62, S.x + 0.62, FLOOR + 1.49, FLOOR + 2.41, -2.97, -2.96, { cast: false });
+    // floor lamp
+    this._cyl(metal, 0.16, 0.16, 0.03, -2.85, FLOOR + 0.015, -2.35, 16);
+    this._cyl(metal, 0.012, 0.012, 1.55, -2.85, FLOOR + 0.8, -2.35, 6);
+    const shade = this._m(new THREE.CylinderGeometry(0.17, 0.22, 0.28, 20, 1, true), this.shades.living, { cast: false });
+    shade.material.side = THREE.DoubleSide;
+    shade.position.set(-2.85, FLOOR + 1.62, -2.35);
+    // wood stove
+    const W = F.stove;
+    this._bx(metal, W.x - 0.28, W.x + 0.28, FLOOR + 0.12, FLOOR + 0.66, W.z - 0.25, W.z + 0.22);
+    this._legs(metal, W.x, W.z, 0.5, 0.42, 0.12, FLOOR, 0.035);
+    this._bx(stoveGlass, W.x - 0.17, W.x + 0.17, FLOOR + 0.24, FLOOR + 0.52, W.z + 0.22, W.z + 0.225, { cast: false });
+    this._bx(this.mat.ceramic, W.x - 0.5, W.x + 0.5, FLOOR, FLOOR + 0.02, W.z - 0.4, W.z + 0.55, { cast: false });
+    // log basket
+    this._cyl(woodDark, 0.2, 0.17, 0.3, W.x + 0.75, FLOOR + 0.15, W.z + 0.1, 14);
+  }
 }
