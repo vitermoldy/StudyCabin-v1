@@ -173,4 +173,69 @@ const MOON_LIGHT = C('#a6bbdc');
  * the clock and the weather.
  */
 export class Atmosphere {
+  constructor(scene, renderer) {
+    this.scene = scene;
+    this.renderer = renderer;
+    this.uniforms = {
+      uZenith: { value: C('#6a8fb8') },
+      uHorizon: { value: C('#c3d0d6') },
+      uGround: { value: C('#8e8f88') },
+      uSunDir: { value: new THREE.Vector3(0, 1, 0) },
+      uSunColor: { value: C('#fff0db') },
+      uMoonDir: { value: new THREE.Vector3(0, -1, 0) },
+      uCloudLit: { value: C('#d9dcdc') },
+      uCloudDark: { value: C('#8d9396') },
+      uSunVis: { value: 1 },
+      uMoonVis: { value: 0 },
+      uStars: { value: 0 },
+      uCloud: { value: 0.2 },
+      uTime: { value: 0 },
+      uWind: { value: 0.3 },
+      uFlash: { value: 0 },
+      uGlow: { value: 1 },
+      uFogAmt: { value: 0.2 },
+      uAurora: { value: 0 },
+    };
+    const mat = new THREE.ShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      side: THREE.BackSide,
+      depthWrite: false,
+      fog: false,
+    });
+    this.dome = new THREE.Mesh(new THREE.SphereGeometry(1000, 48, 24), mat);
+    this.dome.frustumCulled = false;
+    this.dome.renderOrder = -10;
+    scene.add(this.dome);
+
+    this.fog = new THREE.FogExp2(0xc3c6c4, 0.004);
+    scene.fog = this.fog;
+
+    this.hemi = new THREE.HemisphereLight(0xc8d2d8, 0x6f6a60, 1);
+    scene.add(this.hemi);
+
+    this.sun = new THREE.DirectionalLight(0xffffff, 2.5);
+    this.sun.castShadow = true;
+    const coarse = matchMedia('(max-width: 700px)').matches;
+    this.sun.shadow.mapSize.set(coarse ? 1024 : 2048, coarse ? 1024 : 2048);
+    const sc = this.sun.shadow.camera;
+    sc.left = -19; sc.right = 19; sc.top = 15; sc.bottom = -13; sc.near = 5; sc.far = 160;
+    this.sun.shadow.bias = -0.0005;
+    this.sun.shadow.normalBias = 0.035;
+    this.sun.target.position.set(-0.5, 0, 2.5);
+    scene.add(this.sun, this.sun.target);
+
+    this.sunDir = new THREE.Vector3();
+    this.moonDir = new THREE.Vector3();
+    this.dayFactor = 1;
+    this.night = 0;
+    this.overcast = 0;
+    this.horizon = new THREE.Color();
+    this.zenith = new THREE.Color();
+    this.fogColor = new THREE.Color();
+    this.sunColor = new THREE.Color();
+    this._tmpA = new THREE.Color();
+    this._tmpB = new THREE.Color();
+  }
 }
