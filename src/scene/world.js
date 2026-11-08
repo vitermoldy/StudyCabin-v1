@@ -199,4 +199,25 @@ export class World {
     glass.opacity = 0.08 + this.atmo.dayFactor * 0.16 * (1 - smoothstep(0.3, 1, this.cabin.state.living + this.cabin.state.kitchen) * 0.4);
     glass.color.copy(this.atmo.horizon).lerp(WHITE, 0.25);
   }
+
+  /** Mouse position over the scene (CSS pixels), for the grass that parts round it. */
+  setPointer(x, y, on = true) {
+    this.pointerNdc.set((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
+    this.pointerOn = on;
+  }
+
+  _grassPush(dt) {
+    const push = this.terrain.grassPush.value;
+    let want = 0;
+    if (this.pointerOn) {
+      this.raycaster.setFromCamera(this.pointerNdc, this.camera);
+      const hit = this.raycaster.ray.intersectPlane(this.groundPlane, tmpHit);
+      if (hit && hit.distanceTo(this.camera.position) < 70) {
+        push.x = hit.x;
+        push.y = hit.z;
+        want = 1;
+      }
+    }
+    push.z += (want - push.z) * (1 - Math.exp(-6 * dt));
+  }
 }
