@@ -158,4 +158,29 @@ export function mountSound({ ambient }) {
     err.textContent = msg;
     err.hidden = false;
   });
+  const render = () => {
+    onBtn.setAttribute('aria-checked', String(ambient.enabled));
+    vol.value = String(Math.round(ambient.volume * 100));
+    volOut.textContent = `${vol.value}%`;
+    for (const s of sliders) {
+      s.input.value = String(Math.round(ambient.mix[s.layer.id] * 100));
+      s.out.textContent = `${s.input.value}%`;
+      s.input.disabled = !ambient.enabled;
+    }
+    vol.disabled = !ambient.enabled;
+  };
+  ambient.on('change', render);
+  render();
+}
+
+export function mountFocus({ focus }) {
+  const startBtn = $('focus-start');
+  const setPreset = radios($('focus-group'), 'focus-length', Object.entries(PRESETS).map(([k, p]) => [k, p.label]), focus.preset, (v) => focus.setPreset(v));
+  const heroBtn = $('hero-focus');
+  startBtn.addEventListener('click', () => focus.toggle());
+  heroBtn.addEventListener('click', () => focus.toggle());
+  $('focus-skip').addEventListener('click', () => focus.skip());
+  $('focus-reset').addEventListener('click', () => focus.reset());
+  const dockLabel = $('dock-focus-label');
+  const baseTitle = document.title;
 }
