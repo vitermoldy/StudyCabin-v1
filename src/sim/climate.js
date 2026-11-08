@@ -50,3 +50,27 @@ export const SEASONS = {
     line: 'Short days, snow on the roof, the stove lit by four.',
   },
 };
+
+export const WEATHER_ORDER = ['clear', 'cloudy', 'fog', 'rain', 'storm', 'snow'];
+
+export const WEATHERS = {
+  clear: { label: 'Clear', cloud: 0.12, fog: 0.16, rain: 0, snow: 0, wind: 0.25, waves: 0.45, storm: 0, temp: 1 },
+  cloudy: { label: 'Cloudy', cloud: 0.72, fog: 0.32, rain: 0, snow: 0, wind: 0.42, waves: 0.55, storm: 0, temp: -1 },
+  fog: { label: 'Fog', cloud: 0.55, fog: 1, rain: 0, snow: 0, wind: 0.1, waves: 0.32, storm: 0, temp: -1.5 },
+  rain: { label: 'Rain', cloud: 0.92, fog: 0.5, rain: 0.62, snow: 0, wind: 0.5, waves: 0.72, storm: 0, temp: -3 },
+  storm: { label: 'Storm', cloud: 1, fog: 0.58, rain: 1, snow: 0, wind: 1, waves: 1, storm: 1, temp: -4 },
+  snow: { label: 'Snow', cloud: 0.86, fog: 0.55, rain: 0, snow: 0.85, wind: 0.35, waves: 0.5, storm: 0, temp: -2 },
+};
+
+const PARAM_KEYS = ['cloud', 'fog', 'rain', 'snow', 'wind', 'waves', 'storm'];
+
+function pick(odds, random = Math.random) {
+  const entries = Object.entries(odds);
+  const total = entries.reduce((s, [, p]) => s + p, 0);
+  let r = random() * total;
+  for (const [id, p] of entries) {
+    r -= p;
+    if (r <= 0) return id;
+  }
+  return entries[entries.length - 1][0];
+}
