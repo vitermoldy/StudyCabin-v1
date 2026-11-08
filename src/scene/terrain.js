@@ -316,4 +316,50 @@ export class Terrain {
     mesh.frustumCulled = false;
     return mesh;
   }
+
+  _buildMountains() {
+    const group = new THREE.Group();
+    const mat = new THREE.MeshStandardMaterial({ color: 0x5f6662, roughness: 1 });
+    mat.onBeforeCompile = (shader) => {
+      shader.uniforms.uSnow = WORLD.uSnow;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying float vH; varying float vUp2;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\n vH = (modelMatrix * vec4(position, 1.0)).y;')
+        .replace('#include <defaultnormal_vertex>', '#include <defaultnormal_vertex>\n vUp2 = inverseTransformDirection(transformedNormal, viewMatrix).y;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying float vH; varying float vUp2; uniform float uSnow;')
+        .replace(
+          '#include <map_fragment>',
+          `#include <map_fragment>
+          float line = mix(150.0, 34.0, uSnow);
+          float cap = smoothstep(line, line + 18.0, vH) * smoothstep(0.35, 0.7, vUp2);
+          diffuseColor.rgb *= 0.85 + 0.25 * smoothstep(0.0, 120.0, vH);
+          diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.82, 0.85, 0.88), cap);`,
+        );
+    };
+    const ranges = [
+      { z: -215, depth: 180, peak: 74, seed: 3, sx: 0.0052, x: 0 },
+      { z: -380, depth: 220, peak: 120, seed: 9, sx: 0.0034, x: 120 },
+    ];
+    for (const R of ranges) {
+      const geo = new THREE.PlaneGeometry(1700, R.depth, 220, 50);
+      geo.rotateX(-Math.PI / 2);
+      const pa = geo.attributes.position;
+      for (let i = 0; i < pa.count; i++) {
+        const x = pa.getX(i) + R.x;
+        const zl = pa.getZ(i); // -depth/2 (back) .. +depth/2 (front)
+        const front = (zl + R.depth / 2) / R.depth; // 0 back, 1 front
+        const ridge = 1 - Math.abs(fbm(x * R.sx + R.seed, zl * 0.01 + R.seed, 5) * 2 - 1);
+        const sideForward = smoothstep(150, 520, Math.abs(x)) * 0.35;
+        const env = Math.sin(Math.min(1, Math.max(0, (1 - front) * 1.25 + sideForward)) * Math.PI * 0.5);
+        const h = env * (R.peak * 0.25 + R.peak * Math.pow(ridge, 1.6)) * (0.75 + fbm(x * 0.002 + R.seed, 3.1) * 0.5);
+        pa.setY(i, h - 6 - (1 - env) * 10);
+      }
+      geo.computeVertexNormals();
+      const mesh = new THREE.Mesh(geo, mat);
+      mesh.position.set(-R.x, 0, R.z);
+      group.add(mesh);
+    }
+    return group;
+  }
 }
