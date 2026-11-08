@@ -204,3 +204,26 @@ export function mountFocus({ focus }) {
   render();
   return render;
 }
+
+export function mountView({ rig, onWords, wordsShown, onFullscreen }) {
+  const setView = radios($('view-group'), 'view', Object.entries(VIEWS).map(([k, v]) => [k, k === 'follow' ? 'Follow the resident' : v.label]), rig.view, (v) => rig.setView(v));
+  const wordsSwitch = $('words-on');
+  const dockWords = $('dock-words');
+  const sync = () => {
+    const on = wordsShown();
+    wordsSwitch.setAttribute('aria-checked', String(on));
+    dockWords.setAttribute('aria-pressed', String(on));
+    dockWords.setAttribute('aria-label', on ? 'Hide the big words' : 'Show the big words');
+  };
+  wordsSwitch.addEventListener('click', () => { onWords(!wordsShown()); sync(); });
+  dockWords.addEventListener('click', () => { onWords(!wordsShown()); sync(); });
+  $('cam-reset').addEventListener('click', () => rig.resetUser && rig.resetUser());
+  const fs = $('fullscreen');
+  if (!document.fullscreenEnabled) fs.hidden = true;
+  fs.addEventListener('click', onFullscreen);
+  document.addEventListener('fullscreenchange', () => {
+    fs.textContent = document.fullscreenElement ? 'Leave full screen' : 'Full screen';
+  });
+  sync();
+  return { setView, sync };
+}
