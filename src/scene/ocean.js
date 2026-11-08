@@ -200,4 +200,29 @@ export class Ocean {
     this.shallowGrey = new THREE.Color('#6a8984');
     this.landBase = new THREE.Color('#5d6556');
   }
+
+  /** Hook up the ripple simulation (its texture and the patch it covers). */
+  setRipples(texture, area) {
+    this.uniforms.uRipple.value = texture;
+    this.uniforms.uRippleArea.value.set(area.x0, area.z0, area.size, texture ? 1 : 0);
+  }
+
+  update({ time, params, atmo, rippleTexture }) {
+    const u = this.uniforms;
+    if (rippleTexture) u.uRipple.value = rippleTexture;
+    u.uTime.value = time;
+    u.uWaves.value = params.waves;
+    u.uRain.value = params.rain;
+    u.uLight.value = 0.12 + atmo.dayFactor * 0.88 * (1 - params.storm * 0.35);
+    u.uDeep.value.copy(this.deepDay).lerp(this.deepGrey, atmo.overcast);
+    u.uShallow.value.copy(this.shallowDay).lerp(this.shallowGrey, atmo.overcast);
+    u.uZenith.value.copy(atmo.zenith);
+    u.uLand.value.copy(this.landBase).multiplyScalar(0.25 + atmo.dayFactor * 0.75).lerp(atmo.fogColor, 0.45);
+    u.uHorizon.value.copy(atmo.horizon);
+    u.uSunDir.value.copy(atmo.sunDir);
+    u.uSunColor.value.copy(atmo.sunColor);
+    u.uSunVis.value = atmo.uniforms.uSunVis.value;
+    u.uMoonDir.value.copy(atmo.moonDir);
+    u.uMoonVis.value = atmo.uniforms.uMoonVis.value * (1 - atmo.overcast * 0.8);
+  }
 }
