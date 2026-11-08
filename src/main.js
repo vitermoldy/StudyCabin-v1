@@ -17,3 +17,32 @@ const html = document.documentElement;
 const reduced = prefersReducedMotion();
 
 // ------------------------------------------------------------ simulation
+const clock = new Clock();
+const climate = new Climate(clock);
+const focus = new FocusTimer();
+const ambient = new Ambient();
+const music = new MusicPlayer(document.getElementById('yt-host'));
+const overlay = new Overlay({ reducedMotion: reduced });
+const panels = new Panels();
+
+const prefs = load('view', { view: 'shore', words: true });
+let wordsShown = prefs.words !== false;
+html.classList.toggle('is-clear', !wordsShown);
+
+// ------------------------------------------------------------ the scene
+let world = null;
+async function startWorld() {
+  const { World, webglAvailable } = await import('./scene/world.js');
+  if (!webglAvailable()) throw new Error('no webgl');
+  const canvas = document.getElementById('scene');
+  const w = new World(canvas, { reducedMotion: reduced });
+  w.onShaderFail = () => {
+    world = null;
+    showStill();
+  };
+  canvas.addEventListener('webglcontextlost', (e) => {
+    e.preventDefault();
+    showStill();
+  });
+  return w;
+}
