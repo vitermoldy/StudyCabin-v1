@@ -85,4 +85,49 @@ export function mountMusic(player, panels, { onPlayingChange }) {
   input.addEventListener('input', () => {
     if (!err.hidden && !input.value) clearError();
   });
+
+  const togglePlay = () => player.toggle();
+  playBtn.addEventListener('click', togglePlay);
+  dockPlay.addEventListener('click', togglePlay);
+  prevBtn.addEventListener('click', () => player.prev());
+  nextBtn.addEventListener('click', () => player.next());
+  shuffle.addEventListener('click', () => player.setShuffle(!player.shuffle));
+  loop.addEventListener('click', () => player.setLoop(!player.loop));
+  vol.addEventListener('input', () => {
+    player.setVolume(Number(vol.value));
+  });
+  let seeking = false;
+  seek.addEventListener('input', () => {
+    seeking = true;
+    const { duration } = player.progress();
+    seekTime.textContent = `${formatDuration((Number(seek.value) / 100) * duration)} / ${formatDuration(duration)}`;
+  });
+  seek.addEventListener('change', () => {
+    const { duration } = player.progress();
+    player.seek((Number(seek.value) / 100) * duration);
+    seeking = false;
+  });
+
+  qToggle.addEventListener('click', () => {
+    const open = qToggle.getAttribute('aria-expanded') !== 'true';
+    qToggle.setAttribute('aria-expanded', String(open));
+    qList.hidden = !open;
+  });
+  let clearArmed = 0;
+  qClear.addEventListener('click', () => {
+    if (!clearArmed) {
+      qClear.textContent = `Clear all ${player.queue.length}? Press again`;
+      clearArmed = setTimeout(() => {
+        clearArmed = 0;
+        qClear.textContent = 'Clear the queue';
+      }, 3500);
+      return;
+    }
+    clearTimeout(clearArmed);
+    clearArmed = 0;
+    qClear.textContent = 'Clear the queue';
+    player.clear();
+    toast('Queue cleared.');
+    qToggle.focus();
+  });
 }
