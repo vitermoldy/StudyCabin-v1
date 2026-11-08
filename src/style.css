@@ -68,3 +68,61 @@ svg.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
   transform: translateY(-200%); text-decoration: none; font-weight: 500;
 }
 .skip-link:focus-visible { transform: none; }
+
+/* ------------------------------------------------------------ scene */
+#scene, .poster {
+  position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; display: block;
+}
+#scene { z-index: 0; opacity: 0; transition: opacity 900ms var(--ease); pointer-events: auto; touch-action: none; cursor: grab; }
+html.is-dragging #scene { cursor: grabbing; }
+#cam-reset { margin-top: var(--s-3); }
+.poster { object-fit: cover; z-index: 0; transition: opacity 900ms var(--ease); background: #4b524f; }
+html.is-live #scene { opacity: 1; }
+html.is-live .poster { opacity: 0; }
+
+.lines {
+  position: absolute; inset: 0 var(--gut); z-index: 0; display: flex; justify-content: space-between;
+  pointer-events: none; z-index: 1; transition: opacity 400ms var(--ease);
+}
+.lines span { width: 1px; background: rgba(255, 255, 255, 0.13); }
+
+/* ------------------------------------------------------------ the big words */
+.hero { position: relative; height: 100vh; height: 100dvh; z-index: 2; pointer-events: none; overflow: clip; }
+.hero__words { position: absolute; inset: 0 var(--gut); z-index: 1; }
+.big {
+  position: absolute; margin: 0;
+  font-family: var(--font-display); font-weight: var(--display-weight);
+  font-size: var(--big); line-height: 0.84; letter-spacing: var(--display-tracking);
+  font-variant-numeric: tabular-nums; white-space: nowrap;
+  color: var(--big-light);
+  transition: color 700ms var(--ease), opacity 400ms var(--ease);
+}
+.big[data-ink="dark"] { color: var(--big-dark); }
+.big--a { top: calc(var(--edge) * 0.7); left: 0; }
+.big--b { right: 0; top: 47%; transform: translateY(-50%); }
+.big--c { right: 0; bottom: max(26px, calc(var(--edge) * 0.8)); }
+.big .ch, .big time, .big time span { display: inline-block; vertical-align: top; }
+.big time { line-height: inherit; }
+@media (prefers-reduced-motion: no-preference) {
+  .big .ch.is-in { animation: blur-in 900ms var(--ease) both; animation-delay: calc(var(--i) * 55ms); }
+  .big .digit-swap { animation: digit 150ms var(--ease) both; }
+}
+@keyframes blur-in {
+  from { opacity: 0; filter: blur(18px); transform: translateY(0.04em); }
+  to { opacity: 1; filter: blur(0); transform: none; }
+}
+@keyframes digit { from { opacity: 0.25; filter: blur(4px); } to { opacity: 1; filter: blur(0); } }
+
+.story {
+  position: absolute; left: 0; bottom: var(--edge);
+  width: min(380px, 100%);
+  padding: var(--s-3) var(--s-4) var(--s-4);
+  background: var(--plate); border-radius: var(--r-sm);
+  pointer-events: auto; transition: opacity 400ms var(--ease);
+}
+.story__title { font-size: var(--t-label); font-weight: 500; line-height: 1.4; color: var(--muted); }
+.story__line { margin-top: var(--s-1); font-size: 17px; line-height: 1.45; color: var(--ink); }
+.story__meta { margin-top: var(--s-2); font-size: var(--t-label); font-weight: 500; color: var(--muted); }
+.story .btn-row { margin-top: var(--s-3); }
+
+html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; visibility: hidden; }
