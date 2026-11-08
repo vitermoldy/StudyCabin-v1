@@ -367,3 +367,25 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
 /* focus */
 .focus__phase { font-size: var(--t-small); color: var(--muted); }
 .focus__time { margin: var(--s-1) 0 var(--s-4); font-size: 64px; line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+
+/* view */
+.keys { margin: 0; display: grid; gap: var(--s-1); }
+.keys div { display: grid; grid-template-columns: 72px 1fr; gap: var(--s-3); font-size: var(--t-small); }
+.keys dt { color: var(--ink); font-weight: 500; }
+.keys dd { margin: 0; color: var(--muted); }
+#fullscreen { margin-top: var(--s-3); }
+
+/* toast and fallback */
+.toast {
+  position: fixed; left: 50%; top: var(--edge); z-index: 20; transform: translate(-50%, -8px);
+  max-width: min(420px, calc(100vw - 2 * var(--edge) - 120px));
+  padding: var(--s-3) var(--s-4); background: var(--plate); border: 1px solid var(--line); border-radius: var(--r-sm);
+  font-size: 15px; opacity: 0; pointer-events: none;
+  transition: opacity 200ms var(--ease), transform 200ms var(--ease);
+}
+.toast.is-on { opacity: 1; transform: translate(-50%, 0); }
+.toast:empty { padding: 0; border: 0; }
+.nogl {
+  position: fixed; left: var(--edge); top: 40%; z-index: 4; max-width: 380px;
+  padding: var(--s-3) var(--s-4); background: var(--plate); border-radius: var(--r-sm); font-size: 15px;
+}
