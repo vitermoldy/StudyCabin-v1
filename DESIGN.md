@@ -51,3 +51,14 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Pines and broadleaf trees behind the cabin, crowns following the season | Asked for by the owner; they frame the cabin against the hills and show the season. |
 | Northern lights green to teal with a rose top, galaxy band, two star layers | Asked for by the owner. The reference's violet is left out (taste-skill: never violet); green aurora is the natural colour. |
 | Drag, slide and zoom the camera by hand, double-click to reset | Asked for by the owner; the five views stay as starting points. |
+
+## Motion and why
+
+- Scene entrance: the canvas fades over the poster still and the camera settles 6% closer over
+  1.6 s (the house arrives).
+- Activity word: blur-in per letter, 60 ms apart, about 900 ms (a new activity started).
+- Clock digits: a 150 ms cross-fade on the minute digit only (time moved, without flicker).
+- Panels: fade with a 6 px rise, 200 ms open, 120 ms close (motion.md tokens).
+- Camera views: a 1.4 s eased move between presets (where you are looking changed).
+- Scene pause (corner disc, P key) freezes the whole scene; under reduced motion the scene starts
+  paused, cameras cut instead of moving and lightning is off.
