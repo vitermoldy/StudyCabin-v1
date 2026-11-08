@@ -36,5 +36,24 @@
       <span class="chip__glyph" aria-hidden="true">↳</span><span class="chip__text" id="open-music-text">Add music</span>
     </button>
   </header>
+
+  <main id="top">
+    <section class="hero" data-enter aria-labelledby="hero-h">
+      <canvas id="scene" aria-hidden="true"></canvas>
+      <img class="poster" id="poster" src="./poster.jpg" alt="" width="1600" height="1000" fetchpriority="high" decoding="async">
+      <div class="lines" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="wrap hero__words">
+        <p class="big big--a" id="word-activity" data-ink="light">Coffee</p>
+        <p class="big big--b" data-ink="light" aria-hidden="true">at</p>
+        <p class="big big--c" id="word-time" data-ink="light"><span class="sr-only">at </span><time id="clock" datetime="07:42">07:42</time></p>
+        <div class="story">
+          <h1 class="story__title" id="hero-h">StudyCabin, a study room in a beach house</h1>
+          <p class="story__line" id="story-line">Coffee on the deck. Fog over the water, 14°.</p>
+          <p class="story__meta" id="story-meta">Day 1 of spring · one minute every second</p>
+          <div class="btn-row"><button class="btn btn--primary" id="hero-focus" type="button">Start focus</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
 </body>
 </html>
