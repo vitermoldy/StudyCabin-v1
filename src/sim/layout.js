@@ -55,3 +55,58 @@ export const SPOTS = {
   rail: { area: 'deck', via: [p(1.6, DECK_Z), p(1.6, 5.9)], at: p(1.6, 6.15), face: 0 },
   beach: { area: 'beach', via: [p(2.5, 9.0, 0)], at: p(6.5, 10.4, 0), face: 0.2 },
 };
+
+// The loop walked on the sand during a beach walk.
+export const SHORE_LOOP = [p(6.5, 10.4, 0), p(11.5, 10.7, 0), p(16, 10.3, 0), p(12, 9.4, 0), p(7, 9.2, 0), p(3, 9.6, 0)];
+
+// Area connections.
+const DOOR_IN = p(0, SPINE_Z);
+const DOOR_MID = p(0, 3.0);
+const DECK_HUB = p(0, DECK_Z);
+const STEP_TOP = p(0, 6.45);
+const STEP_LOW = p(0, 7.55, 0.02);
+const BEACH_HUB = p(0.6, 8.3, 0);
+
+function hubOf(area, point) {
+  if (area === 'in') return p(point.x, SPINE_Z);
+  if (area === 'deck') return p(point.x, DECK_Z);
+  return BEACH_HUB;
+}
+
+/** A polyline from spot a to spot b (both spot ids). */
+export function route(fromSpot, toSpot, from = null) {
+  const a = SPOTS[fromSpot];
+  const b = SPOTS[toSpot];
+  const pts = [];
+  if (from) pts.push({ ...from });
+  else if (a) pts.push({ ...a.at });
+  if (a) for (let i = a.via.length - 1; i >= 0; i--) pts.push({ ...a.via[i] });
+  const areaA = a ? a.area : 'in';
+  const areaB = b.area;
+  const exitHub = a ? hubOf(areaA, a.via[0]) : null;
+  if (exitHub) pts.push(exitHub);
+
+  const chain = { in: 0, deck: 1, beach: 2 };
+  const steps = [];
+  const ca = chain[areaA];
+  const cb = chain[areaB];
+  if (ca < cb) {
+    if (ca === 0) steps.push(DOOR_IN, DOOR_MID, DECK_HUB);
+    if (cb === 2) steps.push(STEP_TOP, STEP_LOW, BEACH_HUB);
+  } else if (ca > cb) {
+    if (ca === 2) steps.push(BEACH_HUB, STEP_LOW, STEP_TOP, DECK_HUB);
+    if (cb === 0) steps.push(DECK_HUB, DOOR_MID, DOOR_IN);
+  }
+  for (const s of steps) pts.push({ ...s });
+  pts.push(hubOf(areaB, b.via[0]));
+  for (const v of b.via) pts.push({ ...v });
+  pts.push({ ...b.at });
+
+  // Drop points that repeat the one before.
+  const out = [];
+  for (const q of pts) {
+    const last = out[out.length - 1];
+    if (!last || Math.hypot(q.x - last.x, q.z - last.z) > 0.02 || Math.abs(q.y - last.y) > 0.02) out.push(q);
+  }
+  return out;
+}
