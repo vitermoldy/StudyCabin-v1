@@ -154,3 +154,48 @@ export function panelTexture() {
   grain(ctx, 256, 256, rand, 800, 0.04);
   return finish(c, { repeat: [1 / 1.4, 1 / 1.4] });
 }
+
+/** A soft knit / linen weave used on fabrics. */
+export function fabricTexture() {
+  const [c, ctx] = canvas(64, 64);
+  const rand = rng(61);
+  ctx.fillStyle = '#d8d8d8';
+  ctx.fillRect(0, 0, 64, 64);
+  for (let y = 0; y < 64; y += 2) {
+    ctx.fillStyle = `rgba(0,0,0,${0.03 + rand() * 0.03})`;
+    ctx.fillRect(0, y, 64, 1);
+  }
+  for (let x = 0; x < 64; x += 2) {
+    ctx.fillStyle = `rgba(255,255,255,${0.03 + rand() * 0.03})`;
+    ctx.fillRect(x, 0, 1, 64);
+  }
+  return finish(c, { repeat: [3, 3] });
+}
+
+/** Abstract sea print for the frame above the sofa. */
+export function printTexture() {
+  const [c, ctx] = canvas(256, 192);
+  ctx.fillStyle = '#e9e5dc';
+  ctx.fillRect(0, 0, 256, 192);
+  ctx.fillStyle = '#9aa6a3';
+  ctx.fillRect(0, 118, 256, 74);
+  ctx.strokeStyle = 'rgba(60,70,72,0.55)';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 6; i++) {
+    ctx.beginPath();
+    for (let x = 0; x <= 256; x += 8) {
+      const y = 126 + i * 10 + Math.sin(x * 0.05 + i) * 3;
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+  }
+  ctx.fillStyle = '#c98f5a';
+  ctx.beginPath();
+  ctx.arc(176, 92, 18, 0, Math.PI * 2);
+  ctx.fill();
+  const t = finish(c);
+  t.wrapS = t.wrapT = THREE.ClampToEdgeWrapping;
+  t.repeat.set(1, 1);
+  return t;
+}
