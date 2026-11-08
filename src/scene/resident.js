@@ -121,4 +121,134 @@ export class Resident {
     this.head = new THREE.Vector3();
     this.season = 'spring';
   }
+
+  _build() {
+    const m = this.mat;
+    const r = this.root;
+    this.body = new THREE.Group(); // tilts when lying down
+    r.add(this.body);
+    this.hips = new THREE.Group();
+    this.body.add(this.hips);
+    const pelvis = capsule(0.13, 0.12, m.pants);
+    pelvis.rotation.z = Math.PI / 2;
+    pelvis.position.y = 0.02;
+    this.hips.add(pelvis);
+
+    this.spine = new THREE.Group();
+    this.spine.position.y = 0.05;
+    this.hips.add(this.spine);
+    const torso = capsule(0.16, 0.3, m.top);
+    torso.position.y = 0.26;
+    torso.scale.set(1, 1, 0.78);
+    this.spine.add(torso);
+    this.chest = new THREE.Group();
+    this.chest.position.y = 0.47;
+    this.spine.add(this.chest);
+    const neck = capsule(0.05, 0.06, m.skin);
+    neck.position.y = 0.07;
+    this.chest.add(neck);
+    this.headG = new THREE.Group();
+    this.headG.position.y = 0.13;
+    this.chest.add(this.headG);
+    const head = new THREE.Mesh(new THREE.SphereGeometry(0.105, 20, 14), m.skin);
+    head.position.y = 0.1;
+    head.scale.set(0.95, 1.08, 1);
+    head.castShadow = true;
+    this.headG.add(head);
+    const hair = new THREE.Mesh(new THREE.SphereGeometry(0.113, 20, 14, 0, Math.PI * 2, 0, Math.PI * 0.62), m.hair);
+    hair.position.set(0, 0.115, -0.012);
+    hair.rotation.x = -0.25;
+    hair.castShadow = true;
+    this.headG.add(hair);
+    const bun = new THREE.Mesh(new THREE.SphereGeometry(0.055, 12, 10), m.hair);
+    bun.position.set(0, 0.2, -0.08);
+    this.headG.add(bun);
+
+    const arm = (side) => {
+      const sh = new THREE.Group();
+      sh.position.set(0.2 * side, -0.02, 0);
+      this.chest.add(sh);
+      const up = capsule(0.052, 0.2, m.top);
+      up.position.y = -0.14;
+      sh.add(up);
+      const el = new THREE.Group();
+      el.position.y = -0.29;
+      sh.add(el);
+      const fore = capsule(0.044, 0.18, m.top);
+      fore.position.y = -0.12;
+      el.add(fore);
+      const hand = new THREE.Mesh(new THREE.SphereGeometry(0.045, 10, 8), m.skin);
+      hand.position.y = -0.27;
+      hand.scale.set(0.85, 1.15, 0.7);
+      hand.castShadow = true;
+      el.add(hand);
+      const grip = new THREE.Group();
+      grip.position.y = -0.29;
+      el.add(grip);
+      return { sh, el, grip };
+    };
+    this.armL = arm(1);
+    this.armR = arm(-1);
+
+    const leg = (side) => {
+      const th = new THREE.Group();
+      th.position.set(0.095 * side, -0.02, 0);
+      this.hips.add(th);
+      const thigh = capsule(0.07, 0.3, m.pants);
+      thigh.position.y = -0.21;
+      th.add(thigh);
+      const kn = new THREE.Group();
+      kn.position.y = -0.43;
+      th.add(kn);
+      const shin = capsule(0.056, 0.3, m.pants);
+      shin.position.y = -0.2;
+      kn.add(shin);
+      const foot = new THREE.Mesh(new THREE.BoxGeometry(0.09, 0.06, 0.22), m.shoe);
+      foot.position.set(0, -0.44, 0.05);
+      foot.castShadow = true;
+      kn.add(foot);
+      return { th, kn };
+    };
+    this.legL = leg(1);
+    this.legR = leg(-1);
+
+    // Props
+    this.props = {};
+    const book = new THREE.Group();
+    const pageL = new THREE.Mesh(new THREE.BoxGeometry(0.14, 0.2, 0.012), m.book);
+    pageL.position.set(0.072, 0, 0);
+    pageL.rotation.y = -0.25;
+    const pageR = pageL.clone();
+    pageR.position.x = -0.072;
+    pageR.rotation.y = 0.25;
+    const spineB = new THREE.Mesh(new THREE.BoxGeometry(0.02, 0.21, 0.02), m.cover);
+    book.add(pageL, pageR, spineB);
+    book.position.set(0, 0.0, 0.36);
+    book.rotation.x = -0.9;
+    this.chest.add(book);
+    this.props.book = book;
+
+    const mug = new THREE.Mesh(new THREE.CylinderGeometry(0.042, 0.038, 0.09, 12), m.mug);
+    mug.position.set(0, -0.02, 0.04);
+    this.armR.grip.add(mug);
+    this.props.mug = mug;
+
+    const guitar = new THREE.Group();
+    const bodyA = new THREE.Mesh(new THREE.CylinderGeometry(0.19, 0.19, 0.09, 20), m.guitar);
+    bodyA.rotation.x = Math.PI / 2;
+    const bodyB = new THREE.Mesh(new THREE.CylinderGeometry(0.15, 0.15, 0.09, 20), m.guitar);
+    bodyB.rotation.x = Math.PI / 2;
+    bodyB.position.x = 0.22;
+    const neckG = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.05, 0.03), m.guitarDark);
+    neckG.position.set(0.58, 0, 0.03);
+    const hole = new THREE.Mesh(new THREE.CircleGeometry(0.05, 16), m.guitarDark);
+    hole.position.set(0.12, 0, 0.047);
+    guitar.add(bodyA, bodyB, neckG, hole);
+    guitar.position.set(-0.05, -0.06, 0.24);
+    guitar.rotation.set(0, 0, 0.32);
+    guitar.traverse((o) => { if (o.isMesh) o.castShadow = true; });
+    this.spine.add(guitar);
+    this.props.guitar = guitar;
+    for (const p of Object.values(this.props)) p.visible = false;
+  }
 }
