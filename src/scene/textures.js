@@ -85,3 +85,27 @@ export function roofTexture() {
   }
   return finish(c, { repeat: [1 / 1.8, 1 / 1.8] });
 }
+
+/** Grey weathered deck planks, 0.14 m wide, laid along x. */
+export function deckTexture() {
+  const [c, ctx] = canvas(256, 256);
+  const rand = rng(37);
+  const rows = 8;
+  const rh = 256 / rows;
+  for (let r = 0; r < rows; r++) {
+    let x = -rand() * 200;
+    while (x < 256) {
+      const len = 120 + rand() * 160;
+      const tone = 0.84 + rand() * 0.22;
+      ctx.fillStyle = `rgb(${Math.round(162 * tone)},${Math.round(158 * tone)},${Math.round(150 * tone)})`;
+      ctx.fillRect(x, r * rh, len, rh);
+      ctx.fillStyle = 'rgba(30,26,22,0.6)';
+      ctx.fillRect(x + len - 1, r * rh, 2, rh);
+      x += len;
+    }
+    ctx.fillStyle = 'rgba(25,22,18,0.75)';
+    ctx.fillRect(0, r * rh + rh - 2, 256, 2);
+  }
+  grain(ctx, 256, 256, rand, 1600, 0.06);
+  return finish(c, { repeat: [1 / 1.15, 1 / 1.15] });
+}
