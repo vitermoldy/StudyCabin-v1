@@ -477,4 +477,39 @@ export class Cabin {
     };
     this.maxLight = { kitchen: 9, living: 7, bed: 5, desk: 3.2, stove: 3.2, fire: 7 };
   }
+
+  // ------------------------------------------------------------ state
+  /** Targets for every lamp and moving part, each 0..1. */
+  set(values) {
+    Object.assign(this.target, values);
+  }
+
+  update(dt, time) {
+    const s = this.state;
+    for (const k of Object.keys(this.target)) {
+      const rate = k === 'door' ? 5 : k === 'sleeping' ? 2.4 : 2.2;
+      s[k] = damp(s[k], this.target[k], rate, dt);
+    }
+    const flick = (seed) => 0.86 + Math.sin(time * 9.1 + seed) * 0.05 + Math.sin(time * 23.7 + seed * 3) * 0.05 + Math.sin(time * 4.3 + seed) * 0.04;
+    for (const id of ['kitchen', 'living', 'bed', 'desk']) {
+      this.lights[id].intensity = s[id] * this.maxLight[id];
+      this.shades[id].emissiveIntensity = s[id] * 1.6;
+    }
+    this.lights.stove.intensity = s.stove * this.maxLight.stove * flick(1);
+    this.mat.stoveGlass.emissiveIntensity = s.stove * 2.2 * flick(2);
+    this.lights.fire.intensity = s.fire * this.maxLight.fire * flick(3);
+    this.mat.flame.opacity = s.fire * 0.85;
+    this.flames.forEach((f, i) => {
+      const k = 0.7 + 0.3 * Math.sin(time * (7 + i * 1.3) + i);
+      f.scale.set(1, (0.2 + s.fire * 0.8) * k, 1);
+      f.position.y = FLOOR + 0.38 + 0.21 * f.scale.y;
+    });
+    this.shades.porch.emissiveIntensity = s.porch * 2;
+    this.mat.screen.emissiveIntensity = s.screen * 0.9;
+    this.door.position.x = -1.86 * s.door;
+    const sl = s.sleeping;
+    this.duvet.scale.y = 1 + sl * 1.6;
+    this.duvet.position.y = FLOOR + 0.58 + sl * 0.07;
+    this.duvetFold.visible = sl < 0.5;
+  }
 }
