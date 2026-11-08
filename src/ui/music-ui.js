@@ -130,4 +130,76 @@ export function mountMusic(player, panels, { onPlayingChange }) {
     toast('Queue cleared.');
     qToggle.focus();
   });
+
+  function row(item, i) {
+    const li = document.createElement('li');
+    li.className = 'qrow';
+    if (i === player.current) li.classList.add('is-current');
+    if (item.status === 'error') li.classList.add('is-error');
+    const thumb = thumbFor(item);
+    if (thumb) {
+      const img = document.createElement('img');
+      img.className = 'qrow__thumb';
+      img.src = thumb;
+      img.alt = '';
+      img.width = 56;
+      img.height = 32;
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      li.appendChild(img);
+    } else {
+      const ph = document.createElement('span');
+      ph.className = 'qrow__thumb qrow__thumb--list';
+      ph.appendChild(svgUse('i-music'));
+      li.appendChild(ph);
+    }
+    const main = document.createElement('button');
+    main.type = 'button';
+    main.className = 'qrow__main';
+    const isCurrent = i === player.current;
+    main.setAttribute('aria-label', `${isCurrent && player.isPlaying ? 'Playing' : 'Play'} ${titleOf(item)}`);
+    if (isCurrent) main.setAttribute('aria-current', 'true');
+    const t = document.createElement('span');
+    t.className = 'qrow__title';
+    t.textContent = titleOf(item);
+    const meta = document.createElement('span');
+    meta.className = 'qrow__meta';
+    const icon = document.createElement('img');
+    icon.src = ICON[item.source] || ICON.YouTube;
+    icon.alt = item.source;
+    icon.width = 16;
+    icon.height = 12;
+    meta.appendChild(icon);
+    const metaText = document.createElement('span');
+    if (item.status === 'error') metaText.textContent = item.error;
+    else if (isCurrent && player.isPlaying) metaText.textContent = item.kind === 'playlist' ? 'Playlist, playing now' : 'Playing now';
+    else metaText.textContent = item.kind === 'playlist' ? 'Playlist' : item.author || item.source;
+    meta.appendChild(metaText);
+    main.append(t, meta);
+    main.addEventListener('click', () => player.play(i));
+    li.appendChild(main);
+
+    const tools = document.createElement('div');
+    tools.className = 'qrow__tools';
+    const tool = (icon, label, fn, disabled) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'icon-btn';
+      b.setAttribute('aria-label', label);
+      b.disabled = !!disabled;
+      b.appendChild(svgUse(icon));
+      b.addEventListener('click', fn);
+      tools.appendChild(b);
+      return b;
+    };
+    tool('i-up', `Move ${titleOf(item)} up`, () => { player.move(i, -1); focusRow(i - 1, 0); }, i === 0);
+    tool('i-down', `Move ${titleOf(item)} down`, () => { player.move(i, 1); focusRow(i + 1, 1); }, i === player.queue.length - 1);
+    tool('i-remove', `Remove ${titleOf(item)}`, () => {
+      player.remove(i);
+      toast('Removed from the queue.');
+      focusRow(Math.min(i, player.queue.length - 1), 2);
+    });
+    li.appendChild(tools);
+    return li;
+  }
 }
