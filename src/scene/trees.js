@@ -81,3 +81,36 @@ function broadleafGeometry() {
   g.computeVertexNormals();
   return g;
 }
+
+function swayShader(material, { leaves = false } = {}) {
+  const prev = material.onBeforeCompile;
+  // Two programs from one wrapper: give each its own cache key.
+  material.customProgramCacheKey = () => (leaves ? 'tree-leaves' : 'tree-plain');
+  material.onBeforeCompile = (shader, renderer) => {
+    if (prev) prev(shader, renderer);
+    shader.uniforms.uTime = WORLD.uTime;
+    shader.uniforms.uWind = WORLD.uWind;
+    if (leaves) shader.uniforms.uLeaf = material.userData.uLeaf;
+    shader.vertexShader = shader.vertexShader
+      .replace('#include <common>', `#include <common>\nuniform float uTime; uniform float uWind;${leaves ? '\nattribute float aLeaf; varying float vLeaf;' : ''}`)
+      .replace(
+        '#include <begin_vertex>',
+        `#include <begin_vertex>
+        ${leaves ? 'vLeaf = aLeaf;' : ''}
+        #ifdef USE_INSTANCING
+          vec3 base = instanceMatrix[3].xyz;
+          float hh = position.y;
+          float ph = base.x * 0.21 + base.z * 0.17;
+          float s = (sin(uTime * 0.9 + ph) * 0.6 + sin(uTime * 2.1 + ph * 1.7) * 0.25) * (0.15 + uWind * 0.85);
+          transformed.x += s * hh * hh * 0.07;
+          transformed.z += s * hh * hh * 0.03;
+        #endif`,
+      );
+    if (leaves) {
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform vec3 uLeaf; varying float vLeaf;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n diffuseColor.rgb = mix(diffuseColor.rgb, diffuseColor.rgb * uLeaf * 1.6, vLeaf);');
+    }
+  };
+  return material;
+}
