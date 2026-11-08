@@ -60,3 +60,28 @@ export function sidingTexture() {
   }
   return finish(c, { repeat: [1 / 1.2, 1 / 1.2] });
 }
+
+/** Standing-seam metal roof: seams every 0.45 m along the slope. */
+export function roofTexture() {
+  const [c, ctx] = canvas(256, 256);
+  const rand = rng(23);
+  ctx.fillStyle = '#7b7f81';
+  ctx.fillRect(0, 0, 256, 256);
+  grain(ctx, 256, 256, rand, 900, 0.05);
+  const seams = 4;
+  for (let i = 0; i < seams; i++) {
+    const x = Math.round((i * 256) / seams);
+    ctx.fillStyle = 'rgba(25,27,29,0.6)';
+    ctx.fillRect(x, 0, 2, 256);
+    ctx.fillStyle = 'rgba(230,232,235,0.4)';
+    ctx.fillRect(x + 2, 0, 2, 256);
+    ctx.fillStyle = 'rgba(25,27,29,0.2)';
+    ctx.fillRect(x + 4, 0, 3, 256);
+  }
+  // faint rain stains
+  for (let k = 0; k < 30; k++) {
+    ctx.fillStyle = `rgba(40,42,44,${0.03 + rand() * 0.05})`;
+    ctx.fillRect(rand() * 256, 0, 1 + rand() * 3, 256);
+  }
+  return finish(c, { repeat: [1 / 1.8, 1 / 1.8] });
+}
