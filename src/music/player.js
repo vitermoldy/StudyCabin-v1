@@ -208,4 +208,33 @@ export class MusicPlayer extends Emitter {
     if (this.isPlaying) this.player.pauseVideo();
     else this.player.playVideo();
   }
+
+  next() {
+    const item = this.item;
+    if (item && item.kind === 'playlist' && this._ready) {
+      const list = this.player.getPlaylist?.() || [];
+      const at = this.player.getPlaylistIndex?.() ?? -1;
+      if (list.length && at >= 0 && at < list.length - 1) {
+        this.player.nextVideo();
+        return;
+      }
+    }
+    this._advance(1);
+  }
+
+  prev() {
+    if (this._ready && this.player.getCurrentTime && this.player.getCurrentTime() > 4) {
+      this.player.seekTo(0, true);
+      return;
+    }
+    const item = this.item;
+    if (item && item.kind === 'playlist' && this._ready) {
+      const at = this.player.getPlaylistIndex?.() ?? -1;
+      if (at > 0) {
+        this.player.previousVideo();
+        return;
+      }
+    }
+    this._advance(-1);
+  }
 }
