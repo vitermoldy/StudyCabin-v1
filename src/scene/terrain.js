@@ -48,3 +48,23 @@ export function groundHeight(x, z) {
   y += (vnoise(x * 0.8, z * 0.8) - 0.5) * 0.05;
   return y;
 }
+
+/** How much a point reads as vegetated dune (0..1). */
+function duneness(x, z) {
+  const dx = Math.max(0, Math.abs(x + 0.5) - 12.2);
+  const dzBack = Math.max(0, -4.6 - z);
+  const front = z > -4.6 ? smoothstep(10.5, 3.5, z) : 1;
+  return smoothstep(1.5, 6, Math.hypot(dx, dzBack)) * front;
+}
+
+/** How thickly grass covers a point, 0..1. The deck, the path and the beach stay clear. */
+export function grassCover(x, z) {
+  if (z > 9.6) return 0;
+  if (x > -11.4 && x < 10.4 && z > -3.8 && z < 7.8) return 0;
+  if (Math.abs(x + 0.5) < 12.5 && z > 5.5) return 0;
+  const side = x < -11 || x > 10.5 ? smoothstep(9.6, 6.5, z) : 0;
+  const byCabin = z < 8 && z > -20 && x > -28 && x < 27 ? 0.85 : 0;
+  const cover = Math.max(duneness(x, z), side, byCabin);
+  const patchy = fbm(x * 0.07 + 3.1, z * 0.07, 3);
+  return smoothstep(0.22, 0.5, cover * (0.55 + patchy));
+}
