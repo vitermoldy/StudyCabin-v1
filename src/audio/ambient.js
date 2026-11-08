@@ -146,4 +146,22 @@ export class Ambient extends Emitter {
     this.persist();
     this.emit('change');
   }
+
+  /** Browsers start audio suspended; resume on the next gesture if it was on. */
+  resumeIfWanted() {
+    if (this.enabled) this.setEnabled(true);
+  }
+
+  setVolume(v) {
+    this.volume = clamp(v, 0, 1);
+    this._applyMaster(0.15);
+    this.persist();
+    this.emit('change');
+  }
+
+  setMix(id, v) {
+    this.mix[id] = clamp(v, 0, 1);
+    this.persist();
+    this.emit('change');
+  }
 }
