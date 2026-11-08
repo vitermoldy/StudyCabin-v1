@@ -389,3 +389,41 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
   position: fixed; left: var(--edge); top: 40%; z-index: 4; max-width: 380px;
   padding: var(--s-3) var(--s-4); background: var(--plate); border-radius: var(--r-sm); font-size: 15px;
 }
+
+/* ------------------------------------------------------------ smaller screens */
+@media (max-width: 1199px) {
+  .story { bottom: calc(var(--edge) + var(--dock-h) + 14px); }
+  .big--c { bottom: calc(var(--edge) + var(--dock-h) + 8px); }
+}
+@media (max-width: 699px) {
+  :root { --big: clamp(46px, 15.5vw, 96px); --dock-h: 62px; }
+  .big--a { top: calc(var(--edge) + 56px); }
+  .big--b { top: 40%; }
+  .big--c { bottom: calc(var(--edge) + var(--dock-h) + 214px); }
+  .story { bottom: calc(var(--edge) + var(--dock-h) + 8px); padding: var(--s-2) var(--s-3) var(--s-3); }
+  .story__line { font-size: 16px; }
+  .dock { left: 8px; right: 8px; bottom: max(8px, env(safe-area-inset-bottom)); transform: none; padding: 4px; }
+  .dock__tabs { flex: 1; }
+  .dock__tab { flex: 1; min-width: 0; padding: 0 2px; }
+  .dock__play, .dock__words { display: none; }
+  .panel, #panel-music {
+    left: 8px; right: 8px; width: auto; transform: translateY(6px);
+    bottom: calc(max(8px, env(safe-area-inset-bottom)) + var(--dock-h) + 8px);
+    max-height: calc(100dvh - var(--dock-h) - 96px);
+    padding: var(--s-2) var(--s-4) var(--s-4);
+  }
+  .panel[data-open="true"] { transform: none; }
+  .add__row { flex-direction: column; }
+  .add__row .btn { width: 100%; }
+  .top { left: var(--edge); justify-content: flex-end; }
+  .chip { max-width: calc(100vw - 2 * var(--edge) - 52px); }
+  .toast { top: calc(var(--edge) + 52px); max-width: calc(100vw - 2 * var(--edge)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .panel, .panel[data-open="true"] { transform: translate(-50%, 0); transition: opacity 120ms linear, visibility 0s; }
+  .chip:active, .dock__btn:active, .dock__tab:active, .icon-btn:active { transform: none; }
+  #scene, .poster { transition: none; }
+}
+@media (prefers-reduced-motion: reduce) and (max-width: 699px) {
+  .panel, .panel[data-open="true"] { transform: none; }
+}
