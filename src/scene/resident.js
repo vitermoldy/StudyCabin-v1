@@ -309,4 +309,126 @@ export class Resident {
     this.facing = s.face;
     if (spotId === 'beach') this.loopIndex = 0;
   }
+
+  _targetJoints(t) {
+    const seat = SEAT[this.spot] ?? 0.5;
+    const fn = POSES[this.pose] || POSES.stand;
+    return fn(t, seat);
+  }
+
+  /** Where the root sits for the current pose (sleep moves onto the bed). */
+  _poseAnchor(out) {
+    if (this.pose === 'sleep') return out.set(F.bed.x, FLOOR, -1.78);
+    return out.copy(this.pos);
+  }
+
+  update(dt, t, { speedUp = 1, walkOn = true } = {}) {
+    // Walking along the route
+    let moving = false;
+    if (this.path && walkOn) {
+      const spd = this.speed * speedUp;
+      let remaining = spd * dt;
+      while (remaining > 0 && this.path) {
+        const target = this.path[this.pathIndex];
+        const dx = target.x - this.pos.x;
+        const dz = target.z - this.pos.z;
+        const dist = Math.hypot(dx, dz);
+        if (dist < 1e-4 || remaining >= dist) {
+          this.pos.set(target.x, target.y, target.z);
+          remaining -= dist;
+          this.pathIndex++;
+          if (this.pathIndex >= this.path.length) {
+            this.path = null;
+            this.pose = this.activity.pose;
+            if (this.spot === 'beach') { this.loopIndex = 0; this.loopPause = 0; }
+          }
+        } else {
+          const k = remaining / dist;
+          this.pos.x += dx * k;
+          this.pos.z += dz * k;
+          this.pos.y += (target.y - this.pos.y) * k;
+          this.facing = turn(this.facing, Math.atan2(dx, dz), 9 * dt);
+          remaining = 0;
+        }
+      }
+      moving = true;
+      this.walkPhase += spd * dt * 4.6;
+    }
+
+    // A beach walk loops along the shore with short stops.
+    if (!this.path && this.pose === 'walkLoop') {
+      if (this.loopPause > 0) {
+        this.loopPause -= dt;
+        this.facing = damp(this.facing, 0.15, 2, dt);
+      } else {
+        const target = SHORE_LOOP[(this.loopIndex + 1) % SHORE_LOOP.length];
+        const dx = target.x - this.pos.x;
+        const dz = target.z - this.pos.z;
+        const dist = Math.hypot(dx, dz);
+        const step = 0.95 * speedUp * dt;
+        if (dist <= step) {
+          this.pos.set(target.x, 0, target.z);
+          this.loopIndex = (this.loopIndex + 1) % SHORE_LOOP.length;
+          if (this.loopIndex % 2 === 0) this.loopPause = 4 + Math.random() * 3;
+        } else {
+          this.pos.x += (dx / dist) * step;
+          this.pos.z += (dz / dist) * step;
+          this.facing = turn(this.facing, Math.atan2(dx, dz), 5 * dt);
+          moving = true;
+          this.walkPhase += step * 4.6;
+        }
+      }
+      this.pos.y = groundHeight(this.pos.x, this.pos.z);
+    }
+
+    // Turn to face the spot once arrived.
+    if (!this.path && this.spot && this.pose !== 'walkLoop') {
+      const want = this.pose === 'sleep' ? 0 : SPOTS[this.spot].face;
+      this.facing = turn(this.facing, want, 4 * dt);
+    }
+
+    // Joint targets
+    let target;
+    if (moving) {
+      const ph = this.walkPhase;
+      const s = Math.sin(ph);
+      const c = Math.cos(ph);
+      target = base({
+        thL: 0.42 * s, thR: -0.42 * s,
+        knL: 0.12 + 0.62 * Math.max(0, -c), knR: 0.12 + 0.62 * Math.max(0, c),
+        shLx: -0.32 * s, shRx: 0.32 * s, elL: -0.3, elR: -0.3,
+        hipY: 0.92 + 0.018 * Math.cos(ph * 2), spineX: 0.04,
+      });
+    } else {
+      if (this.pose === 'walkLoop') target = POSES.stand(t);
+      else target = this._targetJoints(t);
+    }
+    const rate = moving ? 14 : 5.5;
+    for (const k of JOINTS) this.j[k] = damp(this.j[k], target[k], rate, dt);
+
+    // Apply
+    const j = this.j;
+    const anchor = this._poseAnchor(tmp);
+    // Blend the root onto the bed while lying down.
+    this.root.position.lerpVectors(this.pos, anchor, clamp(j.lie, 0, 1));
+    this.root.rotation.y = this.facing * (1 - j.lie);
+    this.body.position.y = j.hipY;
+    this.body.rotation.x = -Math.PI / 2 * j.lie;
+    this.spine.rotation.set(j.spineX, 0, j.spineZ);
+    this.headG.rotation.set(j.headX, j.headY, 0);
+    this.armL.sh.rotation.set(j.shLx, 0, j.shLz);
+    this.armL.el.rotation.x = j.elL;
+    this.armR.sh.rotation.set(j.shRx, 0, j.shRz);
+    this.armR.el.rotation.x = j.elR;
+    this.legL.th.rotation.x = j.thL;
+    this.legL.kn.rotation.x = j.knL;
+    this.legR.th.rotation.x = j.thR;
+    this.legR.kn.rotation.x = j.knR;
+
+    const props = moving ? [] : PROPS_FOR[this.pose] || [];
+    for (const [id, p] of Object.entries(this.props)) p.visible = props.includes(id);
+
+    this.headG.getWorldPosition(this.head);
+    this.moving = moving;
+  }
 }
