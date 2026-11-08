@@ -195,6 +195,36 @@
     <p class="hint" id="focus-done">No focus blocks finished today.</p>
     <p class="hint">While the timer runs, the resident sits at the desk and studies too. A bell sounds at the end of each block.</p>
   </div>
+
+  <div class="panel" id="panel-view" role="dialog" aria-modal="false" aria-labelledby="view-h" data-open="false" data-focus="#view-group input:checked" inert>
+    <div class="panel__head">
+      <h2 id="view-h">View</h2>
+      <button class="icon-btn panel__close" type="button" aria-label="Close view"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <fieldset class="choices" id="view-group">
+      <legend class="label">Camera</legend>
+    </fieldset>
+    <p class="hint">Drag the scene to turn the camera, right-drag or Ctrl+drag to slide it, scroll or pinch to zoom. Tap the sea to ring the water; Shift+drag draws ripples.</p>
+    <button class="btn btn--secondary" id="cam-reset" type="button">Reset the camera</button>
+    <div class="switch-row">
+      <span class="switch-row__label" id="words-l">Show the big words</span>
+      <button class="switch" id="words-on" type="button" role="switch" aria-checked="true" aria-labelledby="words-l"></button>
+    </div>
+    <button class="btn btn--secondary" id="fullscreen" type="button">Full screen</button>
+    <h3 class="subhead">Keys</h3>
+    <dl class="keys">
+      <div><dt>Space</dt><dd>Play or pause music</dd></div>
+      <div><dt>1 to 5</dt><dd>Shore, deck, window, water, follow</dd></div>
+      <div><dt>Arrows</dt><dd>Turn the camera</dd></div>
+      <div><dt>+ and −</dt><dd>Zoom in and out</dd></div>
+      <div><dt>R</dt><dd>Reset the camera</dd></div>
+      <div><dt>H</dt><dd>Show or hide the big words</dd></div>
+      <div><dt>P</dt><dd>Pause or move the scene</dd></div>
+      <div><dt>F</dt><dd>Full screen</dd></div>
+      <div><dt>Esc</dt><dd>Close the open panel</dd></div>
+    </dl>
+    <p class="hint">YouTube and YouTube Music are trademarks of Google LLC. Songs play in YouTube’s own player.</p>
+  </div>
   </footer>
 </body>
 </html>
