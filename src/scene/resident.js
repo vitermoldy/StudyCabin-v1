@@ -291,4 +291,22 @@ export class Resident {
     }
     this.pose = 'walk';
   }
+
+  _nearestSpot() {
+    let best = 'sofa';
+    let bd = Infinity;
+    for (const [id, s] of Object.entries(SPOTS)) {
+      const d = Math.hypot(s.at.x - this.pos.x, s.at.z - this.pos.z);
+      if (d < bd) { bd = d; best = id; }
+    }
+    return best;
+  }
+
+  _place(spotId) {
+    const s = SPOTS[spotId];
+    this.spot = spotId;
+    this.pos.set(s.at.x, s.at.y, s.at.z);
+    this.facing = s.face;
+    if (spotId === 'beach') this.loopIndex = 0;
+  }
 }
