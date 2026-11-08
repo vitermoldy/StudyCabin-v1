@@ -127,3 +127,61 @@ const CAUSTIC = /* glsl */ `
     return clamp(pow(abs(c), 8.0), 0.0, 1.0);
   }
 `;
+
+export class Terrain {
+  constructor(scene, { lowPower = false } = {}) {
+    this.uniforms = {
+      uSand: { value: new THREE.Color('#d4cab4') },
+      uSandWet: { value: new THREE.Color('#a39a86') },
+      uVeg: { value: new THREE.Color('#7b9558') },
+      uCaustic: { value: 0.5 },
+    };
+    const mat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, metalness: 0 });
+    mat.onBeforeCompile = (shader) => {
+      Object.assign(shader.uniforms, this.uniforms, { uSnow: WORLD.uSnow, uWet: WORLD.uWet, uTime: WORLD.uTime });
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nattribute vec3 aMix; varying vec3 vMix; varying float vUp; varying vec3 vWorldG;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\n vMix = aMix;\n vWorldG = (modelMatrix * vec4(position, 1.0)).xyz;')
+        .replace('#include <defaultnormal_vertex>', '#include <defaultnormal_vertex>\n vUp = inverseTransformDirection(transformedNormal, viewMatrix).y;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace(
+          '#include <common>',
+          `#include <common>
+          varying vec3 vMix; varying float vUp; varying vec3 vWorldG;
+          uniform vec3 uSand; uniform vec3 uSandWet; uniform vec3 uVeg; uniform float uSnow; uniform float uWet;
+          uniform float uTime; uniform float uCaustic;
+          ${CAUSTIC}`,
+        )
+        .replace(
+          '#include <map_fragment>',
+          `#include <map_fragment>
+          vec3 sand = uSand * (0.92 + vMix.z * 0.14);
+          sand = mix(sand, uSandWet, clamp(vMix.x + uWet * 0.55, 0.0, 1.0));
+          vec3 veg = mix(sand, uVeg * (0.38 + vMix.z * 0.16), smoothstep(0.0, 0.6, vMix.y));
+          float snowAmt = uSnow * (1.0 - vMix.x) * smoothstep(0.55, 0.85, vUp);
+          diffuseColor.rgb = mix(veg, vec3(0.9, 0.92, 0.94), snowAmt * 0.92);
+          // Under the water: the sand goes green-grey with depth and catches caustics.
+          float under = -0.04 - vWorldG.y;
+          if (under > 0.0) {
+            diffuseColor.rgb *= mix(vec3(0.86, 0.96, 0.95), vec3(0.45, 0.68, 0.68), smoothstep(0.0, 3.0, under));
+            float cz = caustic(mod(vWorldG.xz * 1.9, 6.28318) - 250.0, uTime * 0.6);
+            float fade = smoothstep(0.0, 0.18, under) * exp(-under * 0.22);
+            diffuseColor.rgb += vec3(0.85, 1.0, 0.95) * cz * fade * uCaustic * 1.1;
+          }`,
+        )
+        .replace(
+          '#include <roughnessmap_fragment>',
+          `#include <roughnessmap_fragment>
+          roughnessFactor = mix(roughnessFactor, 0.35, clamp(vMix.x * 0.8 + uWet * 0.4, 0.0, 1.0) * (1.0 - snowAmt));`,
+        );
+    };
+    this.ground = new THREE.Mesh(buildGround(), mat);
+    this.ground.receiveShadow = true;
+    scene.add(this.ground);
+
+    this.grass = this._buildGrass(lowPower);
+    scene.add(this.grass);
+    this.mountains = this._buildMountains();
+    scene.add(this.mountains);
+  }
+}
