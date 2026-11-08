@@ -210,3 +210,38 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
 .readout { display: flex; align-items: baseline; gap: var(--s-3); margin-bottom: var(--s-4); font-size: 28px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 .readout__sub { font-size: var(--t-small); color: var(--muted); letter-spacing: 0; }
 .field__error { margin-top: var(--s-2); font-size: var(--t-small); color: #f0b37a; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  height: 44px; padding: 0 var(--s-5); border: 1px solid transparent; border-radius: var(--r-btn);
+  font-size: 16px; font-weight: 500; white-space: nowrap;
+}
+.btn--primary { background: var(--action); color: var(--action-ink); }
+.btn--secondary { background: var(--bg); color: var(--ink); border-color: var(--line-strong); }
+.btn:disabled { opacity: 0.5; }
+.btn-row { display: flex; flex-wrap: wrap; gap: var(--s-2); align-items: center; }
+.link-btn {
+  min-height: 44px; padding: 0 var(--s-2); border: 0; background: none; color: var(--ink);
+  text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px;
+  transition: text-decoration-color 120ms var(--ease);
+}
+.link-btn:hover { text-decoration-color: currentColor; transition-duration: 150ms; }
+.icon-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border: 0; border-radius: 50%; background: transparent; color: var(--ink);
+  transition: background-color 120ms var(--ease), transform 90ms var(--ease);
+}
+.icon-btn:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); transition-duration: 150ms; }
+.icon-btn:active:not(:disabled) { transform: translateY(1px) scale(.96); }
+.icon-btn:disabled { color: rgba(228, 229, 225, 0.35); }
+.icon-btn--main { width: 52px; height: 52px; background: var(--ink); color: var(--bg); }
+.icon-btn--main:hover:not(:disabled) { background: #fff; }
+.icon-btn--main:disabled { background: rgba(228, 229, 225, 0.2); color: rgba(23, 23, 22, 0.6); }
+.toggle {
+  height: 44px; padding: 0 var(--s-3); border: 1px solid var(--line-strong); border-radius: var(--r-sm);
+  background: transparent; color: var(--ink); font-size: var(--t-small); font-weight: 500;
+  transition: background-color 120ms var(--ease), border-color 120ms var(--ease), color 120ms var(--ease);
+}
+.toggle:hover { background: rgba(255, 255, 255, 0.06); transition-duration: 150ms; }
+.toggle[aria-pressed="true"] { border-color: var(--action); color: var(--action); background: rgba(217, 160, 91, 0.1); }
