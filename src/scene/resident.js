@@ -251,4 +251,44 @@ export class Resident {
     this.props.guitar = guitar;
     for (const p of Object.values(this.props)) p.visible = false;
   }
+
+  setSeason(id) {
+    if (OUTFIT[id]) this.mat.top.color.set(OUTFIT[id]);
+    this.season = id;
+  }
+
+  /** Go to a spot and take a pose. `teleport` skips the walk (after a time jump). */
+  setActivity(activity, { teleport = false } = {}) {
+    this.activity = activity;
+    const target = activity.spot;
+    if (teleport || !this.spot) {
+      this._place(target);
+      this.pose = activity.pose;
+      this.path = null;
+      this.j = this._targetJoints(0);
+      return;
+    }
+    if (target === this.spot && !this.path) {
+      this.pose = activity.pose;
+      return;
+    }
+    // Stand up and walk from wherever the resident is now.
+    const from = { x: this.pos.x, y: this.pos.y, z: this.pos.z };
+    const to = SPOTS[target].at;
+    const near = Math.hypot(to.x - from.x, to.z - from.z) < 1.7 && Math.abs(to.y - from.y) < 0.1 && !this.path;
+    if (near) {
+      this.path = [from, { ...to }];
+    } else {
+      const startSpot = this.path ? null : this.spot;
+      this.path = route(startSpot || this._nearestSpot(), target, from);
+    }
+    this.pathIndex = 1;
+    this.spot = target;
+    if (this.path.length < 2) {
+      this.path = null;
+      this.pose = activity.pose;
+      return;
+    }
+    this.pose = 'walk';
+  }
 }
