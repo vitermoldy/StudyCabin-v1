@@ -46,3 +46,17 @@ shows a still picture and the music, timer and ambient sound still work.
   browser from the weather and the hour, with a mixer. It turns down while music plays.
 - **Camera.** Five views (shore, deck, window, water, follow the resident), plus your own: drag to
   turn, right-drag or Ctrl+drag to slide, scroll or pinch to zoom, double-click to reset.
+
+## Keys
+
+| Key | Does |
+| --- | --- |
+| Space | Play or pause music |
+| 1 to 5 | Shore, deck, window, water, follow |
+| Arrows | Turn the camera |
+| + and − | Zoom |
+| R | Reset the camera |
+| H | Show or hide the big words |
+| P | Pause or move the scene |
+| F | Full screen |
+| Esc | Close the open panel |
