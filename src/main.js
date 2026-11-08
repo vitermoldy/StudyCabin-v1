@@ -89,3 +89,23 @@ function jumpTo(minutes, sameDay) {
 clock.on('jump', () => {
   jumped = true;
 });
+
+// ------------------------------------------------------------ UI
+const updateDay = mountDay({ clock, onJump: jumpTo });
+const updateWeather = mountWeather({ climate });
+mountSound({ ambient });
+const renderFocus = mountFocus({ focus });
+mountMusic(music, panels, { onPlayingChange: (on) => ambient.setMusicPlaying(on) });
+
+const pauseBtn = document.getElementById('scene-pause');
+function setScenePaused(on, { announce = false } = {}) {
+  scenePaused = on;
+  pauseBtn.setAttribute('aria-pressed', String(on));
+  pauseBtn.setAttribute('aria-label', on ? 'Move the scene' : 'Pause the scene');
+  pauseBtn.querySelector('use').setAttribute('href', on ? '#i-play' : '#i-pause');
+  if (announce) toast(on ? 'Scene paused. The clock stops with it.' : 'Scene moving again.');
+  lastFrame = performance.now();
+}
+pauseBtn.addEventListener('click', () => setScenePaused(!scenePaused, { announce: true }));
+setScenePaused(scenePaused);
+if (reduced) setTimeout(() => toast('The scene is still because your system asks for less motion. Press play at the top right to start it.', 7000), 1200);
