@@ -108,4 +108,66 @@ export class CameraRig {
     const b = this.userS;
     return Math.abs(a.yaw - b.yaw) + Math.abs(a.tilt - b.tilt) + Math.abs(a.zoom - b.zoom) + Math.abs(a.panX - b.panX) * 0.1 + Math.abs(a.panZ - b.panZ) * 0.1 > 0.0005 || this.travel < 1;
   }
+
+  setPointer(x, y) {
+    this.pointer.set(x, y);
+  }
+
+  update(dt, t, followPoint) {
+    const cam = this.camera;
+    // Wider lens on tall screens.
+    const fov = cam.aspect < 1 ? lerp(62, 42, clamp((cam.aspect - 0.45) / 0.55, 0, 1)) : 42;
+    if (Math.abs(cam.fov - fov) > 0.01) {
+      cam.fov = fov;
+      cam.updateProjectionMatrix();
+    }
+    if (followPoint) this.followTarget.lerp(followPoint, 1 - Math.exp(-2.5 * dt));
+    const basePos = tmpA;
+    const baseTarget = tmpB;
+    this._resolve(this.view, basePos, baseTarget, this.view === 'follow' || this.view === 'window' ? this.followTarget : null);
+
+    if (this.travel < 1) {
+      this.travel = Math.min(1, this.travel + dt / this.travelTime);
+      const k = easeInOut(this.travel);
+      this.pos.lerpVectors(this.from.pos, basePos, k);
+      this.target.lerpVectors(this.from.target, baseTarget, k);
+    } else {
+      this.pos.copy(basePos);
+      this.target.copy(baseTarget);
+    }
+
+    // The visitor's own camera moves, eased so a drag feels smooth.
+    for (const k of Object.keys(this.user)) this.userS[k] = damp(this.userS[k], this.user[k], 12, dt);
+    const us = this.userS;
+    if (Math.abs(us.yaw) + Math.abs(us.tilt) + Math.abs(us.zoom - 1) + Math.abs(us.panX) + Math.abs(us.panZ) > 1e-4) {
+      this.target.x += us.panX;
+      this.target.z += us.panZ;
+      sph.setFromVector3(tmpE.subVectors(this.pos, this.target));
+      sph.radius = clamp(sph.radius * us.zoom, 1.6, 190);
+      sph.theta += us.yaw;
+      sph.phi = clamp(sph.phi - us.tilt, 0.1, Math.PI / 2 - 0.02);
+      this.pos.copy(this.target).add(tmpE.setFromSpherical(sph));
+      // Stay above the sand and the sea, and outside the cabin.
+      const floor = Math.max(groundHeight(this.pos.x, this.pos.z), -0.05) + 0.45;
+      if (this.pos.y < floor) this.pos.y = floor;
+      const inCabin = this.pos.x > -10.8 && this.pos.x < 7.6 && this.pos.z > -3.6 && this.pos.z < 3.6 && this.pos.y < 6.4;
+      if (inCabin) this.pos.z = this.pos.z > -0.2 ? 3.6 : -3.6;
+    }
+
+    // Entrance: the camera settles a little closer once, on load.
+    if (this.entrance > 0) this.entrance = Math.max(0, this.entrance - dt / 1.6);
+    const settle = this.reduced ? 0 : easeInOut(this.entrance) * 0.06;
+
+    // A slow breathing drift and a small answer to the pointer.
+    this.pointerSmooth.x = damp(this.pointerSmooth.x, this.pointer.x, 2.5, dt);
+    this.pointerSmooth.y = damp(this.pointerSmooth.y, this.pointer.y, 2.5, dt);
+    const sway = this.reduced ? 0 : 1;
+    const dist = this.pos.distanceTo(this.target);
+    const right = tmpC.subVectors(this.target, this.pos).cross(UP).normalize();
+    cam.position.copy(this.pos)
+      .addScaledVector(tmpD.subVectors(this.pos, this.target), settle)
+      .addScaledVector(right, (this.pointerSmooth.x * 0.035 * dist + Math.sin(t * 0.11) * 0.012 * dist) * sway)
+      .addScaledVector(UP, (this.pointerSmooth.y * 0.018 * dist + Math.sin(t * 0.07) * 0.006 * dist) * sway);
+    cam.lookAt(this.target);
+  }
 }
