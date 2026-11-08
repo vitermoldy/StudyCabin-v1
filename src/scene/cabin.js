@@ -74,4 +74,53 @@ export class Cabin {
     mesh.position.set(x, y, z);
     return mesh;
   }
+
+  _legs(mat, cx, cz, w, d, h, y0 = FLOOR, t = 0.045, parent = this.group) {
+    for (const sx of [-1, 1]) {
+      for (const sz of [-1, 1]) {
+        this._cb(mat, t, h, t, cx + sx * (w / 2 - t), y0 + h / 2, cz + sz * (d / 2 - t), { parent });
+      }
+    }
+  }
+
+  // ------------------------------------------------------------ materials
+  _makeMaterials() {
+    const fab = fabricTexture();
+    this.mat = {
+      siding: weathered(std('#f6f9f1', { map: sidingTexture(), roughness: 0.86 }), { snow: 0.6 }),
+      trim: std('#2b2f2d', { roughness: 0.6 }),
+      roof: weathered(std('#f2f4f5', { map: roofTexture(), roughness: 0.52, metalness: 0.12 }), { snow: 1 }),
+      deck: weathered(std('#f2ece4', { map: deckTexture(), roughness: 0.9 }), { snow: 0.85 }),
+      found: std('#3a3936', { roughness: 0.95 }),
+      floor: std('#ffffff', { map: floorTexture(), roughness: 0.62 }),
+      panel: std('#f4ece2', { map: panelTexture(), roughness: 0.82 }),
+      ceiling: std('#d9c8b6', { map: panelTexture(), roughness: 0.85 }),
+      glass: new THREE.MeshStandardMaterial({
+        color: '#b4c4c5', transparent: true, opacity: 0.16, roughness: 0.05, metalness: 0, depthWrite: false,
+      }),
+      linen: std('#ddd8cd', { map: fab, roughness: 0.95 }),
+      duvet: std('#bfb9ad', { map: fab, roughness: 0.95 }),
+      sofa: std('#b6ae9f', { map: fab, roughness: 0.95 }),
+      cushion: std('#d1c9ba', { map: fab, roughness: 0.95 }),
+      rug: std('#8f8577', { map: fab, roughness: 1 }),
+      wood: std('#a7825f', { roughness: 0.7 }),
+      woodDark: std('#6c5240', { roughness: 0.75 }),
+      deckWood: weathered(std('#87827a', { roughness: 0.85 }), { snow: 0.8 }),
+      metal: std('#1f2121', { roughness: 0.45, metalness: 0.5 }),
+      counter: std('#d9d5cc', { roughness: 0.38 }),
+      cabinet: std('#7e604a', { roughness: 0.7 }),
+      ceramic: std('#e6e1d6', { roughness: 0.35 }),
+      leaf: std('#4f6a44', { roughness: 0.8 }),
+      pot: std('#b19f88', { roughness: 0.8 }),
+      print: std('#ffffff', { map: printTexture(), roughness: 0.9 }),
+      books: std('#ffffff', { map: booksTexture(), roughness: 0.9 }),
+      stoveGlass: new THREE.MeshStandardMaterial({ color: '#120c08', emissive: '#ff7a2e', emissiveIntensity: 0, roughness: 0.3 }),
+      screen: new THREE.MeshStandardMaterial({ color: '#1b1d1f', emissive: '#d6e4ee', emissiveIntensity: 0, roughness: 0.3 }),
+      flame: new THREE.MeshBasicMaterial({ color: '#ffb35c', transparent: true, opacity: 0, depthWrite: false }),
+    };
+    this.shades = {};
+    for (const id of ['kitchen', 'living', 'bed', 'desk', 'porch']) {
+      this.shades[id] = new THREE.MeshStandardMaterial({ color: '#e7dcc6', emissive: '#ffcf8f', emissiveIntensity: 0, roughness: 0.8 });
+    }
+  }
 }
