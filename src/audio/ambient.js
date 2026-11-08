@@ -120,4 +120,30 @@ export class Ambient extends Emitter {
     this.thunderBus.connect(this.master);
     return true;
   }
+
+  /** Turn sound on or off. Must run from a click or key press the first time. */
+  async setEnabled(on) {
+    this.enabled = !!on;
+    if (on) {
+      if (!this._ensure()) {
+        this.enabled = false;
+        this.emit('error', 'This browser cannot play generated sound.');
+        this.emit('change');
+        return;
+      }
+      try {
+        await this.ctx.resume();
+      } catch {
+        /* resumed on the next gesture */
+      }
+    }
+    this._applyMaster(0.4);
+    if (!on && this.ctx) {
+      setTimeout(() => {
+        if (!this.enabled && this.ctx.state === 'running') this.ctx.suspend().catch(() => {});
+      }, 900);
+    }
+    this.persist();
+    this.emit('change');
+  }
 }
