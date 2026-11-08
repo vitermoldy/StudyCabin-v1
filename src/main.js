@@ -155,3 +155,54 @@ mountCameraInput(document.getElementById('scene'), {
   getWorld: () => world,
   onRender: () => { needsStill = true; },
 });
+
+// Pointer for the camera's small answer to the mouse.
+addEventListener('pointermove', (e) => {
+  if (!world || e.pointerType !== 'mouse') return;
+  world.rig.setPointer((e.clientX / innerWidth) * 2 - 1, -((e.clientY / innerHeight) * 2 - 1));
+  world.setPointer(e.clientX, e.clientY, e.target === document.getElementById('scene'));
+}, { passive: true });
+document.addEventListener('pointerleave', () => world && world.setPointer(0, 0, false));
+
+// Audio needs a gesture before it may start.
+const wake = () => ambient.resumeIfWanted();
+addEventListener('pointerdown', wake, { once: true });
+addEventListener('keydown', wake, { once: true });
+
+// Keyboard shortcuts (never while typing).
+addEventListener('keydown', (e) => {
+  const t = e.target;
+  if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+  if (t instanceof HTMLElement && (t.closest('input, textarea, select') || t.isContentEditable)) return;
+  const k = e.key.toLowerCase();
+  if (k === ' ' && !(t instanceof HTMLButtonElement)) {
+    e.preventDefault();
+    music.toggle();
+  } else if (k === 'h') {
+    setWords(!wordsShown);
+    viewApi?.sync();
+  } else if (k === 'p') {
+    setScenePaused(!scenePaused, { announce: true });
+  } else if (k === 'f') {
+    toggleFullscreen();
+  } else if (world && ['arrowleft', 'arrowright', 'arrowup', 'arrowdown'].includes(k) && !(t instanceof HTMLElement && t.closest('[role="dialog"], .dock'))) {
+    e.preventDefault();
+    const step = 28;
+    if (k === 'arrowleft') world.rig.orbit(-step, 0);
+    if (k === 'arrowright') world.rig.orbit(step, 0);
+    if (k === 'arrowup') world.rig.orbit(0, -step);
+    if (k === 'arrowdown') world.rig.orbit(0, step);
+    needsStill = true;
+  } else if (world && (k === '+' || k === '=' || k === '-' || k === '_')) {
+    world.rig.zoomBy(k === '+' || k === '=' ? 0.85 : 1.18);
+    needsStill = true;
+  } else if (world && k === 'r') {
+    world.rig.resetUser();
+    needsStill = true;
+  } else if (['1', '2', '3', '4', '5'].includes(k) && world) {
+    const id = ['shore', 'deck', 'window', 'water', 'follow'][Number(k) - 1];
+    world.rig.setView(id);
+    viewApi?.setView(id);
+    save('view', { ...load('view', {}), view: id });
+  }
+});
