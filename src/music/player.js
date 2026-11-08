@@ -99,4 +99,23 @@ export class MusicPlayer extends Emitter {
     this.persist();
     this.emit('change');
   }
+
+  setVolume(v) {
+    this.volume = clamp(Math.round(v), 0, 100);
+    if (this._ready) this.player.setVolume(this.volume);
+    this.persist();
+    this.emit('change');
+  }
+
+  setLoop(on) {
+    this.loop = !!on;
+    this.persist();
+    this.emit('change');
+  }
+
+  setShuffle(on) {
+    this.shuffle = !!on;
+    this.persist();
+    this.emit('change');
+  }
 }
