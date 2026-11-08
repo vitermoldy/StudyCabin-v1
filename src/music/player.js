@@ -237,4 +237,25 @@ export class MusicPlayer extends Emitter {
     }
     this._advance(-1);
   }
+
+  _advance(dir) {
+    const n = this.queue.length;
+    if (!n) return;
+    let next;
+    if (this.shuffle && n > 1 && dir > 0) {
+      do next = Math.floor(Math.random() * n); while (next === this.current);
+    } else {
+      next = this.current + dir;
+    }
+    if (next >= n) {
+      if (!this.loop) {
+        this.status = 'ended';
+        this.emit('change');
+        return;
+      }
+      next = 0;
+    }
+    if (next < 0) next = this.loop ? n - 1 : 0;
+    this.play(next);
+  }
 }
