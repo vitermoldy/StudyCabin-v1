@@ -121,4 +121,37 @@ export class World {
     }
     this.flash = Math.max(0, this.flash - dt * 3.2);
   }
+
+  /** Decide lamps, stove, fire and door from the time, weather and resident. */
+  _house(state) {
+    const { minutes, climate, activity } = state;
+    const atmo = this.atmo;
+    const p = climate.params;
+    const darkness = clamp(1 - atmo.dayFactor + atmo.overcast * 0.4 + p.rain * 0.2 + p.fog * 0.15, 0, 1);
+    const res = this.resident;
+    const asleep = activity.pose === 'sleep';
+    const awake = !asleep;
+    const spot = res.spot;
+    const at = (a, b) => minutes >= a * 60 && minutes < b * 60;
+    const evening = at(17, 23.5);
+    const on = (cond, level = 1) => (cond ? level : 0);
+    const dark = darkness > 0.42;
+    const season = climate.season;
+    const cold = season === 'winter' || season === 'autumn' || climate.temperature(minutes) < 14;
+    const stoveLit = (cold && (at(15.5, 23.1) || at(6.6, 9.5))) || (season === 'rainy' && at(18.5, 22.8));
+
+    this.cabin.set({
+      kitchen: on(awake && dark && (spot === 'cook' || spot === 'dine' || evening), spot === 'cook' || spot === 'dine' ? 1 : 0.55),
+      living: on(awake && dark && (['sofa', 'armchair', 'shelf', 'stove', 'window'].includes(spot) || evening), 1),
+      bed: (activity.id === 'wake' || activity.id === 'bedtime' || (asleep && at(23, 23.15))) && darkness > 0.3 ? 0.85 : asleep && darkness > 0.5 ? 0.14 : 0,
+      desk: on(spot === 'desk' && !res.path && darkness > 0.25, 1),
+      screen: on(spot === 'desk' && !res.path && (activity.pose === 'sitType'), 1),
+      stove: on(stoveLit, 1),
+      fire: on(at(18.5, 22.5) && p.rain < 0.2 && p.snow < 0.3 && season !== 'rainy', 1),
+      porch: on(darkness > 0.6 && (minutes >= 17 * 60 || minutes < 30), 1),
+      sleeping: on(asleep && !res.path, 1),
+      door: on(res.doorDistance < 1.5, 1),
+    });
+    this.stoveLit = this.cabin.state.stove;
+  }
 }
