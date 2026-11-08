@@ -88,4 +88,26 @@ export class FocusTimer extends Emitter {
     this.remainingMs = this.lengthMs();
     this._commit();
   }
+
+  skip() {
+    this._advancePhase(this.running);
+    this._commit();
+  }
+
+  _advancePhase(keepRunning) {
+    if (this.phase === 'focus') {
+      if (this.doneDate !== today()) {
+        this.doneDate = today();
+        this.done = 0;
+      }
+      this.done += 1;
+      this.phase = this.round >= this.config.rounds ? 'long' : 'short';
+    } else {
+      this.round = this.phase === 'long' ? 1 : this.round + 1;
+      this.phase = 'focus';
+    }
+    this.remainingMs = this.lengthMs();
+    this.running = keepRunning;
+    if (keepRunning) this.endAt = Date.now() + this.remainingMs;
+  }
 }
