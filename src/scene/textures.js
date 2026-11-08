@@ -133,3 +133,24 @@ export function floorTexture() {
   grain(ctx, 256, 256, rand, 1300, 0.05);
   return finish(c, { repeat: [1 / 1.1, 1 / 1.1] });
 }
+
+/** Vertical wood panelling for the inside walls. */
+export function panelTexture() {
+  const [c, ctx] = canvas(256, 256);
+  const rand = rng(53);
+  const n = 5;
+  const w = 256 / n;
+  for (let i = 0; i < n; i++) {
+    const tone = 0.86 + rand() * 0.18;
+    ctx.fillStyle = `rgb(${Math.round(150 * tone)},${Math.round(116 * tone)},${Math.round(86 * tone)})`;
+    ctx.fillRect(i * w, 0, w, 256);
+    for (let k = 0; k < 10; k++) {
+      ctx.fillStyle = `rgba(80,52,30,${0.04 + rand() * 0.06})`;
+      ctx.fillRect(i * w + rand() * w, 0, 1 + rand() * 2, 256);
+    }
+    ctx.fillStyle = 'rgba(50,32,20,0.45)';
+    ctx.fillRect(Math.round(i * w), 0, 1, 256);
+  }
+  grain(ctx, 256, 256, rand, 800, 0.04);
+  return finish(c, { repeat: [1 / 1.4, 1 / 1.4] });
+}
