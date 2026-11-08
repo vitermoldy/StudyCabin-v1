@@ -146,3 +146,31 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
 .chip__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .chip--round { width: 44px; padding: 0; justify-content: center; border-radius: 50%; }
 .chip[aria-expanded="true"] { border-color: var(--action); }
+
+/* ------------------------------------------------------------ dock */
+.dock {
+  position: fixed; left: 50%; bottom: var(--edge); transform: translateX(-50%); z-index: 9;
+  display: flex; align-items: stretch; gap: 2px;
+  height: var(--dock-h); padding: 6px;
+  background: var(--dock); border-radius: var(--r-sm);
+  outline: none;
+}
+.dock__tabs { display: flex; gap: 2px; }
+.dock__btn, .dock__tab {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  border: 0; background: transparent; color: var(--ink); border-radius: 3px;
+  transition: background-color 120ms var(--ease), color 120ms var(--ease), transform 90ms var(--ease);
+}
+.dock__btn { width: 52px; }
+.dock__tab { flex-direction: column; gap: 3px; min-width: 66px; padding: 0 var(--s-2); font-size: var(--t-label); font-weight: 500; line-height: 1.1; }
+.dock__tab span { white-space: nowrap; font-variant-numeric: tabular-nums; }
+.dock__btn:hover:not(:disabled), .dock__tab:hover { background: rgba(255, 255, 255, 0.07); transition-duration: 150ms; }
+.dock__btn:active:not(:disabled), .dock__tab:active { transform: translateY(1px) scale(.985); }
+.dock__btn:disabled { color: rgba(228, 229, 225, 0.38); }
+.dock__tab[aria-expanded="true"] { color: var(--action); background: rgba(217, 160, 91, 0.1); }
+.dock__tab[aria-expanded="true"]::after {
+  content: ""; position: absolute; left: 14px; right: 14px; bottom: 2px; height: 2px; background: var(--action);
+}
+.dock__words[aria-pressed="false"] { color: rgba(228, 229, 225, 0.55); }
+.dock__btn + .dock__tabs, .dock__tabs + .dock__btn { border-left: 1px solid var(--line); padding-left: 2px; }
+.dock__tabs + .dock__btn { border-left: 1px solid var(--line); }
