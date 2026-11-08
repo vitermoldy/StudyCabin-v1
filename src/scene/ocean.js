@@ -158,3 +158,46 @@ function buildGeometry() {
   geo.computeBoundingSphere();
   return geo;
 }
+
+export class Ocean {
+  constructor(scene) {
+    this.uniforms = THREE.UniformsUtils.merge([
+      THREE.UniformsLib.fog,
+      {
+        uTime: { value: 0 },
+        uWaves: { value: 0.5 },
+        uRain: { value: 0 },
+        uLight: { value: 1 },
+        uDeep: { value: new THREE.Color('#1f3a3e') },
+        uShallow: { value: new THREE.Color('#4d7a72') },
+        uZenith: { value: new THREE.Color() },
+        uHorizon: { value: new THREE.Color() },
+        uSunDir: { value: new THREE.Vector3(0, 1, 0) },
+        uSunColor: { value: new THREE.Color() },
+        uSunVis: { value: 1 },
+        uMoonDir: { value: new THREE.Vector3(0, -1, 0) },
+        uMoonVis: { value: 0 },
+        uRipple: { value: null },
+        uLand: { value: new THREE.Color('#6d7065') },
+        uRippleArea: { value: new THREE.Vector4(0, 0, 1, 0) },
+      },
+    ]);
+    const mat = new THREE.ShaderMaterial({
+      uniforms: this.uniforms,
+      vertexShader: VERT,
+      fragmentShader: FRAG,
+      transparent: true,
+      fog: true,
+      depthWrite: true,
+    });
+    this.mesh = new THREE.Mesh(buildGeometry(), mat);
+    this.mesh.frustumCulled = false;
+    this.mesh.renderOrder = 1;
+    scene.add(this.mesh);
+    this.deepDay = new THREE.Color('#1d3d45');
+    this.deepGrey = new THREE.Color('#3a4d51');
+    this.shallowDay = new THREE.Color('#5b968e');
+    this.shallowGrey = new THREE.Color('#6a8984');
+    this.landBase = new THREE.Color('#5d6556');
+  }
+}
