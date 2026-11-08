@@ -133,4 +133,25 @@ export class Climate extends Emitter {
       this.setSeason(SEASON_ORDER[(i + 1) % SEASON_ORDER.length], { fromAuto: true });
     }
   }
+
+  get seasonInfo() {
+    return SEASONS[this.season];
+  }
+
+  get weatherInfo() {
+    return WEATHERS[this.weather];
+  }
+
+  setSeason(id, { fromAuto = false } = {}) {
+    if (!(id in SEASONS)) return;
+    const changed = id !== this.season;
+    this.season = id;
+    if (!fromAuto) this.emit('season-picked', id);
+    if (this.weatherMode === 'auto' && !(this.weather in SEASONS[id].odds)) {
+      this._setWeather(this._roll());
+      this.nextChange = this._now() + this._span();
+    }
+    if (changed) this.emit('season', id);
+    this.persist();
+  }
 }
