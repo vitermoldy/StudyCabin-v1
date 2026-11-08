@@ -206,3 +206,77 @@ addEventListener('keydown', (e) => {
     save('view', { ...load('view', {}), view: id });
   }
 });
+
+// ------------------------------------------------------------ loop
+function frame(now) {
+  requestAnimationFrame(frame);
+  // Up to one game day of catch-up after the tab was hidden.
+  const realDt = Math.min(1440, Math.max(0, (now - lastFrame) / 1000));
+  lastFrame = now;
+  focus.tick();
+  if (scenePaused) {
+    // The scene stands still, but a hand-moved camera still redraws it.
+    if (world && (needsStill || world.rig.settling)) {
+      needsStill = false;
+      world.rig.update(Math.min(realDt, 0.1), elapsed, world.resident.head);
+      world.render(16);
+    }
+    return;
+  }
+  const dt = Math.min(realDt, 0.1);
+  elapsed += dt;
+
+  // The clock runs on real elapsed time, so a hidden tab catches up on return.
+  const gameDt = clock.tick(realDt);
+  if (gameDt > 30) jumped = true;
+  climate.update(dt, gameDt);
+  refreshActivity({ teleport: jumped });
+  jumped = false;
+  overlay.setTime(clock.minutes);
+
+  uiIn -= realDt;
+  if (uiIn <= 0) {
+    uiIn = 0.25;
+    const s = storyText();
+    overlay.setStory(s.line, s.meta);
+    if (panels.current === 'day') updateDay();
+    if (panels.current === 'weather') updateWeather();
+    if (panels.current === 'focus' || focus.running) renderFocus();
+  }
+
+  if (world) {
+    const speedUp = clock.rate >= 10 ? 2.2 : 1;
+    world.update(dt, elapsed, {
+      minutes: clock.minutes,
+      climate,
+      activity,
+      follow: world.rig.view === 'follow',
+      residentOptions: { speedUp },
+    });
+    world.render(realDt * 1000);
+    sampleIn -= realDt;
+    if (sampleIn <= 0 && wordsShown) {
+      sampleIn = 0.8;
+      overlay.applyInk(world.sampleLuminance(overlay.rects()));
+    }
+  }
+
+  audioIn -= dt;
+  if (audioIn <= 0) {
+    audioIn = 0.1;
+    const p = climate.params;
+    const atmo = world?.atmo;
+    const m = clock.minutes;
+    ambient.update(0.1, {
+      waves: p.waves,
+      rain: p.rain,
+      wind: p.wind,
+      storm: p.storm,
+      day: atmo ? atmo.dayFactor : smoothstep(330, 480, m) * (1 - smoothstep(1080, 1200, m)),
+      night: atmo ? atmo.night : 1 - smoothstep(300, 420, m) + smoothstep(1140, 1260, m),
+      morning: m > 300 && m < 660,
+      season: climate.season,
+      fire: world ? world.cabin.state.stove * (isOutside(world.resident.spot) ? 0.35 : 1) : 0,
+    });
+  }
+}
