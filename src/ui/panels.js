@@ -53,4 +53,23 @@ export class Panels extends Emitter {
     }
     this.emit('open', id);
   }
+
+  close(returnFocus = true) {
+    if (!this.current) return;
+    const id = this.current;
+    this._hide(id);
+    this.current = null;
+    this._syncButtons();
+    if (returnFocus && this.opener && document.body.contains(this.opener)) this.opener.focus({ preventScroll: true });
+    this.opener = null;
+    this.emit('close', id);
+  }
+
+  _hide(id) {
+    const panel = this.panels.get(id);
+    if (!panel) return;
+    if (panel.contains(document.activeElement)) document.activeElement.blur();
+    panel.dataset.open = 'false';
+    panel.inert = true;
+  }
 }
