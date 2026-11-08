@@ -35,3 +35,17 @@ export function load(section, fallback) {
   }
   return value;
 }
+
+export function save(section, value) {
+  readAll()[section] = value;
+  if (!timer) timer = setTimeout(flush, 250);
+}
+
+export function saveNow() {
+  if (timer) {
+    clearTimeout(timer);
+    flush();
+  }
+}
+
+addEventListener('pagehide', saveNow);
