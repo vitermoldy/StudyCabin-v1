@@ -34,3 +34,70 @@ function radios(fieldset, name, options, current, onPick) {
     if (i && !i.checked) i.checked = true;
   };
 }
+
+function bindSwitch(button, get, set) {
+  const sync = () => button.setAttribute('aria-checked', String(!!get()));
+  button.addEventListener('click', () => {
+    set(!get());
+    sync();
+  });
+  sync();
+  return sync;
+}
+
+export function mountDay({ clock, onJump }) {
+  const setSpeed = radios($('speed-group'), 'speed', Object.keys(SPEEDS).map((k) => [k, SPEED_LABELS[k]]), clock.speed, (v) => clock.setSpeed(v));
+  clock.on('speed', setSpeed);
+  const scrub = $('time-scrub');
+  const scrubOut = $('time-scrub-out');
+  scrub.addEventListener('input', () => {
+    const m = Number(scrub.value);
+    scrubOut.textContent = formatClock(m);
+    onJump(m, true);
+  });
+  $('sync-clock').addEventListener('click', () => {
+    const d = new Date();
+    onJump(d.getHours() * 60 + d.getMinutes(), true);
+  });
+
+  const list = $('timeline');
+  const rows = DAY.filter((a) => a.id !== 'sleep').map((a) => {
+    const li = document.createElement('li');
+    const b = document.createElement('button');
+    b.type = 'button';
+    const t = document.createElement('span');
+    t.className = 'timeline__t';
+    t.textContent = formatClock(a.start);
+    const w = document.createElement('span');
+    w.className = 'timeline__what';
+    w.textContent = a.line;
+    const now = document.createElement('span');
+    now.className = 'timeline__now';
+    b.append(t, w, now);
+    b.setAttribute('aria-label', `Go to ${formatClock(a.start)}: ${a.line}`);
+    b.addEventListener('click', () => onJump(a.start, false));
+    li.appendChild(b);
+    list.appendChild(li);
+    return { a, b, now };
+  });
+
+  let lastId = '';
+  return function update() {
+    $('day-clock').textContent = formatClock(clock.minutes);
+    $('day-num').textContent = `Day ${clock.day}`;
+    if (document.activeElement !== scrub) {
+      scrub.value = String(Math.floor(clock.minutes / 5) * 5);
+      scrubOut.textContent = formatClock(Number(scrub.value));
+    }
+    const cur = entryAt(clock.minutes).id === 'sleep' ? 'sleep-early' : entryAt(clock.minutes).id;
+    if (cur !== lastId) {
+      lastId = cur;
+      for (const r of rows) {
+        const on = r.a.id === cur;
+        r.now.textContent = on ? 'Now' : '';
+        if (on) r.b.setAttribute('aria-current', 'true');
+        else r.b.removeAttribute('aria-current');
+      }
+    }
+  };
+}
