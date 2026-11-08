@@ -362,4 +362,12 @@ export class Terrain {
     }
     return group;
   }
+
+  update(look, { caustic = 0.5 } = {}) {
+    this.uniforms.uCaustic.value = caustic;
+    this.uniforms.uSand.value.setRGB(look.sand[0], look.sand[1], look.sand[2], THREE.SRGBColorSpace);
+    this.uniforms.uSandWet.value.setRGB(look.sandWet[0], look.sandWet[1], look.sandWet[2], THREE.SRGBColorSpace);
+    this.uniforms.uVeg.value.setRGB(look.grass[0], look.grass[1], look.grass[2], THREE.SRGBColorSpace);
+    this.grass.material.color.setRGB(look.grass[0], look.grass[1], look.grass[2], THREE.SRGBColorSpace);
+  }
 }
