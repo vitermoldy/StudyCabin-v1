@@ -126,3 +126,23 @@ html.is-live .poster { opacity: 0; }
 .story .btn-row { margin-top: var(--s-3); }
 
 html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; visibility: hidden; }
+
+/* ------------------------------------------------------------ top right */
+.top {
+  position: fixed; top: var(--edge); right: var(--edge); z-index: 8;
+  display: flex; gap: var(--s-2); align-items: center;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: var(--s-2);
+  height: 44px; padding: 0 var(--s-4); max-width: min(360px, 60vw);
+  background: var(--plate); color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--r-sm);
+  font-size: 15px; font-weight: 500;
+  transition: background-color 120ms var(--ease), border-color 120ms var(--ease), transform 90ms var(--ease);
+}
+.chip:hover { background: #262624; border-color: var(--line-strong); transition-duration: 150ms; }
+.chip:active { transform: translateY(1px) scale(.985); }
+.chip__glyph { color: var(--action); font-size: 17px; line-height: 1; }
+.chip__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip--round { width: 44px; padding: 0; justify-content: center; border-radius: 50%; }
+.chip[aria-expanded="true"] { border-color: var(--action); }
