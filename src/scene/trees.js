@@ -114,3 +114,70 @@ function swayShader(material, { leaves = false } = {}) {
   };
   return material;
 }
+
+export class Trees {
+  constructor(scene, { lowPower = false } = {}) {
+    const r = rng(42);
+    const spots = [];
+    const tries = lowPower ? 1400 : 2600;
+    for (let i = 0; i < tries; i++) {
+      // A belt of woodland behind the dunes, thicker to the sides, a few
+      // nearer trees standing over the roofline.
+      const x = (r() * 2 - 1) * 95;
+      const z = -14 - Math.pow(r(), 1.3) * 80;
+      const behind = Math.abs(x) < 16 ? smoothstep(-16, -26, z) : 1;
+      const copse = Math.sin(x * 0.09 + 1.3) * Math.cos(z * 0.11) * 0.5 + 0.5;
+      if (r() > behind * (0.25 + copse * 0.75)) continue;
+      if (spots.some((s) => Math.hypot(s.x - x, s.z - z) < 2.6)) continue;
+      spots.push({ x, z, pine: r() < 0.55 + (z < -45 ? 0.2 : 0) });
+      if (spots.length >= (lowPower ? 160 : 260)) break;
+    }
+
+    const pineMat = swayShader(weathered(new THREE.MeshStandardMaterial({ color: '#4f6650', vertexColors: true, roughness: 0.9 }), { snow: 0.9, wet: 0.5 }));
+    const leafMat = new THREE.MeshStandardMaterial({ color: '#ffffff', vertexColors: true, roughness: 0.9 });
+    leafMat.userData.uLeaf = { value: new THREE.Color('#5e7a44') };
+    swayShader(weathered(leafMat, { snow: 0.7, wet: 0.5 }), { leaves: true });
+    this.leafColor = leafMat.userData.uLeaf.value;
+    this.leafMat = leafMat;
+
+    const pines = spots.filter((s) => s.pine);
+    const broad = spots.filter((s) => !s.pine);
+    this.pines = new THREE.InstancedMesh(pineGeometry(), pineMat, pines.length);
+    this.broad = new THREE.InstancedMesh(broadleafGeometry(), leafMat, broad.length);
+    const m = new THREE.Matrix4();
+    const q = new THREE.Quaternion();
+    const s = new THREE.Vector3();
+    const p = new THREE.Vector3();
+    const c = new THREE.Color();
+    const Y = new THREE.Vector3(0, 1, 0);
+    const place = (mesh, list, [h0, h1], [w0, w1]) => {
+      list.forEach((t, i) => {
+        const h = h0 + r() * (h1 - h0);
+        const w = h * (w0 + r() * (w1 - w0));
+        p.set(t.x, groundHeight(t.x, t.z) - 0.2, t.z);
+        q.setFromAxisAngle(Y, r() * Math.PI * 2);
+        s.set(w, h, w);
+        m.compose(p, q, s);
+        mesh.setMatrixAt(i, m);
+        const tone = 0.85 + r() * 0.3;
+        c.setRGB(tone, tone * (0.96 + r() * 0.08), tone);
+        mesh.setColorAt(i, c);
+      });
+      mesh.instanceMatrix.needsUpdate = true;
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      mesh.frustumCulled = false;
+      scene.add(mesh);
+    };
+    place(this.pines, pines, [6, 13], [0.9, 1.2]);
+    place(this.broad, broad, [5, 9.5], [0.95, 1.25]);
+    this._target = new THREE.Color();
+  }
+
+  /** Crowns follow the season's foliage colour (sRGB triple from Climate.look). */
+  update(look) {
+    this._target.setRGB(look.foliage[0], look.foliage[1], look.foliage[2], THREE.SRGBColorSpace);
+    this.leafColor.copy(this._target);
+  }
+}
