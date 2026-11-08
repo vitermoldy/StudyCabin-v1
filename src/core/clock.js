@@ -40,4 +40,34 @@ export class Clock extends Emitter {
   get hours() {
     return this.minutes / 60;
   }
+
+  setSpeed(id) {
+    if (!(id in SPEEDS) || id === this.speed) return;
+    this.speed = id;
+    this.emit('speed', id);
+    this.persist();
+  }
+
+  /** Advance by real seconds. Returns game minutes that passed. */
+  tick(dt) {
+    const passed = dt * this.rate;
+    if (passed <= 0) return 0;
+    this.minutes += passed;
+    while (this.minutes >= 1440) {
+      this.minutes -= 1440;
+      this.day += 1;
+      this.emit('day', this.day);
+    }
+    const whole = Math.floor(this.minutes);
+    if (whole !== this._lastMinute) {
+      this._lastMinute = whole;
+      this.emit('minute', whole);
+    }
+    this._saveIn -= dt;
+    if (this._saveIn <= 0) {
+      this._saveIn = 5;
+      this.persist();
+    }
+    return passed;
+  }
 }
