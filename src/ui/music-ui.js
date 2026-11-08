@@ -54,4 +54,35 @@ export function mountMusic(player, panels, { onPlayingChange }) {
   const openMusicText = $('open-music-text');
 
   panels.registerOpener('music', openMusic);
+
+  function showError(msg) {
+    err.textContent = msg;
+    err.hidden = false;
+    input.setAttribute('aria-invalid', 'true');
+  }
+  function clearError() {
+    err.hidden = true;
+    err.textContent = '';
+    input.removeAttribute('aria-invalid');
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    clearError();
+    try {
+      const item = player.add(input.value);
+      input.value = '';
+      toast(item.kind === 'playlist' ? 'Playlist added to the queue.' : 'Added to the queue.');
+    } catch (ex) {
+      if (ex instanceof LinkError) {
+        showError(ex.message);
+        input.focus();
+      } else {
+        showError('Something went wrong reading that link. Try copying it again.');
+      }
+    }
+  });
+  input.addEventListener('input', () => {
+    if (!err.hidden && !input.value) clearError();
+  });
 }
