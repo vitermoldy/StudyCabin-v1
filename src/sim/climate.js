@@ -110,4 +110,27 @@ export class Climate extends Emitter {
     this.lightning = 0; // 0..1 flash level, set by the scene
     clock.on('day', (day) => this._onDay(day));
   }
+
+  _now() {
+    return this.clock.day * 1440 + this.clock.minutes;
+  }
+
+  _span() {
+    return 120 + Math.random() * 260;
+  }
+
+  _roll() {
+    const odds = { ...SEASONS[this.season].odds };
+    // Weather tends to stay: the current one gets extra weight.
+    if (this.weather && odds[this.weather]) odds[this.weather] += 0.35;
+    return pick(odds);
+  }
+
+  _onDay(day) {
+    if (!this.autoSeason) return;
+    if ((day - 1) % 7 === 0) {
+      const i = SEASON_ORDER.indexOf(this.season);
+      this.setSeason(SEASON_ORDER[(i + 1) % SEASON_ORDER.length], { fromAuto: true });
+    }
+  }
 }
