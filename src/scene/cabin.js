@@ -458,4 +458,23 @@ export class Cabin {
       this.flames.push(fl);
     }
   }
+
+  _lights() {
+    const mk = (color, x, y, z, distance) => {
+      const l = new THREE.PointLight(color, 0, distance, 2);
+      l.position.set(x, y, z);
+      this.group.add(l);
+      return l;
+    };
+    const warm = '#ffc98a';
+    this.lights = {
+      kitchen: mk(warm, -5.2, FLOOR + 1.95, 0.2, 9),
+      living: mk(warm, -2.75, FLOOR + 1.55, -2.1, 9),
+      bed: mk(warm, F.bed.x, FLOOR + 1.1, -2.45, 7),
+      desk: mk('#ffd7a3', F.desk.x - 0.45, FLOOR + 1.12, F.desk.z - 0.05, 5),
+      stove: mk('#ff8a3c', F.stove.x, FLOOR + 0.55, F.stove.z + 0.6, 6),
+      fire: mk('#ff9a4a', F.fireBowl.x, FLOOR + 0.95, F.fireBowl.z, 10),
+    };
+    this.maxLight = { kitchen: 9, living: 7, bed: 5, desk: 3.2, stove: 3.2, fire: 7 };
+  }
 }
