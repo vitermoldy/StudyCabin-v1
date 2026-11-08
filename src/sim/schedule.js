@@ -39,3 +39,35 @@ export const DAY = [
   { id: 'bedtime', start: h(22, 40), end: h(23, 0), word: 'Bedtime', line: 'Getting ready for bed', spot: 'bedside', pose: 'stand' },
   { id: 'sleep', start: h(23, 0), end: h(24, 0), word: 'Sleep', line: 'Asleep under the duvet', spot: 'bed', pose: 'sleep' },
 ];
+
+export const FOCUS_ACTIVITY = { id: 'focus', word: 'Focus', line: 'Studying with you at the desk', spot: 'desk', pose: 'sitType' };
+export const BREAK_ACTIVITY = { id: 'break', word: 'Break', line: 'A short break at the window', spot: 'deskWindow', pose: 'stretch' };
+
+/** The scheduled entry for a time of day, before weather changes. */
+export function entryAt(minutes) {
+  const m = ((minutes % 1440) + 1440) % 1440;
+  return DAY.find((a) => m >= a.start && m < a.end) || DAY[0];
+}
+
+/**
+ * The activity to show right now.
+ * @param {number} minutes  time of day
+ * @param {{badWeather:boolean, cold:boolean}} conditions
+ * @param {'focus'|'break'|null} focusPhase  set while the focus timer runs
+ */
+export function activityAt(minutes, conditions, focusPhase = null) {
+  const base = entryAt(minutes);
+  // The timer only takes over while the resident is awake.
+  if (focusPhase && base.pose !== 'sleep') {
+    const a = focusPhase === 'focus' ? FOCUS_ACTIVITY : BREAK_ACTIVITY;
+    return { ...a, start: base.start, end: base.end, key: a.id };
+  }
+  let resolved = base;
+  if (conditions.badWeather && base.wet) resolved = { ...base, ...base.wet };
+  else if (conditions.cold && base.cold) resolved = { ...base, ...base.cold };
+  return { ...resolved, key: `${base.id}:${resolved.spot}:${resolved.pose}` };
+}
+
+export function isOutside(spot) {
+  return spot === 'deckChair' || spot === 'guitar' || spot === 'rail' || spot === 'beach';
+}
