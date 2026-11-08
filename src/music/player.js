@@ -327,4 +327,14 @@ export class MusicPlayer extends Emitter {
       if (others) this._advance(1);
     }, 1800);
   }
+
+  persist() {
+    save('music', {
+      queue: this.queue.map(({ id, kind, videoId, listId, source, url, title, author, thumb, status, error }) => ({ id, kind, videoId, listId, source, url, title, author, thumb, status, error })),
+      current: this.current,
+      volume: this.volume,
+      loop: this.loop,
+      shuffle: this.shuffle,
+    });
+  }
 }
