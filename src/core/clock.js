@@ -70,4 +70,26 @@ export class Clock extends Emitter {
     }
     return passed;
   }
+
+  /** Move the clock to a time of day. Moving backwards starts the next day. */
+  jumpTo(minutes, { sameDay = false } = {}) {
+    const target = ((minutes % 1440) + 1440) % 1440;
+    if (!sameDay && target < this.minutes - 0.5) {
+      this.day += 1;
+      this.emit('day', this.day);
+    }
+    this.minutes = target;
+    this._lastMinute = Math.floor(target);
+    this.emit('jump', target);
+    this.emit('minute', this._lastMinute);
+    this.persist();
+  }
+
+  syncToReal() {
+    this.jumpTo(realMinutes(), { sameDay: true });
+  }
+
+  persist() {
+    save('clock', { minutes: this.minutes, day: this.day, speed: this.speed });
+  }
 }
