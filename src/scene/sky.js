@@ -130,3 +130,23 @@ const FRAG = /* glsl */ `
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
   }`;
+
+const C = (hex) => new THREE.Color(hex);
+
+// Clear sky by sun height (y of the sun direction).
+const CLEAR = [
+  { y: -0.3, zenith: C('#0c1522'), horizon: C('#1b2738') },
+  { y: -0.08, zenith: C('#22324d'), horizon: C('#55627a') },
+  { y: 0.0, zenith: C('#33496b'), horizon: C('#d39470') },
+  { y: 0.12, zenith: C('#55789f'), horizon: C('#e2c09b') },
+  { y: 0.35, zenith: C('#6a8fb8'), horizon: C('#c3d0d6') },
+  { y: 1.0, zenith: C('#6589b2'), horizon: C('#bfcdd4') },
+];
+const OVERCAST = [
+  { y: -0.3, zenith: C('#15181b'), horizon: C('#22272b') },
+  { y: -0.08, zenith: C('#353b41'), horizon: C('#4b5156') },
+  { y: 0.0, zenith: C('#555a5f'), horizon: C('#7e7671') },
+  { y: 0.12, zenith: C('#8a9092'), horizon: C('#aaa9a3') },
+  { y: 0.35, zenith: C('#a2a8a9'), horizon: C('#c3c6c4') },
+  { y: 1.0, zenith: C('#a7adae'), horizon: C('#c8cbc9') },
+];
