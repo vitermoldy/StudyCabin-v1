@@ -431,4 +431,26 @@ export class Resident {
     this.headG.getWorldPosition(this.head);
     this.moving = moving;
   }
+
+  get isInside() {
+    return this.pos.z < 3.0 && this.pos.x > -7 && this.pos.x < 7;
+  }
+
+  get isSleeping() {
+    return this.pose === 'sleep' && !this.path;
+  }
+
+  /** Distance from the sliding door, for opening it. */
+  get doorDistance() {
+    return Math.hypot(this.pos.x, this.pos.z - 3.0);
+  }
+}
+
+const tmp = new THREE.Vector3();
+
+function turn(current, target, maxStep) {
+  let d = target - current;
+  while (d > Math.PI) d -= Math.PI * 2;
+  while (d < -Math.PI) d += Math.PI * 2;
+  return current + clamp(d, -maxStep, maxStep);
 }
