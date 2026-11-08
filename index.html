@@ -176,6 +176,25 @@
     </div>
     <p class="hint">Made in your browser from the weather and the hour: rain only sounds when it rains, crickets come out at night.</p>
   </div>
+
+  <div class="panel" id="panel-focus" role="dialog" aria-modal="false" aria-labelledby="focus-h" data-open="false" data-focus="#focus-start" inert>
+    <div class="panel__head">
+      <h2 id="focus-h">Focus timer</h2>
+      <button class="icon-btn panel__close" type="button" aria-label="Close focus timer"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <p class="focus__phase" id="focus-phase">Focus, round 1 of 4</p>
+    <p class="focus__time" id="focus-time">25:00</p>
+    <div class="btn-row">
+      <button class="btn btn--primary" id="focus-start" type="button">Start focus</button>
+      <button class="btn btn--secondary" id="focus-skip" type="button">Skip block</button>
+      <button class="link-btn" id="focus-reset" type="button">Reset</button>
+    </div>
+    <fieldset class="choices" id="focus-group">
+      <legend class="label">Block length</legend>
+    </fieldset>
+    <p class="hint" id="focus-done">No focus blocks finished today.</p>
+    <p class="hint">While the timer runs, the resident sits at the desk and studies too. A bell sounds at the end of each block.</p>
+  </div>
   </footer>
 </body>
 </html>
