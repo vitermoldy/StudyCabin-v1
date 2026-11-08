@@ -68,3 +68,44 @@ export function grassCover(x, z) {
   const patchy = fbm(x * 0.07 + 3.1, z * 0.07, 3);
   return smoothstep(0.22, 0.5, cover * (0.55 + patchy));
 }
+
+function warp(u) {
+  const a = Math.abs(u);
+  return Math.sign(u) * (0.1 * a + 0.9 * a * a);
+}
+
+function buildGround() {
+  const NX = 230;
+  const NZ = 200;
+  const pos = [];
+  const mix = [];
+  for (let j = 0; j <= NZ; j++) {
+    const v = (j / NZ) * 2 - 1;
+    const z = v < 0 ? warp(v) * 420 : warp(v) * 80;
+    for (let i = 0; i <= NX; i++) {
+      const u = (i / NX) * 2 - 1;
+      const x = warp(u) * 520;
+      const y = groundHeight(x, z);
+      pos.push(x, y, z);
+      const wet = smoothstep(SHORE_Z - 1.6, SHORE_Z + 0.4, z);
+      const veg = Math.max(grassCover(x, z), duneness(x, z) * 0.35);
+      mix.push(wet, Math.min(1, veg), vnoise(x * 0.35, z * 0.35));
+    }
+  }
+  const idx = [];
+  for (let j = 0; j < NZ; j++) {
+    for (let i = 0; i < NX; i++) {
+      const a = j * (NX + 1) + i;
+      const b = a + 1;
+      const c = a + NX + 1;
+      const d = c + 1;
+      idx.push(a, c, b, b, c, d);
+    }
+  }
+  const geo = new THREE.BufferGeometry();
+  geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+  geo.setAttribute('aMix', new THREE.Float32BufferAttribute(mix, 3));
+  geo.setIndex(idx);
+  geo.computeVertexNormals();
+  return geo;
+}
