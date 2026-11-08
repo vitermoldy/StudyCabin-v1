@@ -99,4 +99,26 @@ export class World {
       this._cooldown = 3;
     }
   }
+
+  _lightning(dt, storm) {
+    if (this.reduced || storm < 0.5) {
+      this.flash = Math.max(0, this.flash - dt * 4);
+      return;
+    }
+    this._nextBolt -= dt;
+    if (this._nextBolt <= 0) {
+      this._nextBolt = 8 + Math.random() * 14;
+      // A soft double pulse, never more than two flashes in a second.
+      this._boltSeq = [{ at: 0, v: 0.75 }, { at: 0.42, v: 0.45 }];
+      this._boltT = 0;
+      if (this.onThunder) setTimeout(() => this.onThunder(storm), 700 + Math.random() * 2200);
+    }
+    if (this._boltSeq.length) {
+      this._boltT += dt;
+      while (this._boltSeq.length && this._boltT >= this._boltSeq[0].at) {
+        this.flash = Math.max(this.flash, this._boltSeq.shift().v);
+      }
+    }
+    this.flash = Math.max(0, this.flash - dt * 3.2);
+  }
 }
