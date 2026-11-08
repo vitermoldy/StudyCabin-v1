@@ -218,3 +218,37 @@ export function booksTexture() {
   t.repeat.set(1, 1);
   return t;
 }
+
+/** Soft round sprite for snow, smoke and lights. */
+export function dotTexture() {
+  const [c, ctx] = canvas(64, 64);
+  const g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+  g.addColorStop(0, 'rgba(255,255,255,1)');
+  g.addColorStop(0.45, 'rgba(255,255,255,0.55)');
+  g.addColorStop(1, 'rgba(255,255,255,0)');
+  ctx.fillStyle = g;
+  ctx.fillRect(0, 0, 64, 64);
+  return finish(c, { srgb: false });
+}
+
+/**
+ * Rescale the UVs of a BoxGeometry so one UV unit is one metre on every face.
+ * Box faces come in the order +x, -x, +y, -y, +z, -z, four vertices each.
+ */
+export function metricBoxUV(geo, w, h, d) {
+  const uv = geo.attributes.uv;
+  const dims = [
+    [d, h], [d, h],
+    [w, d], [w, d],
+    [w, h], [w, h],
+  ];
+  const perFace = uv.count / 6;
+  for (let f = 0; f < 6; f++) {
+    for (let i = 0; i < perFace; i++) {
+      const idx = f * perFace + i;
+      uv.setXY(idx, uv.getX(idx) * dims[f][0], uv.getY(idx) * dims[f][1]);
+    }
+  }
+  uv.needsUpdate = true;
+  return geo;
+}
