@@ -203,4 +203,23 @@ export class Climate extends Emitter {
       this.look[key] = damp(this.look[key], s[key], lookRate, dt);
     }
   }
+
+  /** Sun direction parameters for the current time. */
+  sun(minutes = this.clock.minutes) {
+    const s = SEASONS[this.season];
+    const dayLen = s.sunset - s.sunrise;
+    const t = (minutes - s.sunrise) / dayLen; // 0 at sunrise, 1 at sunset
+    return { t, dayLen, noon: s.noonElevation };
+  }
+
+  temperature(minutes = this.clock.minutes) {
+    const [mean, amp] = SEASONS[this.season].temp;
+    const diurnal = Math.cos(((minutes - 900) / 1440) * Math.PI * 2); // warmest at 15:00
+    return Math.round(mean + amp * diurnal + WEATHERS[this.weather].temp);
+  }
+
+  /** True when the weather keeps the resident indoors. */
+  get badWeather() {
+    return this.params.rain > 0.35 || this.params.snow > 0.4 || this.params.storm > 0.3 || this.weather === 'rain' || this.weather === 'storm' || this.weather === 'snow';
+  }
 }
