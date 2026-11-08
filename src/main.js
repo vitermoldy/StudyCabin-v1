@@ -136,3 +136,22 @@ climate.on('season', (id) => {
   if (climate.autoSeason) toast(`${SEASONS[id].label} has come to the cabin.`);
 });
 climate.on('weather', () => refreshActivity());
+// Words follow a change at once, not on the next scene frame.
+const refreshWords = () => {
+  const s = storyText();
+  overlay.setStory(s.line, s.meta);
+  updateWeather();
+};
+for (const ev of ['season', 'weather', 'weather-mode']) climate.on(ev, refreshWords);
+clock.on('speed', refreshWords);
+clock.on('jump', () => {
+  overlay.setTime(clock.minutes);
+  updateDay();
+});
+
+// Hand-moved camera and ripples on the water (madebyevan.com/webgl-water).
+let needsStill = false;
+mountCameraInput(document.getElementById('scene'), {
+  getWorld: () => world,
+  onRender: () => { needsStill = true; },
+});
