@@ -27,4 +27,36 @@ export class CameraRig {
     this.userS = { ...this.user };
     this._resolve(this.view, this.pos, this.target);
   }
+
+  /** Base position and target for a view at the current aspect. */
+  _resolve(id, outPos, outTarget, follow = null) {
+    const v = VIEWS[id];
+    const cam = this.camera;
+    outTarget.set(...v.target);
+    outPos.set(...v.pos);
+    if (id === 'window' && follow && follow.z < 7.5) {
+      const fx = clamp(follow.x, -4.4, 4.4);
+      outPos.x += fx - outTarget.x;
+      outTarget.x = fx;
+    }
+    if (id === 'follow' && follow) {
+      outTarget.copy(follow);
+      outTarget.y -= 0.25;
+      const inside = follow.z < 3.2;
+      outPos.set(follow.x * 0.85 + 0.3, follow.y + 1.0, inside ? 6.6 : follow.z + 6.8);
+    }
+    // Pull back far enough that `width` metres fit across.
+    const dir = outPos.clone().sub(outTarget);
+    const dist0 = dir.length();
+    dir.normalize();
+    const hfov = 2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(cam.fov) / 2) * cam.aspect);
+    const need = v.width / 2 / Math.tan(hfov / 2);
+    const dist = Math.max(dist0, Math.min(need, dist0 * 2.6));
+    outPos.copy(outTarget).addScaledVector(dir, dist);
+    if (id === 'window' || (id === 'follow' && follow && follow.z < 3.2)) {
+      // Never pass through the glass.
+      outPos.z = Math.max(outPos.z, 3.9);
+    }
+    return outPos;
+  }
 }
