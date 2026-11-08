@@ -76,3 +76,49 @@ const POSES = {
   }),
   sleep: (t) => base({ lie: 1, hipY: 0.62, spineX: 0.012 * Math.sin(t * 1.1), shLx: 0, shLz: 0.12, elL: -0.1, shRx: 0, shRz: -0.12, elR: -0.1, thL: -0.08, knL: 0.15, thR: -0.04, knR: 0.08, headY: 0.25 }),
 };
+
+const PROPS_FOR = {
+  sitRead: ['book'],
+  sitDrink: ['mug'],
+  standDrink: ['mug'],
+  sitGuitar: ['guitar'],
+};
+
+function capsule(r, len, mat) {
+  const m = new THREE.Mesh(new THREE.CapsuleGeometry(r, len, 6, 12), mat);
+  m.castShadow = true;
+  m.receiveShadow = true;
+  return m;
+}
+
+export class Resident {
+  constructor(scene) {
+    this.root = new THREE.Group();
+    scene.add(this.root);
+    this.mat = {
+      skin: new THREE.MeshStandardMaterial({ color: '#c9987a', roughness: 0.7 }),
+      hair: new THREE.MeshStandardMaterial({ color: '#33261f', roughness: 0.9 }),
+      top: new THREE.MeshStandardMaterial({ color: OUTFIT.spring, roughness: 0.95 }),
+      pants: new THREE.MeshStandardMaterial({ color: '#3d4448', roughness: 0.9 }),
+      shoe: new THREE.MeshStandardMaterial({ color: '#2a2725', roughness: 0.8 }),
+      book: new THREE.MeshStandardMaterial({ color: '#ece6da', roughness: 0.9 }),
+      cover: new THREE.MeshStandardMaterial({ color: '#7d4a36', roughness: 0.8 }),
+      mug: new THREE.MeshStandardMaterial({ color: '#e7e2d8', roughness: 0.4 }),
+      guitar: new THREE.MeshStandardMaterial({ color: '#b07a45', roughness: 0.5 }),
+      guitarDark: new THREE.MeshStandardMaterial({ color: '#3a2a20', roughness: 0.6 }),
+    };
+    this._build();
+    this.j = POSES.stand(0, 0.5);
+    this.pos = new THREE.Vector3(SPOTS.bed.at.x, SPOTS.bed.at.y, SPOTS.bed.at.z);
+    this.facing = 0;
+    this.path = null;
+    this.spot = null;
+    this.pose = 'stand';
+    this.walkPhase = 0;
+    this.speed = 1.25;
+    this.loopIndex = 0;
+    this.loopPause = 0;
+    this.head = new THREE.Vector3();
+    this.season = 'spring';
+  }
+}
