@@ -118,4 +118,47 @@ export class MusicPlayer extends Emitter {
     this.persist();
     this.emit('change');
   }
+
+  // ------------------------------------------------------------ player
+  async _ensurePlayer() {
+    if (this._ready) return true;
+    if (this._creating) return this._creating;
+    this.status = 'loading-api';
+    this.apiError = '';
+    this.emit('change');
+    this._creating = (async () => {
+      try {
+        const YT = await loadYouTubeApi();
+        await new Promise((resolve) => {
+          const mount = document.createElement('div');
+          this.host.replaceChildren(mount);
+          this.player = new YT.Player(mount, {
+            width: '100%',
+            height: '100%',
+            playerVars: { playsinline: 1, rel: 0, modestbranding: 1, origin: location.origin },
+            events: {
+              onReady: () => {
+                this._ready = true;
+                this.player.setVolume(this.volume);
+                resolve();
+              },
+              onStateChange: (e) => this._onState(e.data),
+              onError: (e) => this._onError(e.data),
+            },
+          });
+        });
+        return true;
+      } catch (err) {
+        this.status = 'api-error';
+        this.apiError = err && err.message === 'timeout'
+          ? 'YouTube took too long to answer. Check the connection, then try again.'
+          : 'YouTube did not load. Check the connection or an ad blocker, then try again.';
+        this.emit('change');
+        return false;
+      } finally {
+        this._creating = null;
+      }
+    })();
+    return this._creating;
+  }
 }
