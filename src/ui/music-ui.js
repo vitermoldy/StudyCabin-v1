@@ -202,4 +202,92 @@ export function mountMusic(player, panels, { onPlayingChange }) {
     li.appendChild(tools);
     return li;
   }
+
+  function focusRow(index, toolIndex) {
+    requestAnimationFrame(() => {
+      const li = qItems.children[index];
+      if (!li) {
+        qToggle.focus();
+        return;
+      }
+      const btns = li.querySelectorAll('.qrow__tools .icon-btn');
+      const target = btns[toolIndex] && !btns[toolIndex].disabled ? btns[toolIndex] : li.querySelector('.qrow__main');
+      target.focus();
+    });
+  }
+
+  function render() {
+    const q = player.queue;
+    const item = player.item;
+    const has = q.length > 0;
+    const playing = player.isPlaying;
+
+    // The queue list
+    const focusedIndex = [...qItems.children].findIndex((li) => li.contains(document.activeElement));
+    qItems.replaceChildren(...q.map(row));
+    if (focusedIndex >= 0 && !qItems.contains(document.activeElement)) focusRow(Math.min(focusedIndex, q.length - 1), 0);
+    qEmpty.hidden = has;
+    qClear.hidden = !has;
+    qLabel.textContent = has ? `Queue: ${q.length} ${q.length === 1 ? 'link' : 'links'}` : 'Queue is empty';
+
+    // State over the video area (empty, loading, error, end)
+    let msg = '';
+    if (player.status === 'api-error') msg = player.apiError;
+    else if (player.status === 'loading-api') msg = 'Loading the YouTube player…';
+    else if (!has) msg = 'Nothing queued yet. Paste a link above and it starts here.';
+    else if (player.status === 'ended') msg = 'That was the last link. Add another, or turn on Repeat.';
+    else if (player.status === 'idle') msg = `Press play to start “${titleOf(item || q[0])}”.`;
+    state.textContent = msg;
+    state.hidden = !msg;
+
+    // Now playing
+    if (item) {
+      nowTitle.textContent = item.kind === 'playlist' && player.nowTitle ? player.nowTitle : titleOf(item);
+      const bits = [];
+      if (item.kind === 'playlist') bits.push(`From ${titleOf(item)}`);
+      else if (item.author) bits.push(item.author);
+      if (item.status === 'error') bits.push(item.error);
+      nowSub.textContent = bits.join(' · ') || item.source;
+      nowSrc.src = ICON[item.source] || ICON.YouTube;
+      nowSrc.alt = item.source;
+      nowSrc.hidden = false;
+    } else {
+      nowTitle.textContent = 'No song playing';
+      nowSub.textContent = '';
+      nowSrc.hidden = true;
+    }
+
+    // Controls
+    const label = playing ? 'Pause music' : 'Play music';
+    for (const b of [playBtn, dockPlay]) {
+      b.disabled = !has;
+      b.setAttribute('aria-label', label);
+      setIcon(b, playing ? 'i-pause' : 'i-play');
+    }
+    prevBtn.disabled = !has;
+    nextBtn.disabled = !has || (q.length < 2 && !(item && item.kind === 'playlist'));
+    seek.disabled = !(player.status === 'playing' || player.status === 'paused' || player.status === 'buffering');
+    shuffle.setAttribute('aria-pressed', String(player.shuffle));
+    loop.setAttribute('aria-pressed', String(player.loop));
+    vol.value = player.volume;
+    volOut.textContent = `${player.volume}%`;
+
+    // The top-right chip says what is on.
+    const nowText = item && playing ? `Playing: ${nowTitle.textContent}` : 'Add music';
+    if (openMusicText.textContent !== nowText) openMusicText.textContent = nowText;
+    onPlayingChange(playing);
+  }
+
+  player.on('change', render);
+  render();
+
+  // Progress while the music panel is open.
+  setInterval(() => {
+    if (panels.current !== 'music' || seeking) return;
+    const { time, duration } = player.progress();
+    seek.value = duration ? String(Math.round((time / duration) * 100)) : '0';
+    seekTime.textContent = `${formatDuration(time)} / ${formatDuration(duration)}`;
+  }, 500);
+
+  return { render };
 }
