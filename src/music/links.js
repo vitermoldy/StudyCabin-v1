@@ -100,3 +100,18 @@ export async function fetchDetails(item) {
     clearTimeout(timer);
   }
 }
+
+export function thumbFor(item) {
+  if (item.thumb) return item.thumb;
+  if (item.videoId) return `https://i.ytimg.com/vi/${item.videoId}/mqdefault.jpg`;
+  return null;
+}
+
+export const ERROR_TEXT = {
+  2: 'YouTube could not read this link.',
+  5: 'This video cannot play in the browser player.',
+  100: 'This video was removed or is private.',
+  101: 'The owner does not allow this video to play outside YouTube.',
+  150: 'The owner does not allow this video to play outside YouTube.',
+  153: 'YouTube refused to play this here.',
+};
