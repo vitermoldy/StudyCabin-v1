@@ -280,3 +280,59 @@ function frame(now) {
     });
   }
 }
+
+// ------------------------------------------------------------ boot
+overlay.setWord(activity.word);
+overlay.setTime(clock.minutes);
+{
+  const s = storyText();
+  overlay.setStory(s.line, s.meta);
+}
+
+startWorld()
+  .then((w) => {
+    world = w;
+    world.onThunder = (s) => ambient.thunder(s);
+    world.resident.setSeason(climate.season);
+    world.resident.setActivity(activity, { teleport: true });
+    const view = prefs.view in { shore: 1, deck: 1, window: 1, water: 1, follow: 1 } ? prefs.view : 'shore';
+    world.rig.view = view;
+    viewApi = mountView({
+      rig: {
+        get view() { return world.rig.view; },
+        resetUser: () => { world.rig.resetUser(); needsStill = true; },
+        setView: (id) => {
+          world.rig.setView(id);
+          save('view', { ...load('view', {}), view: id });
+        },
+      },
+      onWords: setWords,
+      wordsShown: () => wordsShown,
+      onFullscreen: toggleFullscreen,
+    });
+    addEventListener('resize', () => world.resize());
+    // First frames, then fade the canvas over the poster.
+    world.update(0.016, 0, { minutes: clock.minutes, climate, activity, follow: view === 'follow' });
+    world.render();
+    requestAnimationFrame(() => {
+      html.classList.add('is-live');
+      html.dataset.ready = '1';
+    });
+    if (scenePaused) {
+      // Draw one still frame so the paused scene is not empty.
+      world.render();
+    }
+  })
+  .catch((err) => {
+    console.error('StudyCabin: the 3D scene could not start.', err);
+    showStill();
+    viewApi = mountView({
+      rig: { view: 'shore', setView: () => toast('Camera views need the 3D scene, which this browser cannot draw.') },
+      onWords: setWords,
+      wordsShown: () => wordsShown,
+      onFullscreen: toggleFullscreen,
+    });
+    html.dataset.ready = '1';
+  });
+
+requestAnimationFrame(frame);
