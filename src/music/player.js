@@ -309,4 +309,22 @@ export class MusicPlayer extends Emitter {
     }
     this.emit('change');
   }
+
+  _onError(code) {
+    const item = this.item;
+    if (item) {
+      item.status = 'error';
+      item.error = ERROR_TEXT[code] || 'This video cannot play here.';
+      this.persist();
+    }
+    this.status = 'paused';
+    this.emit('change');
+    const failed = this.current;
+    // Skip to the next link after the reason has been shown.
+    setTimeout(() => {
+      if (this.current !== failed) return;
+      const others = this.queue.some((q, i) => i !== failed && q.status !== 'error');
+      if (others) this._advance(1);
+    }, 1800);
+  }
 }
