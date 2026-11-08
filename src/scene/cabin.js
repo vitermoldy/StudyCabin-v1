@@ -280,4 +280,24 @@ export class Cabin {
     // pendants over the island and the table
     for (const [x, z] of [[I.x, I.z], [T.x, T.z]]) this._pendant(x, z, this.shades.kitchen);
   }
+
+  _chair(x, z, rot, mat = this.mat.wood) {
+    const g = new THREE.Group();
+    g.position.set(x, 0, z);
+    g.rotation.y = rot;
+    this.group.add(g);
+    this._cb(mat, 0.46, 0.04, 0.44, 0, FLOOR + 0.45, 0, { parent: g });
+    this._cb(mat, 0.46, 0.42, 0.04, 0, FLOOR + 0.7, -0.21, { parent: g });
+    this._legs(this.mat.woodDark, 0, 0, 0.44, 0.42, 0.43, FLOOR, 0.04, g);
+    return g;
+  }
+
+  _pendant(x, z, shade) {
+    this._cyl(this.mat.metal, 0.006, 0.006, WALL_TOP - (FLOOR + 2.2), x, (WALL_TOP + FLOOR + 2.2) / 2, z, 6, { cast: false });
+    const cone = this._m(new THREE.ConeGeometry(0.22, 0.2, 24, 1, true), shade, { cast: false });
+    cone.position.set(x, FLOOR + 2.12, z);
+    cone.material.side = THREE.DoubleSide;
+    const bulb = this._m(new THREE.SphereGeometry(0.05, 12, 8), shade, { cast: false });
+    bulb.position.set(x, FLOOR + 2.04, z);
+  }
 }
