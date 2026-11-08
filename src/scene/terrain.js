@@ -20,3 +20,31 @@ function vnoise(x, y) {
   const d = hash(xi + 1, yi + 1);
   return a + (b - a) * u + (c - a) * v + (a - b - c + d) * u * v;
 }
+function fbm(x, y, oct = 4) {
+  let v = 0;
+  let a = 0.5;
+  for (let i = 0; i < oct; i++) {
+    v += a * vnoise(x, y);
+    x = x * 2.02 + 13.7;
+    y = y * 2.02 + 7.3;
+    a *= 0.5;
+  }
+  return v;
+}
+
+export const SHORE_Z = 10.8;
+
+/** Height of the sand and dunes at a point. */
+export function groundHeight(x, z) {
+  let y = 0;
+  if (z > SHORE_Z) y -= (z - SHORE_Z) * 0.085;
+  const dx = Math.max(0, Math.abs(x + 0.5) - 12.2);
+  const dzBack = Math.max(0, -4.6 - z);
+  const away = Math.hypot(dx, dzBack);
+  const front = z > -4.6 ? smoothstep(10.5, 3.5, z) : 1;
+  const dune = smoothstep(0, 7, away) * front;
+  y += dune * (0.35 + fbm(x * 0.045, z * 0.05) * 2.7 + Math.min(dzBack, 45) * 0.035);
+  if (z < -60) y += smoothstep(-60, -150, z) * (2 + fbm(x * 0.012, z * 0.012) * 6);
+  y += (vnoise(x * 0.8, z * 0.8) - 0.5) * 0.05;
+  return y;
+}
