@@ -81,3 +81,22 @@ export function loadYouTubeApi() {
   });
   return apiPromise;
 }
+
+/** Title and thumbnail from YouTube's oEmbed endpoint; null when it cannot be read. */
+export async function fetchDetails(item) {
+  const target = item.kind === 'playlist'
+    ? `https://www.youtube.com/playlist?list=${item.listId}`
+    : `https://www.youtube.com/watch?v=${item.videoId}`;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 7000);
+  try {
+    const res = await fetch(`https://www.youtube.com/oembed?format=json&url=${encodeURIComponent(target)}`, { signal: ctrl.signal });
+    if (!res.ok) return { error: res.status === 401 || res.status === 403 ? 'private' : res.status === 404 ? 'missing' : null };
+    const data = await res.json();
+    return { title: data.title, author: data.author_name, thumb: data.thumbnail_url };
+  } catch {
+    return null;
+  } finally {
+    clearTimeout(timer);
+  }
+}
