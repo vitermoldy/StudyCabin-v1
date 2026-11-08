@@ -361,4 +361,28 @@ export class Cabin {
     // log basket
     this._cyl(woodDark, 0.2, 0.17, 0.3, W.x + 0.75, FLOOR + 0.15, W.z + 0.1, 14);
   }
+
+  _bedroom() {
+    const { wood, linen, duvet, cushion, woodDark, ceramic } = this.mat;
+    const B = F.bed;
+    const x0 = B.x - B.w / 2;
+    const x1 = B.x + B.w / 2;
+    const z0 = B.z - B.d / 2;
+    const z1 = B.z + B.d / 2;
+    this._bx(wood, x0, x1, FLOOR + 0.1, FLOOR + 0.32, z0, z1);
+    this._bx(woodDark, x0 + 0.05, x1 - 0.05, FLOOR, FLOOR + 0.1, z0 + 0.05, z1 - 0.05);
+    this._soft(linen, B.w - 0.06, 0.22, B.d - 0.08, 0.05, B.x, FLOOR + 0.43, B.z);
+    this._bx(wood, x0 - 0.03, x1 + 0.03, FLOOR + 0.1, FLOOR + 1.12, -3.0, -2.92);
+    for (const dx of [-0.42, 0.42]) this._soft(cushion, 0.68, 0.16, 0.38, 0.07, B.x + dx, FLOOR + 0.62, -2.62);
+    // duvet: flat when the bed is made, raised while someone sleeps
+    this.duvet = this._soft(duvet, B.w + 0.04, 0.1, 1.5, 0.05, B.x, FLOOR + 0.58, -1.6);
+    this.duvetFold = this._soft(duvet, B.w + 0.04, 0.08, 0.32, 0.04, B.x, FLOOR + 0.66, -1.0);
+    for (const n of [F.nightL, F.nightR]) {
+      this._bx(woodDark, n.x - 0.24, n.x + 0.24, FLOOR, FLOOR + 0.46, n.z - 0.22, n.z + 0.22);
+      this._cyl(ceramic, 0.07, 0.09, 0.22, n.x, FLOOR + 0.57, n.z, 14);
+      const s = this._m(new THREE.CylinderGeometry(0.12, 0.16, 0.2, 18, 1, true), this.shades.bed, { cast: false });
+      s.material.side = THREE.DoubleSide;
+      s.position.set(n.x, FLOOR + 0.78, n.z);
+    }
+  }
 }
