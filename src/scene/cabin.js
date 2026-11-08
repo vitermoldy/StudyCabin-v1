@@ -385,4 +385,35 @@ export class Cabin {
       s.position.set(n.x, FLOOR + 0.78, n.z);
     }
   }
+
+  _desk() {
+    const { wood, woodDark, trim, ceramic, metal, leaf, pot, screen } = this.mat;
+    const D = F.desk;
+    this._bx(wood, D.x - D.w / 2, D.x + D.w / 2, FLOOR + 0.72, FLOOR + 0.76, D.z - D.d / 2, D.z + D.d / 2);
+    this._legs(woodDark, D.x, D.z, D.w - 0.04, D.d - 0.04, 0.72, FLOOR, 0.04);
+    const top = FLOOR + 0.76;
+    // laptop: its screen faces the chair, away from the glass
+    this._bx(trim, D.x - 0.2, D.x + 0.2, top, top + 0.02, D.z - 0.28, D.z + 0.0);
+    const lid = new THREE.Group();
+    lid.position.set(D.x, top + 0.02, D.z + 0.0);
+    lid.rotation.x = -0.32;
+    this.group.add(lid);
+    this._bx(trim, -0.2, 0.2, 0, 0.27, -0.006, 0.006, { parent: lid });
+    this._bx(screen, -0.185, 0.185, 0.015, 0.255, -0.012, -0.007, { parent: lid, cast: false });
+    // notebook, pen, mug, plant
+    this._bx(ceramic, D.x - 0.62, D.x - 0.34, top, top + 0.015, D.z - 0.25, D.z - 0.03).rotation.y = 0.12;
+    this._cyl(ceramic, 0.045, 0.04, 0.1, D.x + 0.36, top + 0.05, D.z - 0.18, 12);
+    this._cyl(pot, 0.07, 0.055, 0.12, D.x + 0.58, top + 0.06, D.z + 0.12, 12);
+    const p = this._m(new THREE.IcosahedronGeometry(0.11, 0), leaf);
+    p.position.set(D.x + 0.58, top + 0.2, D.z + 0.12);
+    // desk lamp
+    this._cyl(metal, 0.07, 0.08, 0.02, D.x - 0.58, top + 0.01, D.z + 0.15, 14);
+    this._cyl(metal, 0.01, 0.01, 0.42, D.x - 0.58, top + 0.22, D.z + 0.15, 6);
+    const head = this._m(new THREE.ConeGeometry(0.09, 0.12, 18, 1, true), this.shades.desk, { cast: false });
+    head.material.side = THREE.DoubleSide;
+    head.position.set(D.x - 0.5, top + 0.44, D.z + 0.08);
+    head.rotation.x = 0.5;
+    // chair, its back to the room
+    this._chair(D.x, 1.66, 0, woodDark);
+  }
 }
