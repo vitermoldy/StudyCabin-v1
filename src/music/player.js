@@ -161,4 +161,26 @@ export class MusicPlayer extends Emitter {
     })();
     return this._creating;
   }
+
+  async _load(index, autoplay) {
+    const item = this.queue[index];
+    if (!item) return;
+    this.current = index;
+    this.nowTitle = '';
+    if (item.status === 'error') item.status = 'ready';
+    item.error = '';
+    this.persist();
+    this.emit('change');
+    if (!(await this._ensurePlayer())) return;
+    this.status = autoplay ? 'loading' : 'paused';
+    this._seekToVideo = item.kind === 'playlist' && item.videoId ? item.videoId : null;
+    const p = this.player;
+    if (item.kind === 'playlist') {
+      const opts = { list: item.listId, listType: 'playlist', index: 0 };
+      if (autoplay) p.loadPlaylist(opts);
+      else p.cuePlaylist(opts);
+    } else if (autoplay) p.loadVideoById(item.videoId);
+    else p.cueVideoById(item.videoId);
+    this.emit('change');
+  }
 }
