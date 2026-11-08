@@ -150,3 +150,27 @@ const OVERCAST = [
   { y: 0.35, zenith: C('#a2a8a9'), horizon: C('#c3c6c4') },
   { y: 1.0, zenith: C('#a7adae'), horizon: C('#c8cbc9') },
 ];
+
+function sample(table, y, key, out) {
+  if (y <= table[0].y) return out.copy(table[0][key]);
+  for (let i = 1; i < table.length; i++) {
+    if (y <= table[i].y) {
+      const a = table[i - 1];
+      const b = table[i];
+      const t = (y - a.y) / (b.y - a.y);
+      return out.copy(a[key]).lerp(b[key], t * t * (3 - 2 * t));
+    }
+  }
+  return out.copy(table[table.length - 1][key]);
+}
+
+const SUN_LOW = C('#ff9b5e');
+const SUN_HIGH = C('#fff0db');
+const MOON_LIGHT = C('#a6bbdc');
+
+/**
+ * The sky dome, sun, moon, hemisphere light and fog: everything that follows
+ * the clock and the weather.
+ */
+export class Atmosphere {
+}
