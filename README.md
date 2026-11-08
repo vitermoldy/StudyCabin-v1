@@ -71,3 +71,8 @@ shows a still picture and the music, timer and ambient sound still work.
   keeps playing out of sight.
 - The scene is heavy on purpose (about a million grass triangles on a desktop, fewer on phones).
   The page lowers its resolution by itself when frames run slow.
+
+## Before launch
+
+- The wordmark "StudyCabin" and the "S" favicon are placeholders; no logo was given.
+- `og:image` points at `share.jpg`; add `<link rel="canonical">` once the site has a domain.
