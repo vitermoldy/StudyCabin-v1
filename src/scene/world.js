@@ -154,4 +154,49 @@ export class World {
     });
     this.stoveLit = this.cabin.state.stove;
   }
+
+  update(dt, t, state) {
+    const { minutes, climate, activity, follow = true } = state;
+    const p = climate.params;
+    WORLD.uTime.value = t;
+    WORLD.uWind.value = p.wind;
+    WORLD.uSnow.value = climate.look.snow * (0.55 + p.snow * 0.45);
+    WORLD.uWet.value = clamp(p.rain * 1.2, 0, 1);
+
+    this._lightning(dt, p.storm);
+    this.rig.update(dt, t, this.resident.head);
+
+    this.atmo.update({
+      minutes,
+      season: { ...climate.seasonInfo, id: climate.season },
+      params: p,
+      time: t,
+      flash: this.flash,
+      cameraPos: this.camera.position,
+    });
+    // Caustics need sun on the water; a little stays under cloud.
+    const sunVis = this.atmo.uniforms.uSunVis.value;
+    this.terrain.update(climate.look, { caustic: Math.max(0, 0.1 + sunVis * 0.6 * this.atmo.dayFactor - this.atmo.night * 0.1) });
+    this.trees.update(climate.look);
+    this._grassPush(dt);
+    this._rain(dt, p.rain);
+    this.ripples.step(2);
+    this.ocean.update({ time: t, params: p, atmo: this.atmo, rippleTexture: this.ripples.texture });
+    this._house({ minutes, climate, activity });
+    this.cabin.update(dt, t);
+    this.resident.update(dt, t, state.residentOptions);
+    this.fx.update({
+      time: t,
+      params: p,
+      look: climate.look,
+      camera: this.camera,
+      light: 0.15 + this.atmo.dayFactor * 0.85,
+      stove: this.cabin.state.stove,
+      viewportHeight: this.height * this.dpr,
+    });
+    // Glass reflects more by day, shows the lit room at night.
+    const glass = this.cabin.mat.glass;
+    glass.opacity = 0.08 + this.atmo.dayFactor * 0.16 * (1 - smoothstep(0.3, 1, this.cabin.state.living + this.cabin.state.kitchen) * 0.4);
+    glass.color.copy(this.atmo.horizon).lerp(WHITE, 0.25);
+  }
 }
