@@ -184,4 +184,136 @@ export class Terrain {
     this.mountains = this._buildMountains();
     scene.add(this.mountains);
   }
+
+  /**
+   * Fine marram grass: patches of many thin curved blades, laid on a jittered
+   * grid over the dunes so the cover reads as one soft field, with gusts that
+   * roll across it.
+   */
+  _buildGrass(lowPower) {
+    // One patch: many long thin blades over about a square metre, each curving
+    // over toward its tip, dark at the root and light at the tip, so a field of
+    // patches reads as one thick lawn.
+    const rand = rng(7);
+    const pos = [];
+    const col = [];
+    const nrm = [];
+    const blades = lowPower ? 34 : 64;
+    for (let b = 0; b < blades; b++) {
+      const bx = (rand() - 0.5) * 1.12;
+      const bz = (rand() - 0.5) * 1.12;
+      const ang = rand() * Math.PI * 2;
+      const lean = 0.1 + rand() * 0.38;
+      const h = 0.3 + Math.pow(rand(), 0.7) * 0.45;
+      const w = 0.012 + rand() * 0.01;
+      const dx = Math.cos(ang);
+      const dz = Math.sin(ang);
+      const px = -dz * w;
+      const pz = dx * w;
+      const at = (f, side) => {
+        const bend = lean * f * f;
+        const width = (1 - f * 0.8) * side;
+        return [bx + dx * bend + px * width, h * f * (1 - lean * 0.25 * f), bz + dz * bend + pz * width];
+      };
+      const tip = [bx + dx * lean, h * (1 - lean * 0.25), bz + dz * lean];
+      const push = (v, f) => {
+        pos.push(...v);
+        const c = 0.12 + Math.pow(f, 0.8) * 0.95;
+        col.push(c * 1.02, c, c * (0.86 - f * 0.12));
+        nrm.push(dx * 0.3, 1, dz * 0.3);
+      };
+      const l0 = at(0, -1), r0 = at(0, 1), l1 = at(0.55, -1), r1 = at(0.55, 1);
+      push(l0, 0); push(r0, 0); push(l1, 0.55);
+      push(r0, 0); push(r1, 0.55); push(l1, 0.55);
+      push(l1, 0.55); push(r1, 0.55); push(tip, 1);
+    }
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.Float32BufferAttribute(col, 3));
+    geo.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
+    geo.computeBoundingSphere();
+
+    this.grassPush = { value: new THREE.Vector3(0, 0, 0) };
+    const mat = new THREE.MeshLambertMaterial({ color: 0x6f9442, vertexColors: true, side: THREE.DoubleSide });
+    mat.onBeforeCompile = (shader) => {
+      shader.uniforms.uTime = WORLD.uTime;
+      shader.uniforms.uWind = WORLD.uWind;
+      shader.uniforms.uSnow = WORLD.uSnow;
+      shader.uniforms.uPush = this.grassPush;
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nuniform float uTime; uniform float uWind; uniform vec3 uPush; varying float vTip;')
+        .replace(
+          '#include <begin_vertex>',
+          `#include <begin_vertex>
+          float hh = position.y;
+          vTip = clamp(hh / 0.6, 0.0, 1.0);
+          #ifdef USE_INSTANCING
+            vec3 ip = (instanceMatrix * vec4(position, 1.0)).xyz;
+            vec2 wdir = normalize(vec2(1.0, -0.35));
+            // a gust front rolling across the field, plus a fine flutter
+            float roll = sin(dot(ip.xz, wdir) * 0.3 - uTime * 1.6);
+            float gust = pow(roll * 0.5 + 0.5, 2.0);
+            float flutter = sin(uTime * 3.7 + ip.x * 1.9 + ip.z * 2.3) * 0.1;
+            float s = (0.25 + gust * 0.9 + flutter) * (0.2 + uWind * 1.05);
+            float h2 = hh * hh;
+            vec3 windW = vec3(wdir.x, 0.0, wdir.y) * s * h2 * 0.85 - vec3(0.0, s * h2 * 0.22, 0.0);
+            // the blades part round the pointer
+            vec2 away = ip.xz - uPush.xy;
+            float dd = length(away);
+            float near = uPush.z * smoothstep(2.4, 0.2, dd);
+            windW.xz += (away / max(dd, 0.001)) * near * h2 * 1.6;
+            windW.y -= near * h2 * 0.5;
+            mat3 imx = mat3(instanceMatrix);
+            transformed += (transpose(imx) * windW) / max(dot(imx[0], imx[0]), 0.0001);
+          #endif`,
+        );
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nuniform float uSnow; varying float vTip;')
+        .replace('#include <color_fragment>', '#include <color_fragment>\n diffuseColor.rgb = mix(diffuseColor.rgb, vec3(0.88, 0.9, 0.92), uSnow * 0.55 * vTip);');
+    };
+
+    const r = rng(99);
+    const spots = [];
+    const consider = (x, z, scale) => {
+      const cover = grassCover(x, z);
+      if (cover < 0.05 || r() > cover * 1.15) return;
+      spots.push([x, z, scale]);
+    };
+    // Thick near the cabin and over the dunes in view.
+    const near = lowPower ? 1.15 : 0.82;
+    for (let z = -34; z <= 9.6; z += near) {
+      for (let x = -44; x <= 44; x += near) consider(x + (r() - 0.5) * near * 0.7, z + (r() - 0.5) * near * 0.7, 1);
+    }
+    // Further out: bigger patches out to the hills and the trees.
+    const far = lowPower ? 3.4 : 2.6;
+    for (let z = -72; z <= 9; z += far) {
+      for (let x = -110; x <= 110; x += far) {
+        if (Math.abs(x) < 44 && z > -34) continue;
+        consider(x + (r() - 0.5) * 2, z + (r() - 0.5) * 2, 2.3);
+      }
+    }
+    const mesh = new THREE.InstancedMesh(geo, mat, spots.length);
+    const m = new THREE.Matrix4();
+    const q = new THREE.Quaternion();
+    const s = new THREE.Vector3();
+    const p = new THREE.Vector3();
+    const c = new THREE.Color();
+    const Y = new THREE.Vector3(0, 1, 0);
+    spots.forEach(([x, z, scale], i) => {
+      p.set(x, groundHeight(x, z) - 0.03, z);
+      q.setFromAxisAngle(Y, r() * Math.PI * 2);
+      const tall = 0.85 + r() * 0.3 + fbm(x * 0.12, z * 0.12, 2) * 0.45;
+      s.set(scale, tall * (scale > 1 ? 1.3 : 1), scale);
+      m.compose(p, q, s);
+      mesh.setMatrixAt(i, m);
+      const tone = 0.82 + fbm(x * 0.05, z * 0.05, 2) * 0.32 + r() * 0.05;
+      c.setRGB(tone * (0.97 + r() * 0.06), tone, tone * (0.9 + r() * 0.1));
+      mesh.setColorAt(i, c);
+    });
+    mesh.instanceMatrix.needsUpdate = true;
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+    mesh.receiveShadow = true;
+    mesh.frustumCulled = false;
+    return mesh;
+  }
 }
