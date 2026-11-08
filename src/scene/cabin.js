@@ -54,4 +54,24 @@ export class Cabin {
     mesh.position.set((x0 + x1) / 2, (y0 + y1) / 2, (z0 + z1) / 2);
     return mesh;
   }
+
+  /** Box by centre and size, inside an optional parent group. */
+  _cb(mat, w, h, d, x, y, z, opts) {
+    const geo = metricBoxUV(new THREE.BoxGeometry(w, h, d), w, h, d);
+    const mesh = this._m(geo, mat, opts);
+    mesh.position.set(x, y, z);
+    return mesh;
+  }
+
+  _soft(mat, w, h, d, r, x, y, z, opts) {
+    const mesh = this._m(new RoundedBoxGeometry(w, h, d, 3, r), mat, opts);
+    mesh.position.set(x, y, z);
+    return mesh;
+  }
+
+  _cyl(mat, rt, rb, h, x, y, z, seg = 16, opts) {
+    const mesh = this._m(new THREE.CylinderGeometry(rt, rb, h, seg), mat, opts);
+    mesh.position.set(x, y, z);
+    return mesh;
+  }
 }
