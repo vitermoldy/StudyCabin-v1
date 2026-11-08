@@ -238,4 +238,107 @@ export class Atmosphere {
     this._tmpA = new THREE.Color();
     this._tmpB = new THREE.Color();
   }
+
+  static sunDirection(minutes, season, out) {
+    const { sunrise, sunset, noonElevation } = season;
+    const dayLen = sunset - sunrise;
+    let theta;
+    if (minutes >= sunrise && minutes <= sunset) theta = ((minutes - sunrise) / dayLen) * Math.PI;
+    else {
+      const since = (((minutes - sunset) % 1440) + 1440) % 1440;
+      theta = Math.PI + (since / (1440 - dayLen)) * Math.PI;
+    }
+    const peak = THREE.MathUtils.degToRad(noonElevation);
+    const el = Math.sin(theta) * (Math.sin(theta) >= 0 ? peak : 0.6);
+    const hx = Math.cos(theta);
+    const hz = -0.8 + 1.4 * Math.max(Math.sin(theta), -0.3);
+    const hl = Math.hypot(hx, hz) || 1;
+    return out.set((hx / hl) * Math.cos(el), Math.sin(el), (hz / hl) * Math.cos(el));
+  }
+
+  update({ minutes, season, params, time, flash, cameraPos }) {
+    const u = this.uniforms;
+    Atmosphere.sunDirection(minutes, season, this.sunDir);
+    Atmosphere.sunDirection((minutes + 720) % 1440, season, this.moonDir);
+    this.moonDir.x *= -1; // the moon crosses the other way round, so it is not a second sun
+
+    const sy = this.sunDir.y;
+    const day = smoothstep(-0.1, 0.14, sy);
+    this.dayFactor = day;
+    this.night = 1 - smoothstep(-0.16, 0.02, sy);
+    const overcast = smoothstep(0.35, 0.95, params.cloud);
+    this.overcast = overcast;
+    const storm = params.storm;
+
+    sample(CLEAR, sy, 'zenith', this._tmpA);
+    sample(OVERCAST, sy, 'zenith', this._tmpB);
+    this.zenith.copy(this._tmpA).lerp(this._tmpB, overcast);
+    sample(CLEAR, sy, 'horizon', this._tmpA);
+    sample(OVERCAST, sy, 'horizon', this._tmpB);
+    this.horizon.copy(this._tmpA).lerp(this._tmpB, overcast);
+
+    // Fog pulls the whole sky toward a soft grey of the same brightness.
+    const fogAmt = clamp(params.fog, 0, 1);
+    const grey = this._tmpA.copy(this.horizon);
+    const l = (grey.r + grey.g + grey.b) / 3;
+    grey.setRGB(lerp(grey.r, l, 0.7), lerp(grey.g, l, 0.7), lerp(grey.b, l, 0.7));
+    this.horizon.lerp(grey, fogAmt * 0.6);
+    this.zenith.lerp(this.horizon, fogAmt * 0.55);
+    const darken = 1 - storm * 0.38 - params.rain * 0.1;
+    this.horizon.multiplyScalar(darken);
+    this.zenith.multiplyScalar(darken);
+
+    u.uZenith.value.copy(this.zenith);
+    u.uHorizon.value.copy(this.horizon);
+    this.fogColor.copy(this.horizon).lerp(this.zenith, 0.12);
+    u.uGround.value.copy(this.fogColor).multiplyScalar(0.8);
+    this.fog.color.copy(this.fogColor);
+    const f = params.fog;
+    this.fog.density = 0.003 + 0.0035 * f + 0.014 * f * f * f + params.rain * 0.002 + params.snow * 0.003;
+
+    // Sun colour and strength.
+    const lowness = 1 - smoothstep(0.02, 0.4, sy);
+    this.sunColor.copy(SUN_HIGH).lerp(SUN_LOW, lowness);
+    u.uSunColor.value.copy(this.sunColor);
+    u.uSunDir.value.copy(this.sunDir);
+    u.uMoonDir.value.copy(this.moonDir);
+    u.uSunVis.value = smoothstep(-0.06, 0.04, sy) * (1 - overcast * 0.85);
+    u.uGlow.value = 0.6 + lowness * 1.4;
+    u.uMoonVis.value = this.night * smoothstep(-0.05, 0.1, this.moonDir.y);
+    u.uStars.value = this.night * (1 - overcast * 0.9) * (1 - fogAmt * 0.8);
+    // a few clouds are always about; overcast fills the sky
+    u.uCloud.value = 0.3 + params.cloud * 0.7;
+    const auroraSeason = { winter: 1, autumn: 0.85, spring: 0.7, rainy: 0.55, summer: 0.5 }[season.id] ?? 0.7;
+    u.uAurora.value = this.night * (1 - overcast) * (1 - fogAmt * 0.85) * auroraSeason;
+    u.uWind.value = params.wind;
+    u.uTime.value = time;
+    u.uFogAmt.value = fogAmt;
+    u.uFlash.value = flash;
+    u.uCloudLit.value.copy(this.horizon).lerp(this._tmpB.setRGB(1, 1, 1), 0.25 * day).lerp(this.sunColor, 0.15 * day * (1 - overcast));
+    u.uCloudDark.value.copy(this.zenith).lerp(this.horizon, 0.4).multiplyScalar(0.72);
+
+    this.dome.position.copy(cameraPos);
+
+    // Lights.
+    const sunUp = smoothstep(-0.03, 0.08, sy);
+    const moonUp = smoothstep(-0.02, 0.15, this.moonDir.y) * this.night;
+    const useMoon = sunUp < 0.02;
+    const dir = useMoon ? this.moonDir : this.sunDir;
+    this.sun.position.copy(this.sun.target.position).addScaledVector(dir, 70);
+    if (useMoon) {
+      this.sun.color.copy(MOON_LIGHT);
+      this.sun.intensity = 0.42 * moonUp * (1 - overcast * 0.75);
+    } else {
+      this.sun.color.copy(this.sunColor);
+      this.sun.intensity = 3.1 * sunUp * (1 - overcast * 0.78) * (1 - fogAmt * 0.3);
+    }
+    this.sun.castShadow = this.sun.intensity > 0.05;
+
+    this.hemi.color.copy(this.zenith).lerp(this.horizon, 0.5).lerp(this._tmpB.setRGB(1, 1, 1), 0.2);
+    this.hemi.groundColor.copy(this.horizon).multiplyScalar(0.45);
+    this.hemi.intensity = 0.55 + day * (0.95 + overcast * 0.45) + flash * 2.2;
+
+    // A little more exposure at night so the scene never goes black.
+    this.renderer.toneMappingExposure = lerp(1.0, 1.45, this.night) * (1 - storm * 0.05);
+  }
 }
