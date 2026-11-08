@@ -46,3 +46,23 @@ async function startWorld() {
   });
   return w;
 }
+
+function showStill() {
+  html.classList.remove('is-live');
+  document.getElementById('nogl').hidden = false;
+}
+
+// ------------------------------------------------------------ state per frame
+let activity = activityAt(clock.minutes, conditions(), focus.residentPhase);
+let scenePaused = reduced; // under reduced motion the scene waits for a press
+let lastFrame = performance.now();
+let elapsed = 0;
+let sampleIn = 0.3;
+let audioIn = 0;
+let uiIn = 0;
+let jumped = true;
+
+function conditions() {
+  const cold = climate.season === 'winter' || climate.temperature() < 9;
+  return { badWeather: climate.badWeather, cold };
+}
