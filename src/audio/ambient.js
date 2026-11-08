@@ -253,4 +253,40 @@ export class Ambient extends Emitter {
       o.stop(t0 + 0.1);
     }
   }
+
+  _crackle() {
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const s = ctx.createBufferSource();
+    s.buffer = this.noise;
+    const f = ctx.createBiquadFilter();
+    f.type = 'highpass';
+    f.frequency.value = 1400 + Math.random() * 2500;
+    const g = ctx.createGain();
+    const dur = 0.004 + Math.random() * 0.02;
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(0.12 + Math.random() * 0.25, now + 0.002);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + dur);
+    s.connect(f).connect(g).connect(this.g.fire);
+    s.start(now, Math.random() * 3, dur + 0.02);
+  }
+
+  thunder(strength = 1) {
+    if (!this.ctx || !this.enabled || this.ctx.state !== 'running') return;
+    const ctx = this.ctx;
+    const now = ctx.currentTime;
+    const s = ctx.createBufferSource();
+    s.buffer = this.noise;
+    const f = ctx.createBiquadFilter();
+    f.type = 'lowpass';
+    f.frequency.setValueAtTime(420, now);
+    f.frequency.exponentialRampToValueAtTime(90, now + 3.5);
+    const g = ctx.createGain();
+    const peak = 0.9 * strength * this.mix.rain;
+    g.gain.setValueAtTime(0.0001, now);
+    g.gain.exponentialRampToValueAtTime(Math.max(0.0002, peak), now + 0.18);
+    g.gain.exponentialRampToValueAtTime(0.0001, now + 4.2);
+    s.connect(f).connect(g).connect(this.thunderBus);
+    s.start(now, Math.random() * 2, 4.4);
+  }
 }
