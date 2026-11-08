@@ -76,3 +76,8 @@ shows a still picture and the music, timer and ambient sound still work.
 
 - The wordmark "StudyCabin" and the "S" favicon are placeholders; no logo was given.
 - `og:image` points at `share.jpg`; add `<link rel="canonical">` once the site has a domain.
+
+## Credits
+
+YouTube and YouTube Music marks: Gil Barbara's SVG Logos and Simple Icons (CC0), trademarks of
+Google LLC. Typeface: Instrument Sans (SIL OFL) via Fontsource. 3D: three.js (MIT).
