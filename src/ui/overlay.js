@@ -39,4 +39,24 @@ export class Overlay {
       if (!this.reduced) requestAnimationFrame(() => s.classList.add('is-in'));
     });
   }
+
+  setTime(minutes) {
+    const text = formatClock(minutes);
+    if (text === this.lastTime) return;
+    const prev = this.lastTime;
+    this.lastTime = text;
+    this.clock.setAttribute('datetime', text);
+    if (!prev || this.reduced) {
+      this.clock.textContent = text;
+      return;
+    }
+    // Only the characters that changed cross-fade.
+    this.clock.textContent = '';
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.textContent = ch;
+      if (ch !== prev[i]) s.className = 'digit-swap';
+      this.clock.appendChild(s);
+    });
+  }
 }
