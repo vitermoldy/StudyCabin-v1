@@ -153,4 +153,31 @@ export class Cabin {
       this._bx(trim, side * 7.0 - (side > 0 ? 0 : 0.16), side * 7.0 + (side > 0 ? 0.16 : 0), 0.05, WALL_TOP, -3.18, -3.02);
     }
   }
+
+  _front() {
+    const { siding, trim, glass } = this.mat;
+    this._bx(siding, -7.15, 7.15, GLASS_TOP, WALL_TOP, 2.98, 3.13);
+    this._bx(trim, -7.0, 7.0, FLOOR, FLOOR + 0.05, 2.95, 3.1);
+    this._bx(trim, -7.0, 7.0, GLASS_TOP - 0.06, GLASS_TOP, 2.95, 3.1);
+    this._bx(trim, -7.0, 7.0, 0.1, FLOOR - 0.03, 3.0, 3.06); // skirting under the glass line
+    const posts = [-6.98, -3.62, -0.98, 0.98, 3.62, 6.98];
+    for (const x of posts) this._bx(trim, x - 0.035, x + 0.035, FLOOR, GLASS_TOP, 2.97, 3.08);
+    const panes = [[-6.93, -3.67], [-3.57, -1.03], [1.03, 3.57], [3.67, 6.93]];
+    for (const [a, b] of panes) {
+      const pane = this._bx(glass, a, b, FLOOR + 0.05, GLASS_TOP - 0.06, 3.01, 3.03, { cast: false, receive: false });
+      pane.renderOrder = 2;
+    }
+    // sliding door: glass and a thin frame
+    this.door = new THREE.Group();
+    this.door.position.set(0, 0, 2.93);
+    this.group.add(this.door);
+    const dg = this._bx(glass, -0.93, 0.93, FLOOR + 0.05, GLASS_TOP - 0.06, -0.01, 0.01, { cast: false, receive: false, parent: this.door });
+    dg.renderOrder = 2;
+    this._bx(trim, -0.95, -0.92, FLOOR + 0.05, GLASS_TOP - 0.06, -0.02, 0.02, { parent: this.door });
+    this._bx(trim, 0.92, 0.95, FLOOR + 0.05, GLASS_TOP - 0.06, -0.02, 0.02, { parent: this.door });
+    this._bx(trim, 0.78, 0.82, FLOOR + 0.9, FLOOR + 1.3, 0.02, 0.05, { parent: this.door });
+    // porch light beside the door
+    this._bx(trim, 1.15, 1.31, GLASS_TOP + 0.08, GLASS_TOP + 0.3, 3.13, 3.2);
+    this._bx(this.shades.porch, 1.17, 1.29, GLASS_TOP + 0.1, GLASS_TOP + 0.2, 3.2, 3.24, { cast: false });
+  }
 }
