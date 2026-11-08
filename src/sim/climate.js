@@ -74,3 +74,40 @@ function pick(odds, random = Math.random) {
   }
   return entries[entries.length - 1][0];
 }
+
+function hexToRgb(hex) {
+  const n = parseInt(hex.slice(1), 16);
+  return [(n >> 16) / 255, ((n >> 8) & 255) / 255, (n & 255) / 255];
+}
+
+export class Climate extends Emitter {
+  constructor(clock) {
+    super();
+    this.clock = clock;
+    const saved = load('climate', {});
+    this.season = saved.season in SEASONS ? saved.season : 'spring';
+    this.autoSeason = saved.autoSeason !== false;
+    this.weatherMode = saved.weatherMode === 'auto' || saved.weatherMode in WEATHERS ? saved.weatherMode : 'auto';
+    this.weather = saved.weather in WEATHERS ? saved.weather : this._roll();
+    if (this.weatherMode !== 'auto') this.weather = this.weatherMode;
+    this.nextChange = Number.isFinite(saved.nextChange) ? saved.nextChange : this._now() + this._span();
+
+    // Blended values the scene reads every frame.
+    this.params = {};
+    const target = WEATHERS[this.weather];
+    for (const k of PARAM_KEYS) this.params[k] = target[k];
+    const s = SEASONS[this.season];
+    this.look = {
+      grass: hexToRgb(s.grass),
+      sand: hexToRgb(s.sand),
+      sandWet: hexToRgb(s.sandWet),
+      foliage: hexToRgb(s.foliage),
+      snow: s.snow,
+      petals: s.petals,
+      leaves: s.leaves,
+      warmth: s.warmth,
+    };
+    this.lightning = 0; // 0..1 flash level, set by the scene
+    clock.on('day', (day) => this._onDay(day));
+  }
+}
