@@ -238,4 +238,46 @@ export class Cabin {
     this._bx(trim, -9.35, -8.35, FLOOR, ANNEX.h - 0.35, ANNEX.z1, ANNEX.z1 + 0.04);
     this._bx(trim, ANNEX.x0 - 0.2, ANNEX.x1 + 0.08, ANNEX.h - 0.06, ANNEX.h, ANNEX.z1 + 0.26, ANNEX.z1 + 0.32);
   }
+
+  // ------------------------------------------------------------ interior
+  _kitchen() {
+    const { counter, cabinet, ceramic, metal, wood, woodDark, trim, leaf, pot } = this.mat;
+    // back counter and tall cupboard
+    this._bx(cabinet, -6.1, -3.8, FLOOR, FLOOR + 0.86, -3.0, -2.42);
+    this._bx(counter, -6.12, -3.78, FLOOR + 0.86, FLOOR + 0.92, -3.0, -2.38);
+    this._bx(cabinet, -6.98, -6.12, FLOOR, FLOOR + 2.2, -3.0, -2.38);
+    // open shelves with bowls and jars
+    for (const y of [FLOOR + 1.55, FLOOR + 2.0]) {
+      this._bx(wood, -6.0, -3.9, y, y + 0.04, -3.0, -2.74);
+      for (let i = 0; i < 5; i++) {
+        const x = -5.8 + i * 0.42;
+        if ((i + (y > 2.2 ? 1 : 0)) % 2) this._cyl(ceramic, 0.07, 0.06, 0.16, x, y + 0.12, -2.86, 12);
+        else this._cyl(ceramic, 0.12, 0.07, 0.07, x, y + 0.075, -2.86, 14);
+      }
+    }
+    // island with a pot on the hob
+    const I = F.island;
+    this._bx(cabinet, I.x - I.w / 2, I.x + I.w / 2, FLOOR, FLOOR + 0.86, I.z - I.d / 2, I.z + I.d / 2);
+    this._bx(counter, I.x - I.w / 2 - 0.03, I.x + I.w / 2 + 0.03, FLOOR + 0.86, FLOOR + 0.92, I.z - I.d / 2 - 0.03, I.z + I.d / 2 + 0.03);
+    this._bx(trim, I.x - 0.62, I.x + 0.02, FLOOR + 0.92, FLOOR + 0.925, I.z - 0.3, I.z + 0.3);
+    this._cyl(metal, 0.13, 0.12, 0.14, I.x - 0.3, FLOOR + 0.99, I.z - 0.05, 16);
+    this._cyl(ceramic, 0.09, 0.1, 0.18, I.x + 0.45, FLOOR + 1.01, I.z + 0.1, 14);
+    // dining table and chairs
+    const T = F.table;
+    this._bx(wood, T.x - T.w / 2, T.x + T.w / 2, FLOOR + 0.71, FLOOR + 0.76, T.z - T.d / 2, T.z + T.d / 2);
+    this._legs(woodDark, T.x, T.z, T.w - 0.08, T.d - 0.08, 0.71);
+    this._chair(T.x, 0.42, 0);
+    this._chair(T.x - 0.38, 2.02, Math.PI);
+    this._chair(T.x + 0.38, 2.02, Math.PI);
+    this._cyl(ceramic, 0.13, 0.08, 0.06, T.x + 0.25, FLOOR + 0.79, T.z - 0.1, 14);
+    // tall plant in the corner by the glass
+    this._cyl(pot, 0.2, 0.16, 0.42, -6.55, FLOOR + 0.21, 2.5, 16);
+    for (let i = 0; i < 7; i++) {
+      const s = this._m(new THREE.IcosahedronGeometry(0.28 - i * 0.015, 0), leaf);
+      s.position.set(-6.55 + Math.sin(i * 2.1) * 0.18, FLOOR + 0.75 + i * 0.17, 2.5 + Math.cos(i * 2.1) * 0.15);
+      s.scale.set(1, 0.8, 1);
+    }
+    // pendants over the island and the table
+    for (const [x, z] of [[I.x, I.z], [T.x, T.z]]) this._pendant(x, z, this.shades.kitchen);
+  }
 }
