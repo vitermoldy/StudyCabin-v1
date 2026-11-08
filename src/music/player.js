@@ -183,4 +183,29 @@ export class MusicPlayer extends Emitter {
     else p.cueVideoById(item.videoId);
     this.emit('change');
   }
+
+  play(index = this.current) {
+    if (index < 0) index = 0;
+    if (!this.queue[index]) return;
+    return this._load(index, true);
+  }
+
+  _cue(index) {
+    if (!this._ready) {
+      this.current = index;
+      this.emit('change');
+      return;
+    }
+    return this._load(index, false);
+  }
+
+  toggle() {
+    if (!this.queue.length) return;
+    if (!this._ready || this.current < 0 || this.status === 'ended' || this.status === 'api-error') {
+      this.play(this.current < 0 ? 0 : this.current);
+      return;
+    }
+    if (this.isPlaying) this.player.pauseVideo();
+    else this.player.playVideo();
+  }
 }
