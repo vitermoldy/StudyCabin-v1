@@ -129,4 +129,22 @@ export class Ripples {
     this.a = this.b;
     this.b = t;
   }
+
+  step(steps = 2) {
+    if (!this.ok) return;
+    const r = this.renderer;
+    const prev = r.getRenderTarget();
+    const auto = r.autoClear;
+    r.autoClear = false;
+    for (const d of this.queue) {
+      this.dropMat.uniforms.uCenter.value.set(d.u, d.v);
+      this.dropMat.uniforms.uRadius.value = d.r;
+      this.dropMat.uniforms.uStrength.value = d.s;
+      this._pass(this.dropMat);
+    }
+    this.queue.length = 0;
+    for (let i = 0; i < steps; i++) this._pass(this.updateMat);
+    r.setRenderTarget(prev);
+    r.autoClear = auto;
+  }
 }
