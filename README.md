@@ -60,3 +60,14 @@ shows a still picture and the music, timer and ambient sound still work.
 | P | Pause or move the scene |
 | F | Full screen |
 | Esc | Close the open panel |
+
+## Known limits
+
+- Some music videos refuse to play outside YouTube (YouTube error 101/150). The queue shows the
+  reason on that row and moves to the next link.
+- YouTube mixes (lists starting with RD), Liked videos and Watch later cannot be embedded; a song
+  link copied from a YouTube Music mix plays as that one song.
+- The video plays in the Music panel at about 400 by 225 px. When the panel is closed the player
+  keeps playing out of sight.
+- The scene is heavy on purpose (about a million grass triangles on a desktop, fewer on phones).
+  The page lowers its resolution by itself when frames run slow.
