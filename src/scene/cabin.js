@@ -416,4 +416,46 @@ export class Cabin {
     // chair, its back to the room
     this._chair(D.x, 1.66, 0, woodDark);
   }
+
+  _deckFurniture() {
+    const { deckWood, metal, flame, ceramic } = this.mat;
+    // low lounge chairs facing the sea
+    for (const c of [F.deckChair, F.deckChair2]) {
+      const g = new THREE.Group();
+      g.position.set(c.x, 0, c.z);
+      this.group.add(g);
+      this._cb(deckWood, 0.66, 0.05, 0.6, 0, FLOOR + 0.36, 0.02, { parent: g });
+      const back = this._cb(deckWood, 0.66, 0.62, 0.05, 0, FLOOR + 0.66, -0.3, { parent: g });
+      back.rotation.x = -0.32;
+      for (const sx of [-0.33, 0.33]) {
+        this._cb(deckWood, 0.06, 0.06, 0.7, sx, FLOOR + 0.6, 0.0, { parent: g });
+        this._cb(deckWood, 0.05, 0.36, 0.05, sx, FLOOR + 0.18, 0.28, { parent: g });
+        this._cb(deckWood, 0.05, 0.36, 0.05, sx, FLOOR + 0.18, -0.24, { parent: g });
+      }
+    }
+    // a wooden chair and a small table on the right
+    this._chair(F.guitarChair.x, F.guitarChair.z, 0, deckWood);
+    this._chair(F.guitarChair.x + 1.65, F.guitarChair.z, 0, deckWood);
+    const t = F.deckTable;
+    this._cyl(deckWood, 0.3, 0.3, 0.04, t.x, FLOOR + 0.55, t.z, 20);
+    this._cyl(deckWood, 0.04, 0.04, 0.53, t.x, FLOOR + 0.27, t.z, 8);
+    this._cyl(ceramic, 0.045, 0.04, 0.1, t.x + 0.1, FLOOR + 0.62, t.z - 0.05, 12);
+    // fire bowl
+    const f = F.fireBowl;
+    const pts = [];
+    for (let i = 0; i <= 10; i++) {
+      const a = (i / 10) * Math.PI * 0.5;
+      pts.push(new THREE.Vector2(0.05 + Math.sin(a) * 0.5, 0.42 - Math.cos(a) * 0.3));
+    }
+    const bowl = this._m(new THREE.LatheGeometry(pts, 28), metal);
+    bowl.material = metal;
+    bowl.position.set(f.x, FLOOR, f.z);
+    this._cyl(metal, 0.14, 0.2, 0.14, f.x, FLOOR + 0.07, f.z, 16);
+    this.flames = [];
+    for (let i = 0; i < 4; i++) {
+      const fl = this._m(new THREE.ConeGeometry(0.11 - i * 0.012, 0.42, 10), flame, { cast: false, receive: false });
+      fl.position.set(f.x + Math.sin(i * 1.7) * 0.12, FLOOR + 0.55, f.z + Math.cos(i * 1.7) * 0.12);
+      this.flames.push(fl);
+    }
+  }
 }
