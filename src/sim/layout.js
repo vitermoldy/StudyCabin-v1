@@ -30,3 +30,28 @@ export const FURNITURE = {
   guitarChair: { x: 4.0, z: 4.95 },
   fireBowl: { x: -7.4, z: 5.25 },
 };
+
+const f = FURNITURE;
+const p = (x, z, y = FLOOR) => ({ x, y, z });
+
+/**
+ * Spots the resident uses. `via` leads from the area's hub line to the spot;
+ * `face` is the rotation about y once there (0 faces the sea, +z).
+ */
+export const SPOTS = {
+  bed: { area: 'in', via: [p(3.0, SPINE_Z), p(3.0, -1.35)], at: p(3.1, -1.35), face: Math.PI / 2 },
+  bedside: { area: 'in', via: [p(3.0, SPINE_Z), p(3.0, -0.9)], at: p(3.05, -0.9), face: 0.15 },
+  cook: { area: 'in', via: [p(-3.65, SPINE_Z), p(-3.65, -1.82)], at: p(-5.35, -1.82), face: 0 },
+  dine: { area: 'in', via: [p(-3.85, SPINE_Z), p(-3.85, 0.42)], at: p(-5.0, 0.42), face: 0 },
+  sofa: { area: 'in', via: [p(-2.85, SPINE_Z), p(-2.85, -1.0), p(-1.55, -1.0)], at: p(-1.55, -1.72), face: 0 },
+  armchair: { area: 'in', via: [p(0.95, SPINE_Z), p(1.15, 0.95)], at: p(0.98, 0.22), face: f.armchair.rot },
+  desk: { area: 'in', via: [p(4.35, SPINE_Z), p(4.35, 1.28), p(5.6, 1.28)], at: p(5.6, 1.66), face: 0 },
+  stove: { area: 'in', via: [p(1.95, SPINE_Z), p(1.95, -1.7)], at: p(0.68, -1.72), face: Math.PI },
+  shelf: { area: 'in', via: [p(-2.85, SPINE_Z), p(-2.85, -2.12)], at: p(-3.05, -2.12), face: Math.PI },
+  window: { area: 'in', via: [p(-2.3, SPINE_Z)], at: p(-2.3, 2.6), face: 0 },
+  deskWindow: { area: 'in', via: [p(3.6, SPINE_Z)], at: p(3.6, 2.6), face: 0 },
+  deckChair: { area: 'deck', via: [p(-4.2, DECK_Z), p(-4.2, 4.3)], at: p(-4.2, 4.86), face: 0 },
+  guitar: { area: 'deck', via: [p(4.0, DECK_Z), p(4.0, 4.3)], at: p(4.0, 4.86), face: 0 },
+  rail: { area: 'deck', via: [p(1.6, DECK_Z), p(1.6, 5.9)], at: p(1.6, 6.15), face: 0 },
+  beach: { area: 'beach', via: [p(2.5, 9.0, 0)], at: p(6.5, 10.4, 0), face: 0.2 },
+};
