@@ -68,4 +68,24 @@ export class FocusTimer extends Emitter {
     this.endAt = Date.now() + this.remainingMs;
     this._commit();
   }
+
+  pause() {
+    if (!this.running) return;
+    this.remainingMs = Math.max(0, this.endAt - Date.now());
+    this.running = false;
+    this._commit();
+  }
+
+  toggle() {
+    if (this.running) this.pause();
+    else this.start();
+  }
+
+  reset() {
+    this.running = false;
+    this.phase = 'focus';
+    this.round = 1;
+    this.remainingMs = this.lengthMs();
+    this._commit();
+  }
 }
