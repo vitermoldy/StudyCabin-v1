@@ -72,4 +72,23 @@ export class Panels extends Emitter {
     panel.dataset.open = 'false';
     panel.inert = true;
   }
+
+  _syncButtons() {
+    for (const t of this.tabs) t.setAttribute('aria-expanded', String(t.dataset.panel === this.current));
+    for (const [btn, id] of this.extraOpeners) btn.setAttribute('aria-expanded', String(id === this.current));
+  }
+}
+
+let toastTimer = 0;
+export function toast(text, ms = 3600) {
+  const el = document.getElementById('toast');
+  el.textContent = text;
+  el.classList.add('is-on');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    el.classList.remove('is-on');
+    setTimeout(() => {
+      if (!el.classList.contains('is-on')) el.textContent = '';
+    }, 250);
+  }, ms);
 }
