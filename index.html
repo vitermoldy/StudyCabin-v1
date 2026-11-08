@@ -134,6 +134,25 @@
     <h3 class="subhead">The resident's day</h3>
     <ol class="timeline" id="timeline"></ol>
   </div>
+
+  <div class="panel" id="panel-weather" role="dialog" aria-modal="false" aria-labelledby="weather-h" data-open="false" data-focus="#season-group input:checked" inert>
+    <div class="panel__head">
+      <h2 id="weather-h">Season and weather</h2>
+      <button class="icon-btn panel__close" type="button" aria-label="Close season and weather"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <p class="readout"><span id="weather-now">Clear sky, 18°</span></p>
+    <fieldset class="choices" id="season-group">
+      <legend class="label">Season</legend>
+    </fieldset>
+    <p class="hint" id="season-line"></p>
+    <div class="switch-row">
+      <span class="switch-row__label" id="auto-season-l">Move to the next season every 7 days</span>
+      <button class="switch" id="auto-season" type="button" role="switch" aria-checked="true" aria-labelledby="auto-season-l"></button>
+    </div>
+    <fieldset class="choices" id="weather-group">
+      <legend class="label">Weather</legend>
+    </fieldset>
+  </div>
   </footer>
 </body>
 </html>
