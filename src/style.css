@@ -174,3 +174,39 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
 .dock__words[aria-pressed="false"] { color: rgba(228, 229, 225, 0.55); }
 .dock__btn + .dock__tabs, .dock__tabs + .dock__btn { border-left: 1px solid var(--line); padding-left: 2px; }
 .dock__tabs + .dock__btn { border-left: 1px solid var(--line); }
+
+/* ------------------------------------------------------------ panels */
+.panel {
+  position: fixed; left: 50%; z-index: 10;
+  bottom: calc(var(--edge) + var(--dock-h) + 10px);
+  width: min(440px, calc(100vw - 2 * var(--edge)));
+  max-height: calc(100vh - var(--dock-h) - 2 * var(--edge) - 84px);
+  max-height: calc(100dvh - var(--dock-h) - 2 * var(--edge) - 84px);
+  overflow-y: auto; overscroll-behavior: contain;
+  padding: var(--s-3) var(--s-5) var(--s-5);
+  background: rgba(19, 19, 18, 0.9);
+  -webkit-backdrop-filter: blur(16px) saturate(1.1);
+  backdrop-filter: blur(16px) saturate(1.1);
+  border: 1px solid var(--line); border-radius: var(--r-md);
+  opacity: 0; visibility: hidden; transform: translate(-50%, 6px);
+  transition: opacity 120ms var(--ease), transform 120ms var(--ease), visibility 0s linear 120ms;
+  scrollbar-width: thin; scrollbar-color: rgba(228, 229, 225, 0.25) transparent;
+}
+#panel-music { width: min(430px, calc(100vw - 2 * var(--edge))); }
+.panel[data-open="true"] {
+  opacity: 1; visibility: visible; transform: translate(-50%, 0);
+  transition: opacity 200ms var(--ease), transform 200ms var(--ease), visibility 0s;
+}
+.panel__head {
+  position: sticky; top: calc(-1 * var(--s-3)); z-index: 2;
+  display: flex; align-items: center; justify-content: space-between;
+  margin: 0 calc(-1 * var(--s-2)) var(--s-3) 0; padding-top: var(--s-1);
+  background: linear-gradient(rgba(19, 19, 18, 0.98) 70%, rgba(19, 19, 18, 0));
+}
+.panel h2 { font-size: 20px; font-weight: 500; letter-spacing: -0.01em; }
+.subhead { margin: var(--s-6) 0 var(--s-3); font-size: 16px; font-weight: 500; }
+.label { display: block; margin-bottom: var(--s-2); font-size: var(--t-label); font-weight: 500; color: var(--muted); }
+.hint { margin-top: var(--s-2); font-size: var(--t-small); line-height: 1.5; color: var(--muted); }
+.readout { display: flex; align-items: baseline; gap: var(--s-3); margin-bottom: var(--s-4); font-size: 28px; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.readout__sub { font-size: var(--t-small); color: var(--muted); letter-spacing: 0; }
+.field__error { margin-top: var(--s-2); font-size: var(--t-small); color: #f0b37a; }
