@@ -173,4 +173,34 @@ export class Climate extends Emitter {
     this.emit('weather-mode', mode);
     this.persist();
   }
+
+  _setWeather(id) {
+    if (id === this.weather) return;
+    this.weather = id;
+    this.emit('weather', id);
+  }
+
+  /** dt in real seconds, gameDt in game minutes. */
+  update(dt, gameDt) {
+    if (this.weatherMode === 'auto' && this._now() >= this.nextChange) {
+      this._setWeather(this._roll());
+      this.nextChange = this._now() + this._span();
+      this.persist();
+    }
+    // Blend toward the target over about 20 game minutes, never slower than 6 real seconds.
+    const rate = Math.max(0.6, gameDt > 0 ? (gameDt / dt) * 0.12 : 0.6);
+    const target = WEATHERS[this.weather];
+    for (const k of PARAM_KEYS) this.params[k] = damp(this.params[k], target[k], rate, dt);
+
+    const s = SEASONS[this.season];
+    const lookRate = Math.max(0.5, rate * 0.6);
+    for (const key of ['grass', 'sand', 'sandWet', 'foliage']) {
+      const t = hexToRgb(s[key]);
+      const c = this.look[key];
+      for (let i = 0; i < 3; i++) c[i] = damp(c[i], t[i], lookRate, dt);
+    }
+    for (const key of ['snow', 'petals', 'leaves', 'warmth']) {
+      this.look[key] = damp(this.look[key], s[key], lookRate, dt);
+    }
+  }
 }
