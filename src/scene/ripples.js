@@ -48,3 +48,61 @@ const UPDATE_FRAG = /* glsl */ `
     gl_FragColor = info;
   }
 `;
+
+export class Ripples {
+  constructor(renderer) {
+    this.renderer = renderer;
+    this.ok = false;
+    const gl = renderer.getContext();
+    // three.js is WebGL 2 only now; float targets still need this extension.
+    const canFloat = gl.getExtension('EXT_color_buffer_float') || gl.getExtension('EXT_color_buffer_half_float');
+    if (!canFloat) return;
+    const opts = {
+      type: THREE.HalfFloatType,
+      format: THREE.RGBAFormat,
+      minFilter: THREE.LinearFilter,
+      magFilter: THREE.LinearFilter,
+      wrapS: THREE.ClampToEdgeWrapping,
+      wrapT: THREE.ClampToEdgeWrapping,
+      depthBuffer: false,
+      stencilBuffer: false,
+    };
+    this.a = new THREE.WebGLRenderTarget(RES, RES, opts);
+    this.b = new THREE.WebGLRenderTarget(RES, RES, opts);
+    this.camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+    this.scene = new THREE.Scene();
+    this.quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2));
+    this.quad.frustumCulled = false;
+    this.scene.add(this.quad);
+    this.dropMat = new THREE.ShaderMaterial({
+      uniforms: { uTex: { value: null }, uCenter: { value: new THREE.Vector2() }, uRadius: { value: 0.02 }, uStrength: { value: 0.5 } },
+      vertexShader: QUAD_VERT,
+      fragmentShader: DROP_FRAG,
+      depthTest: false,
+      depthWrite: false,
+    });
+    this.updateMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTex: { value: null },
+        uDelta: { value: new THREE.Vector2(1 / RES, 1 / RES) },
+        uZ0: { value: RIPPLE_AREA.z0 },
+        uSize: { value: RIPPLE_AREA.size },
+        uShore: { value: SHORE_Z },
+      },
+      vertexShader: QUAD_VERT,
+      fragmentShader: UPDATE_FRAG,
+      depthTest: false,
+      depthWrite: false,
+    });
+    this.queue = [];
+    this.ok = true;
+    // Start flat.
+    const prev = renderer.getRenderTarget();
+    for (const t of [this.a, this.b]) {
+      renderer.setRenderTarget(t);
+      renderer.setClearColor(0x000000, 0);
+      renderer.clear(true, false, false);
+    }
+    renderer.setRenderTarget(prev);
+  }
+}
