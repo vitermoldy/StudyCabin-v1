@@ -115,6 +115,25 @@
       </div>
     </div>
   </div>
+
+  <div class="panel" id="panel-day" role="dialog" aria-modal="false" aria-labelledby="day-h" data-open="false" data-focus="#speed-group input:checked" inert>
+    <div class="panel__head">
+      <h2 id="day-h">Day and time</h2>
+      <button class="icon-btn panel__close" type="button" aria-label="Close day and time"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <p class="readout"><span id="day-clock">07:42</span><span class="readout__sub" id="day-num">Day 1</span></p>
+    <fieldset class="choices" id="speed-group">
+      <legend class="label">Clock speed</legend>
+    </fieldset>
+    <div class="slider-row">
+      <label class="label" for="time-scrub">Time of day</label>
+      <input class="range" id="time-scrub" type="range" min="0" max="1435" step="5" value="0">
+      <output class="slider-row__value" id="time-scrub-out" for="time-scrub">00:00</output>
+    </div>
+    <button class="btn btn--secondary" id="sync-clock" type="button">Match my clock</button>
+    <h3 class="subhead">The resident's day</h3>
+    <ol class="timeline" id="timeline"></ol>
+  </div>
   </footer>
 </body>
 </html>
