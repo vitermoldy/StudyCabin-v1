@@ -19,4 +19,24 @@ export class Overlay {
     this.lastTime = '';
     this.inks = new Map();
   }
+
+  setWord(text) {
+    if (text === this.currentWord) return;
+    this.currentWord = text;
+    const el = this.word;
+    el.textContent = '';
+    const said = document.createElement('span');
+    said.className = 'sr-only';
+    said.textContent = text;
+    el.appendChild(said);
+    [...text].forEach((ch, i) => {
+      const s = document.createElement('span');
+      s.className = 'ch';
+      s.setAttribute('aria-hidden', 'true');
+      s.textContent = ch;
+      s.style.setProperty('--i', i);
+      el.appendChild(s);
+      if (!this.reduced) requestAnimationFrame(() => s.classList.add('is-in'));
+    });
+  }
 }
