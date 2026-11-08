@@ -105,4 +105,28 @@ export class Ripples {
     }
     renderer.setRenderTarget(prev);
   }
+
+  get texture() {
+    return this.ok ? this.a.texture : null;
+  }
+
+  /** A drop at a world point. radius in metres, strength roughly 0..1. */
+  drop(x, z, radius = 1.6, strength = 0.5) {
+    if (!this.ok) return;
+    const u = (x - RIPPLE_AREA.x0) / RIPPLE_AREA.size;
+    const v = (z - RIPPLE_AREA.z0) / RIPPLE_AREA.size;
+    if (u < 0.02 || u > 0.98 || v < 0.02 || v > 0.98) return;
+    if (this.queue.length > 24) this.queue.shift();
+    this.queue.push({ u, v, r: radius / RIPPLE_AREA.size, s: strength });
+  }
+
+  _pass(material) {
+    material.uniforms.uTex.value = this.a.texture;
+    this.quad.material = material;
+    this.renderer.setRenderTarget(this.b);
+    this.renderer.render(this.scene, this.camera);
+    const t = this.a;
+    this.a = this.b;
+    this.b = t;
+  }
 }
