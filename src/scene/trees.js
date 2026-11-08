@@ -42,3 +42,42 @@ function pineGeometry() {
   g.computeVertexNormals();
   return g;
 }
+
+/** A broadleaf tree 1 unit tall: trunk, two limbs and a cloud of crown lumps. */
+function broadleafGeometry() {
+  const trunkParts = [];
+  const crownParts = [];
+  const trunk = new THREE.CylinderGeometry(0.025, 0.045, 0.5, 7);
+  trunk.translate(0, 0.25, 0);
+  trunkParts.push(flat(trunk));
+  for (const [ang, tilt] of [[0.4, 0.6], [2.6, -0.55]]) {
+    const limb = new THREE.CylinderGeometry(0.012, 0.022, 0.28, 5);
+    limb.translate(0, 0.14, 0);
+    limb.rotateZ(tilt);
+    limb.rotateY(ang);
+    limb.translate(0, 0.42, 0);
+    trunkParts.push(flat(limb));
+  }
+  const r = rng(5);
+  const lumps = [[0, 0.72, 0, 0.26], [0.17, 0.62, 0.05, 0.19], [-0.16, 0.64, -0.04, 0.2], [0.04, 0.6, 0.17, 0.18], [-0.03, 0.62, -0.17, 0.18], [0.06, 0.86, -0.02, 0.17]];
+  for (const [x, y, z, s] of lumps) {
+    const blob = new THREE.IcosahedronGeometry(s, 1);
+    const p = blob.attributes.position;
+    for (let i = 0; i < p.count; i++) {
+      const k = 0.88 + r() * 0.24;
+      p.setXYZ(i, p.getX(i) * k, p.getY(i) * k * 0.86, p.getZ(i) * k);
+    }
+    blob.translate(x, y, z);
+    crownParts.push(flat(blob));
+  }
+  const trunkG = paint(mergeGeometries(trunkParts), 0.38, 0.3, 0.24);
+  const crownG = paint(mergeGeometries(crownParts), 1, 1, 1, 0.5);
+  // Mark crown vertices so the shader can tint only the leaves.
+  const leafT = new Float32Array(trunkG.attributes.position.count).fill(0);
+  const leafC = new Float32Array(crownG.attributes.position.count).fill(1);
+  trunkG.setAttribute('aLeaf', new THREE.BufferAttribute(leafT, 1));
+  crownG.setAttribute('aLeaf', new THREE.BufferAttribute(leafC, 1));
+  const g = mergeGeometries([trunkG, crownG]);
+  g.computeVertexNormals();
+  return g;
+}
