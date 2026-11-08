@@ -121,3 +121,41 @@ export function mountWeather({ climate }) {
     if ($('weather-now').textContent !== now) $('weather-now').textContent = now;
   };
 }
+
+export function mountSound({ ambient }) {
+  const onBtn = $('amb-on');
+  const vol = $('amb-vol');
+  const volOut = $('amb-vol-out');
+  const err = $('amb-error');
+  const mix = $('amb-mix');
+  onBtn.addEventListener('click', () => ambient.setEnabled(!ambient.enabled));
+  vol.addEventListener('input', () => ambient.setVolume(Number(vol.value) / 100));
+  const sliders = LAYERS.map((layer) => {
+    const row = document.createElement('div');
+    row.className = 'slider-row';
+    const id = `mix-${layer.id}`;
+    const label = document.createElement('label');
+    label.className = 'label';
+    label.htmlFor = id;
+    label.textContent = layer.label;
+    const input = document.createElement('input');
+    input.className = 'range';
+    input.type = 'range';
+    input.id = id;
+    input.min = '0';
+    input.max = '100';
+    input.step = '1';
+    const out = document.createElement('output');
+    out.className = 'slider-row__value';
+    out.htmlFor = id;
+    input.addEventListener('input', () => ambient.setMix(layer.id, Number(input.value) / 100));
+    row.append(label, input, out);
+    mix.appendChild(row);
+    return { layer, input, out };
+  });
+  bindSwitch($('amb-duck'), () => ambient.duckWhenMusic, (v) => ambient.setDuck(v));
+  ambient.on('error', (msg) => {
+    err.textContent = msg;
+    err.hidden = false;
+  });
+}
