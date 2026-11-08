@@ -110,4 +110,22 @@ export class FocusTimer extends Emitter {
     this.running = keepRunning;
     if (keepRunning) this.endAt = Date.now() + this.remainingMs;
   }
+
+  /** Call often; finishes a block when its time is up. */
+  tick() {
+    if (this.running && Date.now() >= this.endAt) {
+      const finished = this.phase;
+      this._advancePhase(true);
+      this._commit();
+      this.emit('finished', finished);
+    }
+  }
+
+  _commit() {
+    save('focus', {
+      preset: this.preset, phase: this.phase, round: this.round, running: this.running,
+      endAt: this.endAt, remainingMs: this.remainingMs, done: this.done, doneDate: this.doneDate,
+    });
+    this.emit('change');
+  }
 }
