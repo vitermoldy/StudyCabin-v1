@@ -50,3 +50,34 @@ export function parseLink(raw) {
     : `https://www.youtube.com/watch?v=${videoId}`;
   return { kind, videoId, listId, source, url: clean };
 }
+
+let apiPromise = null;
+
+/** Loads the YouTube IFrame API once; rejects after 15 s. */
+export function loadYouTubeApi() {
+  if (window.YT && window.YT.Player) return Promise.resolve(window.YT);
+  if (apiPromise) return apiPromise;
+  apiPromise = new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      apiPromise = null;
+      reject(new Error('timeout'));
+    }, 15000);
+    const prev = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = () => {
+      clearTimeout(timer);
+      if (typeof prev === 'function') prev();
+      resolve(window.YT);
+    };
+    const s = document.createElement('script');
+    s.src = 'https://www.youtube.com/iframe_api';
+    s.async = true;
+    s.onerror = () => {
+      clearTimeout(timer);
+      apiPromise = null;
+      s.remove();
+      reject(new Error('network'));
+    };
+    document.head.appendChild(s);
+  });
+  return apiPromise;
+}
