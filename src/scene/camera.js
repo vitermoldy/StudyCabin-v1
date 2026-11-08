@@ -59,4 +59,32 @@ export class CameraRig {
     }
     return outPos;
   }
+
+  setView(id) {
+    if (!VIEWS[id] || id === this.view) return;
+    this.from.pos.copy(this.camera.position);
+    this.from.target.copy(this.target);
+    this.view = id;
+    this.travel = this.reduced ? 1 : 0;
+    this.resetUser();
+  }
+
+  /** Drag to turn: pixels moved. */
+  orbit(dx, dy) {
+    this.user.yaw -= dx * 0.0055;
+    this.user.tilt = clamp(this.user.tilt - dy * 0.0045, -1.2, 1.2);
+  }
+
+  /** Drag to slide the view over the ground: pixels moved. */
+  pan(dx, dy) {
+    const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
+    const k = dist * 0.0016;
+    const theta = Math.atan2(this.camera.position.x - this.target.x, this.camera.position.z - this.target.z);
+    const rx = Math.cos(theta);
+    const rz = -Math.sin(theta);
+    const fx = Math.sin(theta);
+    const fz = Math.cos(theta);
+    this.user.panX = clamp(this.user.panX - dx * k * rx - dy * k * fx, -60, 60);
+    this.user.panZ = clamp(this.user.panZ - dx * k * rz - dy * k * fz, -45, 60);
+  }
 }
