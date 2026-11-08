@@ -289,4 +289,31 @@ export class Ambient extends Emitter {
     s.connect(f).connect(g).connect(this.thunderBus);
     s.start(now, Math.random() * 2, 4.4);
   }
+
+  /** Two soft bell notes for the end of a focus or break block. Works with ambient off. */
+  chime() {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return;
+    if (!this.chimeCtx) this.chimeCtx = this.ctx || new AC();
+    const ctx = this.chimeCtx;
+    ctx.resume?.().catch?.(() => {});
+    const now = ctx.currentTime + 0.02;
+    [[784, 0], [1175, 0.32]].forEach(([freq, delay]) => {
+      for (const [mult, amp] of [[1, 0.22], [2.76, 0.05], [5.4, 0.02]]) {
+        const o = ctx.createOscillator();
+        const g = ctx.createGain();
+        o.frequency.value = freq * mult;
+        g.gain.setValueAtTime(0.0001, now + delay);
+        g.gain.exponentialRampToValueAtTime(amp, now + delay + 0.01);
+        g.gain.exponentialRampToValueAtTime(0.0001, now + delay + 2.2);
+        o.connect(g).connect(ctx.destination);
+        o.start(now + delay);
+        o.stop(now + delay + 2.3);
+      }
+    });
+  }
+
+  persist() {
+    save('ambient', { on: this.enabled, volume: this.volume, mix: this.mix, duck: this.duckWhenMusic });
+  }
 }
