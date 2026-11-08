@@ -153,6 +153,29 @@
       <legend class="label">Weather</legend>
     </fieldset>
   </div>
+
+  <div class="panel" id="panel-sound" role="dialog" aria-modal="false" aria-labelledby="sound-h" data-open="false" data-focus="#amb-on" inert>
+    <div class="panel__head">
+      <h2 id="sound-h">Ambient sound</h2>
+      <button class="icon-btn panel__close" type="button" aria-label="Close ambient sound"><svg aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="switch-row">
+      <span class="switch-row__label" id="amb-on-l">Sound of the cabin</span>
+      <button class="switch" id="amb-on" type="button" role="switch" aria-checked="false" aria-labelledby="amb-on-l"></button>
+    </div>
+    <p class="field__error" id="amb-error" hidden></p>
+    <div class="slider-row">
+      <label class="label" for="amb-vol">Volume</label>
+      <input class="range" id="amb-vol" type="range" min="0" max="100" step="1" value="60">
+      <output class="slider-row__value" id="amb-vol-out" for="amb-vol">60%</output>
+    </div>
+    <div id="amb-mix"></div>
+    <div class="switch-row">
+      <span class="switch-row__label" id="amb-duck-l">Turn it down while music plays</span>
+      <button class="switch" id="amb-duck" type="button" role="switch" aria-checked="true" aria-labelledby="amb-duck-l"></button>
+    </div>
+    <p class="hint">Made in your browser from the weather and the hour: rain only sounds when it rains, crickets come out at night.</p>
+  </div>
   </footer>
 </body>
 </html>
