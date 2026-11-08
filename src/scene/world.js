@@ -71,4 +71,32 @@ export class World {
     this._cooldown = 0;
     this.resize();
   }
+
+  resize() {
+    const w = this.canvas.clientWidth || window.innerWidth;
+    const h = this.canvas.clientHeight || window.innerHeight;
+    this.width = w;
+    this.height = h;
+    this.renderer.setSize(w, h, false);
+    this.camera.aspect = w / h;
+    this.camera.updateProjectionMatrix();
+  }
+
+  /** Drop resolution while frames run slow, raise it again when there is room. */
+  _adapt(frameMs) {
+    this._frameAvg += (frameMs - this._frameAvg) * 0.05;
+    this._dprCheck += frameMs / 1000;
+    if (this._cooldown > 0) this._cooldown -= frameMs / 1000;
+    if (this._dprCheck < 2 || this._cooldown > 0) return;
+    this._dprCheck = 0;
+    let next = this.dpr;
+    if (this._frameAvg > 24 && this.dpr > 0.6) next = Math.max(0.6, this.dpr - 0.2);
+    else if (this._frameAvg < 12 && this.dpr < this.maxDpr) next = Math.min(this.maxDpr, this.dpr + 0.1);
+    if (next !== this.dpr) {
+      this.dpr = next;
+      this.renderer.setPixelRatio(next);
+      this.resize();
+      this._cooldown = 3;
+    }
+  }
 }
