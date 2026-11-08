@@ -214,4 +214,28 @@ export class Cabin {
     this._cyl(this.mat.metal, 0.16, 0.16, 0.08, stove.x, RIDGE + 1.04, stove.z);
     this.flueTop = new THREE.Vector3(stove.x, RIDGE + 1.1, stove.z);
   }
+
+  _deck() {
+    const { deck, deckWood, found } = this.mat;
+    this._bx(deck, DECK.x0, DECK.x1, FLOOR - 0.1, FLOOR, DECK.z0, DECK.z1);
+    this._bx(deckWood, DECK.x0, DECK.x1, 0.05, FLOOR - 0.1, DECK.z1 - 0.06, DECK.z1);
+    this._bx(deckWood, DECK.x0, DECK.x0 + 0.06, 0.05, FLOOR - 0.1, DECK.z0, DECK.z1);
+    this._bx(deckWood, DECK.x1 - 0.06, DECK.x1, 0.05, FLOOR - 0.1, DECK.z0, DECK.z1);
+    for (let x = DECK.x0 + 0.4; x < DECK.x1; x += 2.4) {
+      this._bx(found, x - 0.07, x + 0.07, -0.3, FLOOR - 0.1, DECK.z1 - 0.35, DECK.z1 - 0.21);
+    }
+    // three steps down to the sand
+    const steps = [[6.6, 6.95, 0.34], [6.95, 7.3, 0.18], [7.3, 7.65, 0.04]];
+    for (const [z0, z1, top] of steps) this._bx(deck, -1.25, 1.25, top - 0.12, top, z0, z1);
+    this._bx(deckWood, -1.3, -1.25, -0.05, FLOOR, 6.6, 7.65);
+    this._bx(deckWood, 1.25, 1.3, -0.05, FLOOR, 6.6, 7.65);
+  }
+
+  _annex() {
+    const { siding, roof, trim } = this.mat;
+    this._bx(siding, ANNEX.x0, ANNEX.x1, 0.05, ANNEX.h, ANNEX.z0, ANNEX.z1);
+    this._bx(roof, ANNEX.x0 - 0.2, ANNEX.x1 + 0.08, ANNEX.h, ANNEX.h + 0.1, ANNEX.z0 - 0.25, ANNEX.z1 + 0.3);
+    this._bx(trim, -9.35, -8.35, FLOOR, ANNEX.h - 0.35, ANNEX.z1, ANNEX.z1 + 0.04);
+    this._bx(trim, ANNEX.x0 - 0.2, ANNEX.x1 + 0.08, ANNEX.h - 0.06, ANNEX.h, ANNEX.z1 + 0.26, ANNEX.z1 + 0.32);
+  }
 }
