@@ -61,4 +61,23 @@ export class MusicPlayer extends Emitter {
     if (playNow || this.current < 0 || this.status === 'ended') this.play(this.queue.length - 1);
     return item;
   }
+
+  remove(index) {
+    if (index < 0 || index >= this.queue.length) return;
+    const wasCurrent = index === this.current;
+    this.queue.splice(index, 1);
+    if (index < this.current) this.current--;
+    if (wasCurrent) {
+      if (this.queue.length === 0) {
+        this.current = -1;
+        this._stop();
+      } else {
+        this.current = Math.min(index, this.queue.length - 1);
+        if (this.isPlaying) this.play(this.current);
+        else this._cue(this.current);
+      }
+    }
+    this.persist();
+    this.emit('change');
+  }
 }
