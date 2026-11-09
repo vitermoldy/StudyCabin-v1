@@ -199,7 +199,7 @@ export class CameraRig {
       .addScaledVector(right, (this.pointerSmooth.x * 0.035 * dist + Math.sin(t * 0.11) * 0.012 * dist) * sway)
       .addScaledVector(UP, (this.pointerSmooth.y * 0.018 * dist + Math.sin(t * 0.07) * 0.006 * dist) * sway);
     cam.lookAt(this.target);
-    if (this.lookUp > 0)
+    if (this.lookUp > 0) cam.rotateX(this.lookUp);
   }
 }
 
