@@ -344,4 +344,4 @@ export class Pets {
     } else if (asleep && d.mode === 'follow') {
       // Bedtime: off to the basket.
       d.mode = 'basket';
-      d.path =
+      d.path = route(null,
