@@ -105,7 +105,7 @@ export class CameraRig {
    * factor > 1 moves away, < 1 moves closer. With `at` (a point on the ground), the camera closes
    * in on that point, as a map zooms toward the pointer.
    */
-  zoomBy(factor, at
+  zoomBy(factor, at =
   }
 
   resetUser() {
