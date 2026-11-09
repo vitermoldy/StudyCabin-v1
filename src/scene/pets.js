@@ -329,4 +329,4 @@ export class Pets {
     if (jumped) {
       d.crumbs = [];
       d.path = null;
-      if (asleep)
+      if (asleep) {
