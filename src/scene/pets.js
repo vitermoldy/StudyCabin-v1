@@ -210,4 +210,4 @@ const h = (hh, mm = 0) => hh * 60 + mm;
 function catSpot(minutes, { bad, cold, residentSpot }) {
   const m = ((minutes % 1440) + 1440) % 1440;
   let id;
-  if
+  if (m
