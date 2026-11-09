@@ -212,7 +212,7 @@ export class World {
     const ndc = new THREE.Vector2((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
     this.raycaster.setFromCamera(ndc, this.camera);
     const hit = this.raycaster.ray.intersectPlane(FLOOR_PLANE, new THREE.Vector3());
-    return hit && hit.distanceTo(this.camera.position) <
+    return hit && hit.distanceTo(this.camera.position) < 400
   /** Mouse position over the scene (CSS pixels), for the grass that parts round it. */
   setPointer(x, y, on = true) {
     this.pointerNdc.set((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
