@@ -229,4 +229,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
 function pointBack(path, dist) {
   let left = dist;
   for (let i = path.length - 1; i > 0; i--) {
-    const a
+    const a =
