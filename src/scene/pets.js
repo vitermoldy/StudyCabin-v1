@@ -367,4 +367,4 @@ export class Pets {
     } else {
       // Follow the resident's own steps.
       const last = d.crumbs[d.crumbs.length - 1] || d.pos;
-      if (dist2(last, R) > 0.2) d.crumbs.push({ x:
+      if (dist2(last, R) > 0.2) d.crumbs.push({ x: R.x,
