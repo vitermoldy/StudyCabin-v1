@@ -333,4 +333,4 @@ export class Pets {
         const b = DOG_SPOTS.basket.at;
         d.pos.set(b.x, b.y, b.z);
         d.mode = 'basket';
-      } else
+      } else {
