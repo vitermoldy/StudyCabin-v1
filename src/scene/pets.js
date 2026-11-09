@@ -471,4 +471,4 @@ export class Pets {
       walking = moved > 1e-4;
       c.step += (moved / this.catModel.stride) * Math.PI * 2;
     } else {
-      c.facing
+      c.facing =
