@@ -376,4 +376,4 @@ export class Pets {
         prev = c;
       }
       remaining += dist2(prev, R);
-      // The resident has stopped for a while: settle beside them instead of
+      // The resident has stopped for a while: settle beside them instead of behind,
