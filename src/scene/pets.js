@@ -437,4 +437,4 @@ export class Pets {
           }
         }
       } else {
-        // Arrived: look at the resident; lie
+        // Arrived: look at the resident; lie down
