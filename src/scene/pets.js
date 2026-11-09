@@ -402,4 +402,4 @@ export class Pets {
       if (!still) d.settled = false;
       if (d.settle) {
         const dd = dist2(d.pos, d.settle);
-        if (dd > 0.03)
+        if (dd > 0.03) {
