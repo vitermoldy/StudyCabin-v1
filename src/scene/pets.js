@@ -406,4 +406,4 @@ export class Pets {
           const step = Math.min(dd, 0.7 * speedUp * dt);
           d.pos.x += ((d.settle.x - d.pos.x) / dd) * step;
           d.pos.z += ((d.settle.z - d.pos.z) / dd) * step;
-          d.facing = turn(d.facing, Math.atan2(d.settle.x -
+          d.facing = turn(d.facing, Math.atan2(d.settle.x - d.pos.x,
