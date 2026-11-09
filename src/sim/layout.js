@@ -76,7 +76,7 @@ function hubOf(area, point) {
 /** The way into a spot from its area's hub line, ending at the spot: [hub, ...via, at]. */
 export function approachPath(spotId, spots = SPOTS) {
   const s = spots[spotId];
-  return [hubOf(s.area, s.via[0]),
+  return [hubOf(s.area, s.via[0]), ...s.via,
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
