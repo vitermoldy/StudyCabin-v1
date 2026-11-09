@@ -33,4 +33,4 @@ function leg(material, length, top, bottom, [x, y, z]) {
   const pivot = new THREE.Group();
   pivot.position.set(x, y, z);
   const mesh = new THREE.Mesh(g, material);
-  mesh.castShadow =
+  mesh.castShadow = true;
