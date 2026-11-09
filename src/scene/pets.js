@@ -421,4 +421,4 @@ export class Pets {
         d.step += (budget / this.dogModel.stride) * Math.PI * 2;
         walking = true;
         while (budget > 1e-5 && d.crumbs.length) {
-          const c
+          const c =
