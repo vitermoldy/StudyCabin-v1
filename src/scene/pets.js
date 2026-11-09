@@ -384,4 +384,4 @@ export class Pets {
       const inside = R.z < 3.0 && Math.abs(R.x) < 7;
       const onDeck = R.z >= 3.0 && R.z < 6.6;
       if (d.still > 2.5 && !d.settle && !d.settled && remaining <= GAP + 0.1 && (inside || onDeck)) {
-        const
+        const f
