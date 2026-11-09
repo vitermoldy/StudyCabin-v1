@@ -22,4 +22,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
   mesh.scale.set(sx, sy, sz);
   mesh.position.set(x, y, z);
   mesh.rotation.z = tilt;
-  mesh.castShadow =
+  mesh.castShadow = true;
