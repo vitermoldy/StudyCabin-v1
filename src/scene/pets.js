@@ -445,4 +445,4 @@ export class Pets {
     }
     const m = this.dogModel;
     m.root.position.copy(d.pos);
-    m.root.rotation.y =
+    m.root.rotation.y = d.facing;
