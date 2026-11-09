@@ -436,4 +436,4 @@ export class Pets {
             budget = 0;
           }
         }
-      } else
+      } else {
