@@ -28,7 +28,7 @@ shows a still picture and the music, timer and ambient sound still work.
   deck and the beach walk, and sleeps in its basket by the stove at night. A cat that keeps its
   own day: the foot of the bed at night, its bowl at breakfast and dinner, the sunny deck on fine
   mornings (the glass on cold or wet ones), the sofa in the afternoon and the evening, the
-  armchair or the glass by the desk in between. The sliding door
+  armchair or the glass by the desk in between. The sliding door opens
 - **Clock.** 1 minute every second by default; also stopped, real time and 10 minutes a second.
   Jump to any hour from the Day panel or its timeline.
 - **Seasons.** Spring, summer, rainy season, autumn, winter: day length, temperature, grass and
