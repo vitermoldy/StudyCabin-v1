@@ -412,3 +412,4 @@ export class Pets {
         } else {
           // Lying beside the resident, facing the way they face.
           d.facing = turn(d.facing, res.facing, 2 * dt);
+        }
