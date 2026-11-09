@@ -1,2 +1,2 @@
 import * as THREE from 'three';
-import { FLOOR, SPINE_Z, DECK_Z,
+import { FLOOR, SPINE_Z, DECK_Z, route,
