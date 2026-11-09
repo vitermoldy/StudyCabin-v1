@@ -370,4 +370,4 @@ export class Pets {
       if (dist2(last, R) > 0.2) d.crumbs.push({ x: R.x, y: R.y, z: R.z });
       if (d.crumbs.length > 600) d.crumbs.splice(0, d.crumbs.length - 600);
       let remaining = 0;
-      let prev =
+      let prev = d.pos;
