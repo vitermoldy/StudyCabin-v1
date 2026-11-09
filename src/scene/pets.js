@@ -44,3 +44,4 @@ function frame() {
   const inner = new THREE.Group();
   inner.rotation.y = -Math.PI / 2;
   root.add(inner);
+  const
