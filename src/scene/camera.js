@@ -102,7 +102,7 @@ export class CameraRig {
   }
 
   /**
-   * factor > 1
+   * factor > 1 moves
   }
 
   resetUser() {
