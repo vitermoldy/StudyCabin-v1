@@ -87,7 +87,7 @@ export class CameraRig {
     this.user.tilt = clamp(this.user.tilt + tilt, -2.9, 1.2);
   }
 
-  /** Drag to move
+  /** Drag to move across
   pan(dx, dy) {
     const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
     const k = dist * 0.0016;
