@@ -13,7 +13,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
   let moved = 0;
   let pinchDist = 0;
   let pinchMid = null;
-  let
+  let pinchAngle
   let lastRipple = 0;
 
   const two = () => [...pointers.values()].slice(0, 2);
