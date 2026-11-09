@@ -102,7 +102,7 @@ export class CameraRig {
   }
 
   /**
-   *
+   * factor
   }
 
   resetUser() {
