@@ -74,7 +74,7 @@ function hubOf(area, point) {
 }
 
 /** The way into a spot from its area's hub line, ending at the spot: [hub, ...via, at]. */
-export
+export function
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
