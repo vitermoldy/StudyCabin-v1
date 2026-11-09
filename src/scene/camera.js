@@ -22,7 +22,7 @@ export class CameraRig {
     this.followTarget = new THREE.Vector3();
     this.entrance = 1; // 1 = start pulled back, eases to 0
     this.reduced = false;
-    // How far the visitor may wander from the view's own target,
+    // How far the visitor may wander from the view's own target, and
     // The visitor's own turn, tilt, zoom and slide on top of the chosen view.
     this.user = { yaw: 0, tilt: 0, zoom: 1, panX: 0, panZ: 0 };
     this.userS = { ...this.user };
