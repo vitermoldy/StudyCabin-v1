@@ -396,3 +396,4 @@ export class Pets {
             d.settle = { x, y: R.y, z };
             break;
           }
+        }
