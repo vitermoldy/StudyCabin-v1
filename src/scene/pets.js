@@ -231,4 +231,4 @@ function pointBack(path, dist) {
   for (let i = path.length - 1; i > 0; i--) {
     const a = path[i - 1];
     const b = path[i];
-    const d = Math.hypot(b.x
+    const d = Math.hypot(b.x -
