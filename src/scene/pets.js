@@ -176,3 +176,4 @@ function applyPose(m, state, name, dt, t, walking) {
 const DOG_SPOTS = {
   basket: { area: 'in', via: [p(2.45, SPINE_Z), p(2.45, -1.55)], at: p(2.45, -2.3, FLOOR + 0.08), face: 1.2 },
 };
+const
