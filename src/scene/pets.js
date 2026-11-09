@@ -450,4 +450,4 @@ export class Pets {
   }
 
   _cat(dt, t, minutes, conditions, residentSpot, jumped, speedUp) {
-    const
+    const c
