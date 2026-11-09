@@ -419,4 +419,4 @@ export class Pets {
         const speed = 1.25 * speedUp * (remaining > GAP + 1 ? 1.45 : 1);
         let budget = Math.min(speed * dt, remaining - GAP);
         d.step += (budget / this.dogModel.stride) * Math.PI * 2;
-        walking
+        walking =
