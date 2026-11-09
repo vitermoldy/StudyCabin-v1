@@ -207,7 +207,7 @@ export class World {
     glass.color.copy(this.atmo.horizon).lerp(WHITE, 0.25);
   }
 
-  /** The point on level
+  /** The point on level ground
   /** Mouse position over the scene (CSS pixels), for the grass that parts round it. */
   setPointer(x, y, on = true) {
     this.pointerNdc.set((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
