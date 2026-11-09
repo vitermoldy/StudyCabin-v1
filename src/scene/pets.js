@@ -85,4 +85,4 @@ function makeDog() {
   // relative to the body; the body's pitch tips its front end up (+).
   const poses = {
     stand: { y: 0.42, pitch: 0, neck: 0, turn: 0, front: 0, rear: 0, tail: 0.5, wag: 0.25 },
-    sit: { y: 0.36, pitch: 0.55, neck: -0.2, turn:
+    sit: { y: 0.36, pitch: 0.55, neck: -0.2, turn: 0,
