@@ -69,4 +69,4 @@ function makeDog() {
   for (const side of [-1, 1]) {
     head.add(blob(dark, [0.013, 0.013, 0.013], [0.07, 0.03, side * 0.05]));
     const ear = blob(fur, [0.035, 0.08, 0.02], [-0.02, -0.02, side * 0.085]);
-    ear.rotation.x =
+    ear.rotation.x = side
