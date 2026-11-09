@@ -93,4 +93,4 @@ function makeDog() {
 }
 
 function makeCat() {
-  const
+  const fur
