@@ -52,7 +52,7 @@ shows a still picture and the music, timer and ambient sound still work.
   browser from the weather and the hour, with a mixer. It turns down while music plays.
 - **Camera.** Five views (shore, deck, window, water, follow the resident), plus your own, moved
   like a map: drag to move across the land (well beyond the cabin), right-drag or Ctrl+drag to
-  turn, and keep
+  turn, and keep dragging
 
 ## Keys
 
