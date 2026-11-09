@@ -477,4 +477,4 @@ export class Pets {
     const m = this.catModel;
     m.root.position.copy(c.pos);
     m.root.rotation.y = c.facing;
-    applyPose(m, c, c.pose,
+    applyPose(m, c, c.pose, dt,
