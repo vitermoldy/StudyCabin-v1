@@ -73,10 +73,7 @@ function hubOf(area, point) {
   return BEACH_HUB;
 }
 
-/** A polyline from spot a to spot b (both spot ids). */
-export function route(fromSpot, toSpot, from = null) {
-  const a = SPOTS[fromSpot];
-  const b = SPOTS[toSpot];
+/**
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
