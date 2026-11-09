@@ -106,4 +106,4 @@ function makeCat() {
   head.position.set(0.05, 0.07, 0);
   neck.add(head);
   head.add(blob(fur, [0.07, 0.062, 0.068], [0, 0, 0]));
-  head.add(blob(pale, [0.035, 0.025,
+  head.add(blob(pale, [0.035, 0.025, 0.035],
