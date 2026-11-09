@@ -473,4 +473,4 @@ export class Pets {
     } else {
       c.facing = turn(c.facing, CAT_SPOTS[c.spot].face, 2 * dt);
     }
-    c.pose =
+    c.pose = CAT_SPOTS[c.spot].pose;
