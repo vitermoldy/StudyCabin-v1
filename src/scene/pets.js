@@ -364,3 +364,4 @@ export class Pets {
         d.facing = turn(d.facing, DOG_SPOTS.basket.face, 2 * dt);
       }
       d.pose = 'sleep';
+    }
