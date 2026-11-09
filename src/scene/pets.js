@@ -59,4 +59,4 @@ function makeDog() {
   const neck = new THREE.Group();
   neck.position.set(0.26, 0.06, 0);
   body.add(neck);
-  neck.add(blob(fur,
+  neck.add(blob(fur, [0.07,
