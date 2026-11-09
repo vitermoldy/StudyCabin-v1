@@ -296,3 +296,4 @@ export class Pets {
       m.position.set(x, y, z);
       m.castShadow = true;
       m.receiveShadow = true;
+      this.group.add(m);
