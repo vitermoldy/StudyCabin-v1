@@ -304,3 +304,4 @@ export class Pets {
     const b = DOG_SPOTS.basket.at;
     add(new THREE.CylinderGeometry(0.46, 0.48, 0.12, 28), '#7e6c5a', b.x, FLOOR + 0.06, b.z);
     add(new THREE.CylinderGeometry(0.37, 0.37, 0.06, 28), '#b9ab97', b.x, FLOOR + 0.1, b.z);
+  }
