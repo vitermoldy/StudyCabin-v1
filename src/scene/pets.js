@@ -456,3 +456,4 @@ export class Pets {
       const s = CAT_SPOTS[want];
       c.spot = want;
       c.path = null;
+      c.pos.set(s.at.x,
