@@ -14,4 +14,4 @@ const p = (x, z, y = FLOOR) => ({ x, y, z });
 const GAP = 1.1; // how far behind the resident the dog keeps
 
 function coat(hex) {
-  return new THREE.MeshStandardMaterial({ color: hex, roughness:
+  return new THREE.MeshStandardMaterial({ color: hex, roughness: 0.9,
