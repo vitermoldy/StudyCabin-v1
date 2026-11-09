@@ -140,4 +140,4 @@ function makeCat() {
     sit: { y: 0.16, pitch: 0.75, neck: -0.45, turn: 0, front: -0.75, rear: 0.65, tail: -0.1, wrap: 0.45 },
     loaf: { y: 0.085, pitch: 0, neck: 0.05, turn: 0, front: 1.5, rear: 1.5, tail: -0.05, wrap: 0.4 },
     curl: { y: 0.075, pitch: 0, neck: -0.5, turn: 1.1, front: 1.5, rear: 1.5, tail: 0, wrap: 0.55 },
-    eat: { y: 0.17, pitch: -0.12, neck: -0.9, turn: 0, front: 0.12, rear: 0, tail:
+    eat: { y: 0.17, pitch: -0.12, neck: -0.9, turn: 0, front: 0.12, rear: 0, tail: 0.2,
