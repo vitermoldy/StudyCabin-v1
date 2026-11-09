@@ -468,4 +468,4 @@ export class Pets {
       const before = c.pos.clone();
       walkPath(c, 0.7 * speedUp * dt, dt);
       const moved = before.distanceTo(c.pos);
-      walking
+      walking =
