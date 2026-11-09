@@ -100,3 +100,4 @@ function makeCat() {
   body.add(blob(fur, [0.19, 0.08, 0.07], [0, 0, 0]));
   body.add(blob(pale, [0.07, 0.06, 0.055], [0.13, -0.02, 0]));
   const neck = new THREE.Group();
+  neck.position.set(0.17,
