@@ -52,4 +52,4 @@ function frame() {
 function makeDog() {
   const fur = coat('#c4914e');
   const pale = coat('#ecd9b4');
-  const dark
+  const dark =
