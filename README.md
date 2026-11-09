@@ -62,7 +62,7 @@ shows a still picture and the music, timer and ambient sound still work.
 | --- | --- |
 | Space | Play or pause music |
 | 1 to 5 | Shore, deck, window, water, follow |
-| Arrows | Move across the land
+| Arrows | Move across the land |
 | R | Reset the camera |
 | H | Show or hide the big words |
 | P | Pause or move the scene |
