@@ -339,3 +339,4 @@ export class Pets {
         d.pos.set(back.at.x, back.at.y, back.at.z);
         d.crumbs = back.rest.slice(0, -1);
         d.mode = 'follow';
+      }
