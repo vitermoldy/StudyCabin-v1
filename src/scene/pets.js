@@ -385,4 +385,4 @@ export class Pets {
       const onDeck = R.z >= 3.0 && R.z < 6.6;
       if (d.still > 2.5 && !d.settle && !d.settled && remaining <= GAP + 0.1 && (inside || onDeck)) {
         const f = res.facing;
-        const
+        const fx
