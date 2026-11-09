@@ -277,3 +277,4 @@ function walkPath(m, budget, dt) {
 
 export class Pets {
   constructor(scene, resident) {
+    this.resident
