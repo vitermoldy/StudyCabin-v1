@@ -414,4 +414,4 @@ export class Pets {
           d.facing = turn(d.facing, res.facing, 2 * dt);
         }
       } else if (remaining > GAP + 0.05 || ((res.path || res.moving) && remaining > GAP + 0.001)) {
-        // Keep pace while the resident walks (no stop and start every few frames); catch
+        // Keep pace while the resident walks (no stop and start every few frames); catch up
