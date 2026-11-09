@@ -292,4 +292,4 @@ export class Pets {
   /** Food and water bowls in the kitchen, the dog's basket by the stove. */
   _things() {
     const add = (geo, color, x, y, z) => {
-      const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness:
+      const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.6
