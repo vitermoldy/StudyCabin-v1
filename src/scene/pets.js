@@ -342,4 +342,4 @@ export class Pets {
       }
       d.facing = Math.atan2(R.x - d.pos.x, R.z - d.pos.z);
     } else if (asleep && d.mode === 'follow') {
-      // Bedtime: off to the
+      // Bedtime: off to the basket.
