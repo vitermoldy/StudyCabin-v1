@@ -94,4 +94,4 @@ function makeDog() {
 
 function makeCat() {
   const fur = coat('#6b655e');
-  const
+  const pale
