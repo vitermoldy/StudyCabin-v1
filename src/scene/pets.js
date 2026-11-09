@@ -114,3 +114,4 @@ function makeCat() {
     ear.position.set(-0.005, 0.06, side * 0.035);
     ear.rotation.x = side * -0.25;
     ear.castShadow = true;
+    head.add(ear);
