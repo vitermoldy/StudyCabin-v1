@@ -161,4 +161,4 @@ function applyPose(m, state, name, dt, t, walking) {
     l.rotation.z = (front ? j.front : j.rear) + swing;
   });
   if (m.links) {
-    // The
+    // The cat's
