@@ -250,4 +250,4 @@ function turn(current, target, maxStep) {
 
 const dist2 = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 
-/** Walk a mover along a polyline by `budget` metres; a step
+/** Walk a mover along a polyline by `budget` metres; a step up
