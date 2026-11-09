@@ -372,4 +372,4 @@ export class Pets {
       let remaining = 0;
       let prev = d.pos;
       for (const c of d.crumbs) {
-        remaining
+        remaining +=
