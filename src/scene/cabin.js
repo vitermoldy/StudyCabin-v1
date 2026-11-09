@@ -166,7 +166,7 @@ export class Cabin {
       geo.rotateY(-Math.PI / 2);
       geo.translate(x + 0.01, 0, 0);
       this._m(geo, this.mat.glass, { cast: false, receive: false }).renderOrder = 2;
-      this._bx(trim, ...xs, WALL_TOP, RIDGE
+      this._bx(trim, ...xs, WALL_TOP, RIDGE -
       // dark corner boards
       this._bx(trim, side * 7.0 - (side > 0 ? 0 : 0.16), side * 7.0 + (side > 0 ? 0.16 : 0), 0.05, WALL_TOP, 2.98, 3.16);
       this._bx(trim, side * 7.0 - (side > 0 ? 0 : 0.16), side * 7.0 + (side > 0 ? 0.16 : 0), 0.05, WALL_TOP, -3.18, -3.02);
