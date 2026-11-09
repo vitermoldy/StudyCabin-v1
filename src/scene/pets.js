@@ -307,4 +307,4 @@ export class Pets {
   }
 
   /** Distance of the nearer pet from the sliding door, so it opens for them too. */
-  get doorDistance()
+  get doorDistance() {
