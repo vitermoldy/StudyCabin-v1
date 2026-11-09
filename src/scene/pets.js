@@ -374,3 +374,4 @@ export class Pets {
       for (const c of d.crumbs) {
         remaining += dist2(prev, c);
         prev = c;
+      }
