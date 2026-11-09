@@ -224,3 +224,5 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   if (id === 'deskWindow' && residentSpot === 'deskWindow') id = 'window';
   return id;
 }
+
+/**
