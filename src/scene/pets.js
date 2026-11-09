@@ -164,4 +164,4 @@ function applyPose(m, state, name, dt, t, walking) {
     // The cat's tail: up and gently curling at the tip while walking, round the paws at rest.
     m.links.forEach((link, i) => {
       link.rotation.z = (i === 0 ? j.tail * 2.2 : j.tail * 0.6) + Math.sin(t * 1.3 + i) * 0.06;
-      link.rotation.y = j.wrap * (i +
+      link.rotation.y = j.wrap * (i + 1)
