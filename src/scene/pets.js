@@ -415,3 +415,4 @@ export class Pets {
         }
       } else if (remaining > GAP + 0.05 || ((res.path || res.moving) && remaining > GAP + 0.001)) {
         // Keep pace while the resident walks (no stop and start every few frames); catch up
+        //
