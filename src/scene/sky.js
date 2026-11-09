@@ -61,7 +61,7 @@ const FRAG = /* glsl */ `
     float band = exp(-g * g / 0.018);
     // Coordinates along the band itself, not round the zenith, so looking straight up shows no
     // pinch; the seam sits at the band's lowest point, below the horizon.
-    vec3 b1 = normalize(vec3(0.0, 1.0, 0.0) -
+    vec3 b1 = normalize(vec3(0.0, 1.0, 0.0) - n
     float cloud = fbm(q * 2.0 + 3.0);
     float dust = smoothstep(0.45, 0.7, fbm(q * 3.4 + 11.0)) * exp(-g * g / 0.004);
     float core = exp(-pow(length(d - normalize(vec3(-0.55, 0.32, -0.77))), 2.0) * 4.0);
