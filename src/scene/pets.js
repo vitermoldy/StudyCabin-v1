@@ -97,4 +97,4 @@ function makeCat() {
   const pale = coat('#d9d1c4');
   const dark = coat('#26221f');
   const { root, body } = frame();
-  body.add(blob(fur, [0.19,
+  body.add(blob(fur, [0.19, 0.08,
