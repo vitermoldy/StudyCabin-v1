@@ -353,4 +353,4 @@ export class Pets {
       d.crumbs = [{ x: 2.45, y: FLOOR, z: SPINE_Z }, { x: R.x, y: R.y, z: R.z }];
     }
 
-    let walking =
+    let walking = false;
