@@ -130,4 +130,4 @@ function makeCat() {
     links.push(link);
     parent = link;
   }
-  const legs = [[0.12, 0.04], [0.12,
+  const legs = [[0.12, 0.04], [0.12, -0.04],
