@@ -113,6 +113,7 @@ export class CameraRig {
       const L = this.panLimit;
       this.user.panX = clamp(this.user.panX + (at.x - this.target.x) * (1 - f), -L, L);
       this.user.panZ = clamp(this.user.panZ + (at.z - this.target.z) * (1 - f), -L, L);
+    }
   }
 
   resetUser() {
