@@ -129,3 +129,4 @@ function makeCat() {
     link.add(blob(fur, [0.045, 0.017, 0.017], [-0.037, 0, 0]));
     links.push(link);
     parent = link;
+  }
