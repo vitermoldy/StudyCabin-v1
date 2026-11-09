@@ -156,7 +156,7 @@ export class Cabin {
     tri.closePath();
     for (const side of [-1, 1]) {
       const x = side * 7.06;
-      const xs
+      const xs =
       geo.rotateY(-Math.PI / 2);
       geo.translate(side > 0 ? 7.12 : -7.0, 0, 0);
       this._m(geo, siding);
