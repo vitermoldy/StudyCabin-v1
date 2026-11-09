@@ -186,4 +186,4 @@ const CAT_SPOTS = {
   deck: { area: 'deck', via: [p(2.6, DECK_Z)], at: p(2.6, 5.3), pose: 'loaf', face: 0.6 },
 };
 
-// Footprints the
+// Footprints the pets
