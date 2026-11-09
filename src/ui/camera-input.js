@@ -76,7 +76,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       if (da > Math.PI) da -= Math.PI * 2;
       if (da < -Math.PI) da += Math.PI * 2;
       pinchAngle += da;
-      w.rig.rotateBy(-da, -(m.y -
+      w.rig.rotateBy(-da, -(m.y - pinchMid.y)
       pinchMid = m;
       onRender();
       return;
