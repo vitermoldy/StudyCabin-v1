@@ -50,7 +50,7 @@ const FRAG = /* glsl */ `
       col += c * curtain * rays * (0.55 - fi * 0.13);
     }
     // they hang over the hills, fading toward the sea behind the viewer
-    // and stay low: nothing streaks across the zenith when the view
+    // and stay low: nothing streaks across the zenith when the view is
   }
 
   // The Milky Way: a soft band of light with dark dust lanes and a brighter core.
