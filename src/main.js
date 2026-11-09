@@ -200,7 +200,7 @@ addEventListener('keydown', (e) => {
   } else if (world && ['arrowleft', 'arrowright', 'arrowup', 'arrowdown'].includes(k) && !(t instanceof HTMLElement && t.closest('[role="dialog"], .dock'))) {
     e.preventDefault();
     // Arrows move across the land like a map; with Shift they turn and tilt (down looks up).
-    const [dx, dy] = { arrowleft: [1, 0], arrowright: [-1,
+    const [dx, dy] = { arrowleft: [1, 0], arrowright: [-1, 0],
     needsStill = true;
   } else if (world && (k === '+' || k === '=' || k === '-' || k === '_')) {
     world.rig.zoomBy(k === '+' || k === '=' ? 0.85 : 1.18);
