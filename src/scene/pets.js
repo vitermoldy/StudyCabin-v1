@@ -470,4 +470,4 @@ export class Pets {
       const moved = before.distanceTo(c.pos);
       walking = moved > 1e-4;
       c.step += (moved / this.catModel.stride) * Math.PI * 2;
-    } else
+    } else {
