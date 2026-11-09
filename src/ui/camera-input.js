@@ -72,7 +72,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       const m = middle();
       w.rig.zoomBy(pinchDist / d, w.groundAt(m.x, m.y));
       pinchDist = d;
-      let da =
+      let da = angle()
       pinchMid = m;
       onRender();
       return;
