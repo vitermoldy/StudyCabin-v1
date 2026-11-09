@@ -274,3 +274,5 @@ function walkPath(m, budget, dt) {
     }
   }
 }
+
+export
