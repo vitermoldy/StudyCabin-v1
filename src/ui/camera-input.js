@@ -107,7 +107,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       mode = null;
     } else if (pointers.size === 1) {
       // One finger left after a pinch: carry on moving across the land.
-      mode =
+      mode = 'pan';
       moved = 5;
     }
   };
