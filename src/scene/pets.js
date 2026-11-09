@@ -400,4 +400,4 @@ export class Pets {
         d.settled = true;
       }
       if (!still) d.settled = false;
-      if (d.settle)
+      if (d.settle) {
