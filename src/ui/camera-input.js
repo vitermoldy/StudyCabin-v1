@@ -74,7 +74,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       pinchDist = d;
       let da = angle() - pinchAngle;
       if (da > Math.PI) da -= Math.PI * 2;
-      if (da
+      if (da <
       pinchMid = m;
       onRender();
       return;
