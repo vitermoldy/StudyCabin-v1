@@ -451,4 +451,4 @@ export class Pets {
 
   _cat(dt, t, minutes, conditions, residentSpot, jumped, speedUp) {
     const c = this.cat;
-    const want
+    const want =
