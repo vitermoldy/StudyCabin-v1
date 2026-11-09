@@ -438,4 +438,4 @@ export class Pets {
         }
       } else {
         // Arrived: look at the resident; lie down while they sit, sit while they stand.
-        d.facing = turn(d.facing, Math.atan2(R.x - d.pos.x, R.z - d.pos.z),
+        d.facing = turn(d.facing, Math.atan2(R.x - d.pos.x, R.z - d.pos.z), 3
