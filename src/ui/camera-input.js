@@ -66,7 +66,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
     const w = getWorld();
     if (!w) return;
     if (mode === 'pinch' && pointers.size >= 2) {
-      // Pinch zooms toward the
+      // Pinch zooms toward the point
       const d = spread();
       w.rig.zoomBy(pinchDist / d);
       pinchDist = d;
