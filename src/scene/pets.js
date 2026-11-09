@@ -50,3 +50,4 @@ function frame() {
 }
 
 function makeDog() {
+  const
