@@ -293,3 +293,4 @@ export class Pets {
   _things() {
     const add = (geo, color, x, y, z) => {
       const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.6 }));
+      m.position.set(x,
