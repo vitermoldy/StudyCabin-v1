@@ -172,6 +172,7 @@ export class CameraRig {
       sph.radius = clamp(sph.radius * us.zoom, 1.6, this.maxRadius);
       sph.theta += us.yaw;
       // Past level ground the camera stays down and the gaze tips up instead.
+      const
       this.pos.copy(this.target).add(tmpE.setFromSpherical(sph));
       // Stay above the sand and the sea, and outside the cabin.
       const floor = Math.max(groundHeight(this.pos.x, this.pos.z), -0.05) + 0.45;
