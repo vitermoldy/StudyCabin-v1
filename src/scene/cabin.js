@@ -182,7 +182,7 @@ export class Cabin {
     // Posts run to the head of the wall; a band of glass sits above the doors and panes.
     const posts = [-6.98, -3.62, -0.98, 0.98, 3.62, 6.98];
     for (const x of posts) this._bx(trim, x - 0.035, x + 0.035, FLOOR, WALL_TOP, 2.97, 3.08);
-    for (let i = 0; i < posts.length - 1; i++) this._pane(posts[i] +
+    for (let i = 0; i < posts.length - 1; i++) this._pane(posts[i] + 0.035,
     const panes = [[-6.93, -3.67], [-3.57, -1.03], [1.03, 3.57], [3.67, 6.93]];
     for (const [a, b] of panes) {
       const pane = this._bx(glass, a, b, FLOOR + 0.05, GLASS_TOP - 0.06, 3.01, 3.03, { cast: false, receive: false });
