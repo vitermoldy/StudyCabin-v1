@@ -413,4 +413,4 @@ export class Pets {
           // Lying beside the resident, facing the way they face.
           d.facing = turn(d.facing, res.facing, 2 * dt);
         }
-      } else if (remaining > GAP + 0.05 || ((res.path || res.moving)
+      } else if (remaining > GAP + 0.05 || ((res.path || res.moving) &&
