@@ -51,7 +51,7 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Pines and broadleaf trees behind the cabin, crowns following the season | Asked for by the owner; they frame the cabin against the hills and show the season. |
 | Northern lights green to teal with a rose top, galaxy band, two star layers | Asked for by the owner. The reference's violet is left out (taste-skill: never violet); green aurora is the natural colour. |
 | Move, turn and zoom the camera by hand, double-click to reset | Asked for by the owner; the five views stay as starting points. |
-| Every wall of the main room is glass in thin dark frames, the gables too; the annex stays solid | Asked for by the owner: the rooms and the resident show from every side, daylight falls in from all of them. The annex is the one
+| Every wall of the main room is glass in thin dark frames, the gables too; the annex stays solid | Asked for by the owner: the rooms and the resident show from every side, daylight falls in from all of them. The annex is the one closed
 
 ## Motion and why
 
