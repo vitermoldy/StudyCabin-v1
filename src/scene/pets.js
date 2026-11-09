@@ -238,4 +238,4 @@ function pointBack(path, dist) {
     }
     left -= d;
   }
-  return { at: { ...path[0] }, rest: path.slice(1)
+  return { at: { ...path[0] }, rest: path.slice(1) };
