@@ -90,3 +90,4 @@ function makeDog() {
     sleep: { y: 0.15, pitch: 0, neck: -0.85, turn: 0.5, front: 1.45, rear: 1.2, tail: -0.6, wag: 0 },
   };
   return { root, body, neck, head, tail, legs, poses, stride: 0.75, swing: 0.5 };
+}
