@@ -204,4 +204,4 @@ function roomFor(x, z, inside) {
   return !BLOCKS.some(([x0, x1, z0, z1]) => x > x0 - r && x < x1 + r && z > z0 - r && z < z1 + r);
 }
 
-const h =
+const h = (hh,
