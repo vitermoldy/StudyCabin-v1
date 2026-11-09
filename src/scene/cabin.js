@@ -126,6 +126,7 @@ export class Cabin {
 
   /** A thin pane of glass: across x at depth z (axis 'z') or across z at x (axis 'x'). */
   _pane(a0, a1, y0, y1, axis, at) {
+    const
   // ------------------------------------------------------------ shell
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
