@@ -51,7 +51,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       mode = 'pinch';
       pinchDist = spread();
       pinchMid = middle();
-      pinchAngle
+      pinchAngle =
     }
   });
 
