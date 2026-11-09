@@ -146,4 +146,4 @@ function makeCat() {
 }
 
 /** Each joint eases toward the pose; legs swing while walking. */
-function applyPose(m, state, name, dt, t,
+function applyPose(m, state, name, dt, t, walking)
