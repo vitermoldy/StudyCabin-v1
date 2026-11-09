@@ -191,6 +191,7 @@ export class World {
       minutes,
       conditions: { badWeather: climate.badWeather, cold: climate.season === 'winter' || climate.temperature(minutes) < 9 },
       speedUp: state.residentOptions?.speedUp ?? 1,
+    });
     this.fx.update({
       time: t,
       params: p,
