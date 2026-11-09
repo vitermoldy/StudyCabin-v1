@@ -394,3 +394,4 @@ export class Pets {
           const z = R.z + rz * side * 0.8 + fz * 0.2;
           if (roomFor(x, z, inside)) {
             d.settle = { x, y: R.y, z };
+            break;
