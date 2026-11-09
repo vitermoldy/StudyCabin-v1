@@ -211,4 +211,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   const m = ((minutes % 1440) + 1440) % 1440;
   let id;
   if (m < h(6, 45)) id = 'bed';
-  else if (m < h(7,
+  else if (m < h(7, 25))
