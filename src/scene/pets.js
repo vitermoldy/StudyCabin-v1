@@ -397,4 +397,4 @@ export class Pets {
             break;
           }
         }
-        d.settled
+        d.settled =
