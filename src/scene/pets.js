@@ -297,4 +297,4 @@ export class Pets {
       m.castShadow = true;
       m.receiveShadow = true;
       this.group.add(m);
-      return
+      return m;
