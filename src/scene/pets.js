@@ -283,4 +283,4 @@ export class Pets {
     this.dogModel = makeDog();
     this.catModel = makeCat();
     this.group.add(this.dogModel.root, this.catModel.root);
-    this.dog =
+    this.dog = {
