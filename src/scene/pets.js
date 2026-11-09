@@ -341,4 +341,4 @@ export class Pets {
         d.mode = 'follow';
       }
       d.facing = Math.atan2(R.x - d.pos.x, R.z - d.pos.z);
-    } else if (asleep
+    } else if (asleep &&
