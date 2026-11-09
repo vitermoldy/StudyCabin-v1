@@ -64,3 +64,4 @@ function makeDog() {
   head.position.set(0.1, 0.2, 0);
   neck.add(head);
   head.add(blob(fur, [0.11, 0.095, 0.09], [0, 0, 0]));
+  head.add(blob(fur,
