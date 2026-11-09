@@ -325,4 +325,4 @@ export class Pets {
   _dog(dt, t, res, jumped, speedUp) {
     const d = this.dog;
     const R = res.pos;
-    const asleep = res.pose ===
+    const asleep = res.pose === 'sleep'
