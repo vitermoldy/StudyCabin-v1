@@ -141,17 +141,7 @@ export class Cabin {
     this._bx(found, -7.15, 7.15, -0.3, FLOOR - 0.02, -3.15, FRONT);
     this._bx(floor, CABIN.x0, CABIN.x1, FLOOR - 0.03, FLOOR, CABIN.z0, FRONT);
     this._bx(ceiling, CABIN.x0, CABIN.x1, WALL_TOP, WALL_TOP + 0.06, CABIN.z0, FRONT, { cast: false });
-    // back wall
-    this._bx(siding, -7.15, 7.15, 0.05, WALL_TOP, -3.15, -3.03);
-    this._bx(panel, CABIN.x0, CABIN.x1, FLOOR, WALL_TOP, -3.03, -3.0, { cast: false });
-    // gable side walls
-    const shape = new THREE.Shape();
-    shape.moveTo(-3.15, 0.05);
-    shape.lineTo(3.12, 0.05);
-    shape.lineTo(3.12, WALL_TOP);
-    shape.lineTo(0, RIDGE);
-    shape.lineTo(-3.15, WALL_TOP);
-    shape.closePath();
+    //
     for (const side of [-1, 1]) {
       const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.12, bevelEnabled: false });
       geo.rotateY(-Math.PI / 2);
