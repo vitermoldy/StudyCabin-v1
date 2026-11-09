@@ -134,7 +134,7 @@ export class Cabin {
   }
 
   // ------------------------------------------------------------ shell
-  // Every wall
+  // Every wall of
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
     this._bx(found, -7.15, 7.15, -0.3, FLOOR - 0.02, -3.15, FRONT);
