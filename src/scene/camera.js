@@ -169,7 +169,7 @@ export class CameraRig {
       // Moved out over the land, the point turned about rides above the ground there.
       this.target.y = Math.max(this.target.y, groundHeight(this.target.x, this.target.z) + 1.2);
       sph.setFromVector3(tmpE.subVectors(this.pos, this.target));
-      sph.radius = clamp(sph.radius *
+      sph.radius = clamp(sph.radius * us.zoom,
       sph.theta += us.yaw;
       sph.phi = clamp(sph.phi - us.tilt, 0.1, Math.PI / 2 - 0.02);
       this.pos.copy(this.target).add(tmpE.setFromSpherical(sph));
