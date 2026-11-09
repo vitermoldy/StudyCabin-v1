@@ -153,6 +153,7 @@ export class Cabin {
     tri.moveTo(-3.1, WALL_TOP);
     tri.lineTo(3.08, WALL_TOP);
     tri.lineTo(0, RIDGE - 0.05);
+    tri.closePath();
     for (const side of [-1, 1]) {
       const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.12, bevelEnabled: false });
       geo.rotateY(-Math.PI / 2);
