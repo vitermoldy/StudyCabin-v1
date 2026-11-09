@@ -323,3 +323,4 @@ export class Pets {
   }
 
   _dog(dt, t, res, jumped, speedUp) {
+    const
