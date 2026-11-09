@@ -395,3 +395,4 @@ export class Pets {
           if (roomFor(x, z, inside)) {
             d.settle = { x, y: R.y, z };
             break;
+          }
