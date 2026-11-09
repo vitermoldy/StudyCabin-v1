@@ -350,4 +350,4 @@ export class Pets {
       // Morning: out of the basket and after the resident again.
       d.mode = 'follow';
       d.path = null;
-      d.crumbs = [{ x: 2.45, y: FLOOR, z: SPINE_Z }, { x: R.x, y: R.y, z:
+      d.crumbs = [{ x: 2.45, y: FLOOR, z: SPINE_Z }, { x: R.x, y: R.y, z: R.z
