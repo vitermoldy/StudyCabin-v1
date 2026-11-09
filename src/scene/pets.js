@@ -327,3 +327,4 @@ export class Pets {
     const R = res.pos;
     const asleep = res.pose === 'sleep' && !res.path;
     if (jumped) {
+      d.crumbs
