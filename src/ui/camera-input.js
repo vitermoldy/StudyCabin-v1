@@ -26,7 +26,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
     return { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
   };
   const angle = () => {
-    const
+    const [a,
 
   canvas.addEventListener('contextmenu', (e) => e.preventDefault());
 
