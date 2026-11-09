@@ -52,7 +52,7 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Northern lights green to teal with a rose top, galaxy band, two star layers | Asked for by the owner. The reference's violet is left out (taste-skill: never violet); green aurora is the natural colour. |
 | Move, turn and zoom the camera by hand, double-click to reset | Asked for by the owner; the five views stay as starting points. |
 | Every wall of the main room is glass in thin dark frames, the gables too; the annex stays solid | Asked for by the owner: the rooms and the resident show from every side, daylight falls in from all of them. The annex is the one closed room. |
-| The camera moves like a map: drag moves across the land, right-drag turns, scroll zooms toward the pointer | Asked for
+| The camera moves like a map: drag moves across the land, right-drag turns, scroll zooms toward the pointer | Asked for by
 
 ## Motion and why
 
