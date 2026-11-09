@@ -108,4 +108,4 @@ function makeCat() {
   head.add(blob(fur, [0.07, 0.062, 0.068], [0, 0, 0]));
   head.add(blob(pale, [0.035, 0.025, 0.035], [0.055, -0.02, 0]));
   head.add(blob(dark, [0.012, 0.01, 0.012], [0.09, -0.01, 0]));
-  for (const side
+  for (const side of
