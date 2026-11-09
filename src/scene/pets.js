@@ -390,4 +390,4 @@ export class Pets {
         const rx = Math.cos(f);
         const rz = -Math.sin(f);
         for (const side of [1, -1]) {
-          const
+          const x
