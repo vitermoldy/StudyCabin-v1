@@ -119,7 +119,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
     if (!w) return;
     e.preventDefault();
     const delta = e.deltaMode === 1 ? e.deltaY * 32 : e.deltaY;
-    w.rig.zoomBy(Math.exp(Math.max(-200, Math.min(200, delta)) * 0.0011));
+    w.rig.zoomBy(Math.exp(Math.max(-200,
     onRender();
   }, { passive: false });
 
