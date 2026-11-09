@@ -188,6 +188,7 @@ export class World {
     this.cabin.update(dt, t);
     this.resident.update(dt, t, state.residentOptions);
     this.pets.update(dt, t, {
+      minutes,
     this.fx.update({
       time: t,
       params: p,
