@@ -371,3 +371,4 @@ export class Pets {
       if (d.crumbs.length > 600) d.crumbs.splice(0, d.crumbs.length - 600);
       let remaining = 0;
       let prev = d.pos;
+      for
