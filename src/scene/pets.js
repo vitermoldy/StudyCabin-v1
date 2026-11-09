@@ -32,4 +32,4 @@ function leg(material, length, top, bottom, [x, y, z]) {
   g.translate(0, -length / 2, 0);
   const pivot = new THREE.Group();
   pivot.position.set(x, y, z);
-  const mesh = new THREE.Mesh(g,
+  const mesh = new THREE.Mesh(g, material);
