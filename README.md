@@ -25,6 +25,7 @@ shows a still picture and the music, timer and ambient sound still work.
   or snows. Lamps, the stove, the porch light and the fire bowl follow the hour and the weather.
 - **Pets.** A dog that goes where the resident goes, a metre behind on their own steps: it lies
   down beside the chair, the sofa or the desk, sits while the resident stands, comes along on the
+  deck
 - **Clock.** 1 minute every second by default; also stopped, real time and 10 minutes a second.
   Jump to any hour from the Day panel or its timeline.
 - **Seasons.** Spring, summer, rainy season, autumn, winter: day length, temperature, grass and
