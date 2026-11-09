@@ -366,4 +366,4 @@ export class Pets {
       d.pose = 'sleep';
     } else {
       // Follow the resident's own steps.
-      const last = d.crumbs[d.crumbs.length - 1] ||
+      const last = d.crumbs[d.crumbs.length - 1] || d.pos;
