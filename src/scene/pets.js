@@ -362,3 +362,4 @@ export class Pets {
         d.step += (before.distanceTo(d.pos) / this.dogModel.stride) * Math.PI * 2;
       } else {
         d.facing = turn(d.facing, DOG_SPOTS.basket.face, 2 * dt);
+      }
