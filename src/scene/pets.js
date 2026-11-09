@@ -120,4 +120,4 @@ function makeCat() {
   const tail = new THREE.Group();
   tail.position.set(-0.18, 0.03, 0);
   body.add(tail);
-  const links
+  const links =
