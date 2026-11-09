@@ -45,7 +45,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       if (e.shiftKey) {
         mode = 'ripple';
         if (w) w.poke(e.clientX, e.clientY, 0.6);
-      } else if (e.button === 2 || e.button === 1 || e.ctrlKey || e.metaKey) mode
+      } else if (e.button === 2 || e.button === 1 || e.ctrlKey || e.metaKey) mode =
     } else if (pointers.size === 2) {
       mode = 'pinch';
       pinchDist = spread();
