@@ -189,6 +189,7 @@ export class World {
     this.resident.update(dt, t, state.residentOptions);
     this.pets.update(dt, t, {
       minutes,
+      conditions:
     this.fx.update({
       time: t,
       params: p,
