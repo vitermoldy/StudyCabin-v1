@@ -23,7 +23,7 @@ shows a still picture and the music, timer and ambient sound still work.
   glass. The resident follows a daily routine (sleep, coffee, breakfast, study, a walk on the
   shore, cooking, reading, guitar, journal) and swaps outdoor plans for indoor ones when it rains
   or snows. Lamps, the stove, the porch light and the fire bowl follow the hour and the weather.
-- **Pets.** A dog that goes where the resident goes, a metre behind on their own steps:
+- **Pets.** A dog that goes where the resident goes, a metre behind on their own steps: it
 - **Clock.** 1 minute every second by default; also stopped, real time and 10 minutes a second.
   Jump to any hour from the Day panel or its timeline.
 - **Seasons.** Spring, summer, rainy season, autumn, winter: day length, temperature, grass and
