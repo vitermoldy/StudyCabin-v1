@@ -174,4 +174,4 @@ function applyPose(m, state, name, dt, t, walking) {
 
 // The dog's basket by the stove and the cat's spots, on the same hub lines as the resident's.
 const DOG_SPOTS = {
-  basket:
+  basket: {
