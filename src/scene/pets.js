@@ -201,4 +201,4 @@ const BLOCKS = [
 function roomFor(x, z, inside) {
   const r = 0.35;
   if (inside ? x < -6.8 || x > 6.8 || z < -2.8 || z > 2.75 : x < -10.3 || x > 9.3 || z < 3.35 || z > 6.35) return false;
-  return !BLOCKS.some(([x0, x1, z0, z1]) => x > x0 - r && x < x1 +
+  return !BLOCKS.some(([x0, x1, z0, z1]) => x > x0 - r && x < x1 + r
