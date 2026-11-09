@@ -143,3 +143,4 @@ function makeCat() {
     eat: { y: 0.17, pitch: -0.12, neck: -0.9, turn: 0, front: 0.12, rear: 0, tail: 0.2, wrap: 0 },
   };
   return { root, body, neck, head, tail, links, legs, poses, stride: 0.35, swing: 0.6 };
+}
