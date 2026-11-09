@@ -264,3 +264,4 @@ function walkPath(m, budget, dt) {
     } else {
       const k = budget / d;
       m.pos.x += (target.x - m.pos.x) * k;
+      m.pos.z
