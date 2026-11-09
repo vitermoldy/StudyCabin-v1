@@ -189,7 +189,7 @@ export class World {
     this.resident.update(dt, t, state.residentOptions);
     this.pets.update(dt, t, {
       minutes,
-      conditions: { badWeather: climate.badWeather, cold: climate.season === 'winter' || climate.temperature(minutes)
+      conditions: { badWeather: climate.badWeather, cold: climate.season === 'winter' || climate.temperature(minutes) <
     this.fx.update({
       time: t,
       params: p,
