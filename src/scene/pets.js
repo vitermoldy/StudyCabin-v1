@@ -214,4 +214,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   else if (m < h(7, 25)) id = 'bowl';
   else if (m < h(10, 30)) id = bad || cold ? 'window' : 'deck';
   else if (m < h(15)) id = 'sofa';
-  else if (m <
+  else if (m < h(17))
