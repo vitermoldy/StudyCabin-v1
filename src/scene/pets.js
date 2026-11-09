@@ -272,3 +272,4 @@ function walkPath(m, budget, dt) {
       m.facing = turn(m.facing, Math.atan2(target.x - m.pos.x, target.z - m.pos.z), 8 * dt);
       budget = 0;
     }
+  }
