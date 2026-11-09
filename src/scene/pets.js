@@ -135,4 +135,4 @@ function makeCat() {
     body.add(l);
     return l;
   });
-  const poses
+  const poses =
