@@ -263,3 +263,4 @@ function walkPath(m, budget, dt) {
       if (m.idx >= m.path.length) m.path = null;
     } else {
       const k = budget / d;
+      m.pos.x
