@@ -317,4 +317,4 @@ export class Pets {
     const R = res.pos;
     // A jump in time moves the resident at once; the pets go with them.
     const jumped = !this.last || dist2(this.last, R) > 2.5;
-    this.last = { x: R.x, y:
+    this.last = { x: R.x, y: R.y,
