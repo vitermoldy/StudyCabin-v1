@@ -81,4 +81,4 @@ function makeDog() {
     body.add(l);
     return l;
   });
-  // Standing height of the
+  // Standing height of the body's
