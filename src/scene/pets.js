@@ -237,3 +237,4 @@ function pointBack(path, dist) {
       return { at: { x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k, z: a.z + (b.z - a.z) * k }, rest: path.slice(i) };
     }
     left -= d;
+  }
