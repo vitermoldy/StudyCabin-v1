@@ -314,4 +314,4 @@ export class Pets {
   /** ctx: { minutes, conditions: { badWeather, cold }, speedUp } */
   update(dt, t, { minutes, conditions = {}, speedUp = 1 } = {}) {
     const res = this.resident;
-    const R
+    const R =
