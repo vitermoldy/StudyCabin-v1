@@ -73,7 +73,7 @@ function hubOf(area, point) {
   return BEACH_HUB;
 }
 
-/** The way into a spot from its area's
+/** The way into a spot from its area's hub
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
