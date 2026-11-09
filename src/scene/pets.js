@@ -430,4 +430,4 @@ export class Pets {
           } else {
             const k = budget / dd;
             d.pos.x += (c.x - d.pos.x) * k;
-            d.pos.z += (c.z
+            d.pos.z += (c.z -
