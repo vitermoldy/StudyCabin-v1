@@ -190,6 +190,7 @@ export class World {
     this.pets.update(dt, t, {
       minutes,
       conditions: { badWeather: climate.badWeather, cold: climate.season === 'winter' || climate.temperature(minutes) < 9 },
+      speedUp:
     this.fx.update({
       time: t,
       params: p,
