@@ -81,4 +81,4 @@ function makeDog() {
     body.add(l);
     return l;
   });
-  // Standing height of the body's centre, and each pose
+  // Standing height of the body's centre, and each pose as
