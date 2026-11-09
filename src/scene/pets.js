@@ -375,3 +375,4 @@ export class Pets {
         remaining += dist2(prev, c);
         prev = c;
       }
+      remaining
