@@ -335,4 +335,4 @@ export class Pets {
         d.mode = 'basket';
       } else {
         const way = res.spot ? approachPath(res.spot) : [{ x: R.x, y: R.y, z: R.z + 1.2 }, { x: R.x, y: R.y, z: R.z }];
-        const back = pointBack(way,
+        const back = pointBack(way, GAP);
