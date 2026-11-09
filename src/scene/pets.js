@@ -425,3 +425,4 @@ export class Pets {
           const dd = dist2(d.pos, c);
           if (dd <= budget) {
             d.pos.set(c.x, c.y, c.z);
+            budget
