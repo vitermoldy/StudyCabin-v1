@@ -1,6 +1,6 @@
 /**
  * Moving the camera by hand on the scene canvas, like a map.
- *
+ * Mouse:
  */
 export function mountCameraInput(canvas, { getWorld, onRender }) {
   const html = document.documentElement;
