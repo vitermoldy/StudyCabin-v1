@@ -199,11 +199,7 @@ addEventListener('keydown', (e) => {
     toggleFullscreen();
   } else if (world && ['arrowleft', 'arrowright', 'arrowup', 'arrowdown'].includes(k) && !(t instanceof HTMLElement && t.closest('[role="dialog"], .dock'))) {
     e.preventDefault();
-    const step = 28;
-    if (k === 'arrowleft') world.rig.orbit(-step, 0);
-    if (k === 'arrowright') world.rig.orbit(step, 0);
-    if (k === 'arrowup') world.rig.orbit(0, -step);
-    if (k === 'arrowdown') world.rig.orbit(0, step);
+    //
     needsStill = true;
   } else if (world && (k === '+' || k === '=' || k === '-' || k === '_')) {
     world.rig.zoomBy(k === '+' || k === '=' ? 0.85 : 1.18);
