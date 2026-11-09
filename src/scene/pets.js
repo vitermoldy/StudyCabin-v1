@@ -381,4 +381,4 @@ export class Pets {
       const still = !res.path && !res.moving;
       d.still = still ? (d.still || 0) + dt : 0;
       if (!still) d.settle = null;
-      const inside = R.z
+      const inside = R.z <
