@@ -331,4 +331,4 @@ export class Pets {
       d.path = null;
       if (asleep) {
         const b = DOG_SPOTS.basket.at;
-        d.pos.set(b.x, b.y,
+        d.pos.set(b.x, b.y, b.z);
