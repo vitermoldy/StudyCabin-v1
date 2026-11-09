@@ -1,5 +1,5 @@
 /**
- * Moving the camera
+ * Moving the camera by
  */
 export function mountCameraInput(canvas, { getWorld, onRender }) {
   const html = document.documentElement;
