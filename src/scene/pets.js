@@ -18,3 +18,4 @@ function coat(hex) {
 }
 
 function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
+  const
