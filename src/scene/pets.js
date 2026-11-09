@@ -41,3 +41,4 @@ function leg(material, length, top, bottom, [x, y, z]) {
 /** A model is built facing +x; `inner` turns it so that facing 0 looks down +z, as the resident does. */
 function frame() {
   const root = new THREE.Group();
+  const
