@@ -299,4 +299,4 @@ export class Pets {
       this.group.add(m);
       return m;
     };
-    add(new THREE.CylinderGeometry(0.085, 0.07, 0.045, 18), '#b8614a', -3.6,
+    add(new THREE.CylinderGeometry(0.085, 0.07, 0.045, 18), '#b8614a', -3.6, FLOOR
