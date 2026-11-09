@@ -106,7 +106,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       if (tap && e.type === 'pointerup' && w) w.poke(e.clientX, e.clientY, 0.7);
       mode = null;
     } else if (pointers.size === 1) {
-      // One
+      // One finger
       moved = 5;
     }
   };
