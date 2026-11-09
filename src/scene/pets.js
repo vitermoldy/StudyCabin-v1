@@ -134,3 +134,4 @@ function makeCat() {
     const l = leg(fur, 0.17, 0.018, 0.014, [x, -0.02, z]);
     body.add(l);
     return l;
+  });
