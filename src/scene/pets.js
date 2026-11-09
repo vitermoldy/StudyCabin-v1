@@ -410,4 +410,4 @@ export class Pets {
           d.step += (step / this.dogModel.stride) * Math.PI * 2;
           walking = true;
         } else {
-          // Lying beside the
+          // Lying beside the resident,
