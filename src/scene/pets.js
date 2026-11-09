@@ -149,4 +149,4 @@ function makeCat() {
 function applyPose(m, state, name, dt, t, walking) {
   const target = m.poses[walking ? 'stand' : name] || m.poses.stand;
   const j = state.j || (state.j = { ...target });
-  const k =
+  const k = dt
