@@ -315,4 +315,4 @@ export class Pets {
   update(dt, t, { minutes, conditions = {}, speedUp = 1 } = {}) {
     const res = this.resident;
     const R = res.pos;
-    // A jump in time moves the resident at once; the pets go with
+    // A jump in time moves the resident at once; the pets go with them.
