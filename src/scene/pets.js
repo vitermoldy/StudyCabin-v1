@@ -82,4 +82,4 @@ function makeDog() {
     return l;
   });
   // Standing height of the body's centre, and each pose as targets for the joints. Leg angles are
-  // relative to the body; the
+  // relative to the body; the body's
