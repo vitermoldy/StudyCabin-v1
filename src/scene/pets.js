@@ -29,4 +29,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
 // A leg hanging from its hip or shoulder; rotating the pivot about z swings it forward (+) or back.
 function leg(material, length, top, bottom, [x, y, z]) {
   const g = new THREE.CylinderGeometry(top, bottom, length, 6);
-  g.translate(0, -length
+  g.translate(0, -length /
