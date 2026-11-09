@@ -162,7 +162,7 @@ export class CameraRig {
     // The visitor's own camera moves, eased so a drag feels smooth.
     for (const k of Object.keys(this.user)) this.userS[k] = damp(this.userS[k], this.user[k], 12, dt);
     const us = this.userS;
-    this.lookUp =
+    this.lookUp = 0;
     if (Math.abs(us.yaw) + Math.abs(us.tilt) + Math.abs(us.zoom - 1) + Math.abs(us.panX) + Math.abs(us.panZ) > 1e-4) {
       this.target.x += us.panX;
       this.target.z += us.panZ;
