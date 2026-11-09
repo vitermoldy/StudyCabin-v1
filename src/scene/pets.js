@@ -424,4 +424,4 @@ export class Pets {
           const c = d.crumbs[0];
           const dd = dist2(d.pos, c);
           if (dd <= budget) {
-            d.pos.set(c.x,
+            d.pos.set(c.x, c.y,
