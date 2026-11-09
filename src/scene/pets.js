@@ -119,3 +119,4 @@ function makeCat() {
   // The tail: four links, each bending a little, so it can stand up, hang or wrap round the feet.
   const tail = new THREE.Group();
   tail.position.set(-0.18, 0.03, 0);
+  body.add(tail);
