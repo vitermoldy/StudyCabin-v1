@@ -288,3 +288,5 @@ export class Pets {
     this.last = null;
     this._things();
   }
+
+  /**
