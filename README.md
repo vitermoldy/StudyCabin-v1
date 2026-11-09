@@ -27,7 +27,7 @@ shows a still picture and the music, timer and ambient sound still work.
   down beside the chair, the sofa or the desk, sits while the resident stands, comes along on the
   deck and the beach walk, and sleeps in its basket by the stove at night. A cat that keeps its
   own day: the foot of the bed at night, its bowl at breakfast and dinner, the sunny deck on fine
-  mornings (the glass on cold or wet ones), the sofa in the afternoon and the evening,
+  mornings (the glass on cold or wet ones), the sofa in the afternoon and the evening, the
 - **Clock.** 1 minute every second by default; also stopped, real time and 10 minutes a second.
   Jump to any hour from the Day panel or its timeline.
 - **Seasons.** Spring, summer, rainy season, autumn, winter: day length, temperature, grass and
