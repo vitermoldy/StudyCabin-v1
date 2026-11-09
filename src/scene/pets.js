@@ -334,4 +334,4 @@ export class Pets {
         d.pos.set(b.x, b.y, b.z);
         d.mode = 'basket';
       } else {
-        const way = res.spot ? approachPath(res.spot) : [{ x: R.x, y: R.y, z: R.z + 1.2 }, { x:
+        const way = res.spot ? approachPath(res.spot) : [{ x: R.x, y: R.y, z: R.z + 1.2 }, { x: R.x,
