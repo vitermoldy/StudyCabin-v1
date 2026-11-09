@@ -124,7 +124,7 @@ export class Cabin {
     }
   }
 
-  /**
+  /** A
   // ------------------------------------------------------------ shell
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
