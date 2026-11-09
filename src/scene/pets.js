@@ -464,4 +464,4 @@ export class Pets {
       c.spot = want;
     }
     let walking = false;
-    if (c.path)
+    if (c.path) {
