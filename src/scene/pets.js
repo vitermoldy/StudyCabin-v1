@@ -121,4 +121,4 @@ function makeCat() {
   tail.position.set(-0.18, 0.03, 0);
   body.add(tail);
   const links = [];
-  let parent =
+  let parent = tail;
