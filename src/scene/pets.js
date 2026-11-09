@@ -136,3 +136,4 @@ function makeCat() {
     return l;
   });
   const poses = {
+    stand:
