@@ -171,3 +171,5 @@ function applyPose(m, state, name, dt, t, walking) {
     m.tail.rotation.y = Math.sin(t * (walking ? 9 : 6)) * j.wag;
   }
 }
+
+//
