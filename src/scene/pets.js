@@ -275,4 +275,4 @@ function walkPath(m, budget, dt) {
   }
 }
 
-export class
+export class Pets
