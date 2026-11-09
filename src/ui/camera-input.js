@@ -1,6 +1,7 @@
 /**
  * Moving the camera by hand on the scene canvas, like a map.
  * Mouse: drag to move across the land, right-drag or Ctrl+drag to turn and tilt (keep dragging
+ *
  */
 export function mountCameraInput(canvas, { getWorld, onRender }) {
   const html = document.documentElement;
