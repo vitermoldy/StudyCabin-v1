@@ -27,4 +27,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
 }
 
 // A leg hanging from its hip or shoulder; rotating the pivot about z swings it forward (+) or back.
-function leg(material, length, top, bottom, [x, y, z])
+function leg(material, length, top, bottom, [x, y, z]) {
