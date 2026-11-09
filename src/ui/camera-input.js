@@ -69,8 +69,6 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       // Pinch zooms toward the point between the fingers, a twist turns, both fingers sliding
       // up or down tilt.
       const d = spread();
-      w.rig.zoomBy(pinchDist / d);
-      pinchDist = d;
       const m = middle();
       w.rig.pan(m.x - pinchMid.x, m.y - pinchMid.y);
       pinchMid = m;
