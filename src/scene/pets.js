@@ -444,3 +444,4 @@ export class Pets {
       d.pose = res.path || res.moving ? 'sit' : seated ? 'lie' : 'sit';
     }
     const m = this.dogModel;
+    m.root.position.copy(d.pos);
