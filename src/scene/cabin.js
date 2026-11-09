@@ -149,7 +149,7 @@ export class Cabin {
     for (const x of posts.slice(1, -1)) this._bx(trim, x - 0.035, x + 0.035, FLOOR, WALL_TOP, ...backZ);
     for (let i = 0; i < posts.length - 1; i++) this._pane(posts[i] + 0.035, posts[i + 1] - 0.035, FLOOR + 0.05, WALL_TOP - 0.06, 'z', -3.075);
     // gable ends: glass to the head of the wall, posts, and a glass triangle up to the ridge
-    const tri =
+    const tri = new
     for (const side of [-1, 1]) {
       const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.12, bevelEnabled: false });
       geo.rotateY(-Math.PI / 2);
