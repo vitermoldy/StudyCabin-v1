@@ -209,7 +209,7 @@ export class World {
 
   /** The point on level ground under a screen position (CSS pixels), or null over the sky. */
   groundAt(x, y) {
-    const ndc = new THREE.Vector2((x / this.width) * 2 - 1, -(y / this.height) *
+    const ndc = new THREE.Vector2((x / this.width) * 2 - 1, -(y / this.height) * 2
   /** Mouse position over the scene (CSS pixels), for the grass that parts round it. */
   setPointer(x, y, on = true) {
     this.pointerNdc.set((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
