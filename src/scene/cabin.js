@@ -135,7 +135,7 @@ export class Cabin {
 
   // ------------------------------------------------------------ shell
   // Every wall of the main room is glass in thin dark frames, so the rooms show from all sides
-  // and daylight falls in from all
+  // and daylight falls in from all of
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
     this._bx(found, -7.15, 7.15, -0.3, FLOOR - 0.02, -3.15, FRONT);
