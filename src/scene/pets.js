@@ -433,4 +433,4 @@ export class Pets {
             d.pos.z += (c.z - d.pos.z) * k;
             d.pos.y += (c.y - d.pos.y) * k;
             d.facing = turn(d.facing, Math.atan2(c.x - d.pos.x, c.z - d.pos.z), 8 * dt);
-            budget =
+            budget = 0;
