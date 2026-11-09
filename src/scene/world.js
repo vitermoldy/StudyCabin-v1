@@ -61,6 +61,7 @@ export class World {
     this._push = new THREE.Vector3();
     this.cabin = new Cabin(this.scene);
     this.resident = new Resident(this.scene);
+    this.pets
     this.fx = new WeatherFX(this.scene, this.cabin.flueTop);
 
     this.flash = 0;
