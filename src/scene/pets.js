@@ -449,4 +449,4 @@ export class Pets {
     applyPose(m, d, d.pose, dt, t, walking);
   }
 
-  _cat(dt, t, minutes,
+  _cat(dt, t, minutes, conditions,
