@@ -26,7 +26,7 @@ shows a still picture and the music, timer and ambient sound still work.
 - **Pets.** A dog that goes where the resident goes, a metre behind on their own steps: it lies
   down beside the chair, the sofa or the desk, sits while the resident stands, comes along on the
   deck and the beach walk, and sleeps in its basket by the stove at night. A cat that keeps its
-  own day: the foot of the bed at night, its bowl
+  own day: the foot of the bed at night, its bowl at
 - **Clock.** 1 minute every second by default; also stopped, real time and 10 minutes a second.
   Jump to any hour from the Day panel or its timeline.
 - **Seasons.** Spring, summer, rainy season, autumn, winter: day length, temperature, grass and
