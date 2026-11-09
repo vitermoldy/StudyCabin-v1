@@ -308,4 +308,4 @@ export class Pets {
 
   /** Distance of the nearer pet from the sliding door, so it opens for them too. */
   get doorDistance() {
-    return Math.min(Math.hypot(this.dog.pos.x, this.dog.pos.z - 3.0), Math.hypot(this.cat.pos.x,
+    return Math.min(Math.hypot(this.dog.pos.x, this.dog.pos.z - 3.0), Math.hypot(this.cat.pos.x, this.cat.pos.z
