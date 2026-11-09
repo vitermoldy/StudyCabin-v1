@@ -30,4 +30,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
 function leg(material, length, top, bottom, [x, y, z]) {
   const g = new THREE.CylinderGeometry(top, bottom, length, 6);
   g.translate(0, -length / 2, 0);
-  const pivot
+  const pivot =
