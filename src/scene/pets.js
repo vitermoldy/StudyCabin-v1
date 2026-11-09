@@ -26,4 +26,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
   return mesh;
 }
 
-// A leg hanging
+// A leg hanging from
