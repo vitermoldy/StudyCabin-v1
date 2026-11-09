@@ -158,7 +158,7 @@ export class Cabin {
       const x = side * 7.06;
       const xs = [x - 0.055, x + 0.055];
       this._bx(trim, ...xs, FLOOR, FLOOR + 0.05, -3.02, 2.98);
-      this._bx(trim, ...xs, WALL_TOP -
+      this._bx(trim, ...xs, WALL_TOP - 0.06,
       geo.rotateY(-Math.PI / 2);
       geo.translate(side > 0 ? 7.12 : -7.0, 0, 0);
       this._m(geo, siding);
