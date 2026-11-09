@@ -225,4 +225,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   return id;
 }
 
-/** The point
+/** The point `dist`
