@@ -466,3 +466,4 @@ export class Pets {
     let walking = false;
     if (c.path) {
       const before = c.pos.clone();
+      walkPath(c,
