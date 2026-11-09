@@ -279,3 +279,4 @@ export class Pets {
   constructor(scene, resident) {
     this.resident = resident;
     this.group = new THREE.Group();
+    scene.add(this.group);
