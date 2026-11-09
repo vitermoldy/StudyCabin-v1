@@ -158,6 +158,7 @@ mountCameraInput(document.getElementById('scene'), {
 
 // Zoom buttons beside the pause disc, closer and further, as the + and − keys do.
 for (const [id, factor] of [['zoom-in', 0.8], ['zoom-out', 1.25]]) {
+  document.getElementById(id).addEventListener('click',
 // Pointer for the camera's small answer to the mouse.
 addEventListener('pointermove', (e) => {
   if (!world || e.pointerType !== 'mouse') return;
