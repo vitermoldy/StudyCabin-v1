@@ -102,6 +102,7 @@ export class CameraRig {
   }
 
   /**
+   *
   }
 
   resetUser() {
