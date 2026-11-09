@@ -20,3 +20,4 @@ function coat(hex) {
 function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
   const mesh = new THREE.Mesh(ball, material);
   mesh.scale.set(sx, sy, sz);
+  mesh.position.set(x,
