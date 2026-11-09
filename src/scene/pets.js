@@ -427,3 +427,4 @@ export class Pets {
             d.pos.set(c.x, c.y, c.z);
             budget -= dd;
             d.crumbs.shift();
+          }
