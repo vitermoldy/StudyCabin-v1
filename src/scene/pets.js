@@ -157,4 +157,4 @@ function applyPose(m, state, name, dt, t, walking) {
   m.neck.rotation.y = j.turn;
   m.legs.forEach((l, i) => {
     const front = i < 2;
-    const swing = walking ? Math.sin(state.step + (i === 0 ||
+    const swing = walking ? Math.sin(state.step + (i === 0 || i
