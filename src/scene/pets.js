@@ -337,4 +337,4 @@ export class Pets {
         const way = res.spot ? approachPath(res.spot) : [{ x: R.x, y: R.y, z: R.z + 1.2 }, { x: R.x, y: R.y, z: R.z }];
         const back = pointBack(way, GAP);
         d.pos.set(back.at.x, back.at.y, back.at.z);
-        d.crumbs =
+        d.crumbs = back.rest.slice(0,
