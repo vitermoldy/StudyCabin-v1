@@ -300,3 +300,4 @@ export class Pets {
       return m;
     };
     add(new THREE.CylinderGeometry(0.085, 0.07, 0.045, 18), '#b8614a', -3.6, FLOOR + 0.023, -2.18);
+    add(new
