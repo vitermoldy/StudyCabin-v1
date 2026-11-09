@@ -245,4 +245,4 @@ function turn(current, target, maxStep) {
   let d = target - current;
   while (d > Math.PI) d -= Math.PI * 2;
   while (d < -Math.PI) d += Math.PI * 2;
-  return current + Math.max(-maxStep,
+  return current + Math.max(-maxStep, Math.min(maxStep,
