@@ -64,7 +64,7 @@ shows a still picture and the music, timer and ambient sound still work.
 | 1 to 5 | Shore, deck, window, water, follow |
 | Arrows | Move across the land |
 | Shift + arrows | Turn and tilt; down past level looks up at the sky |
-| + and − | Zoom (or the buttons at
+| + and − | Zoom (or the buttons at the
 | R | Reset the camera |
 | H | Show or hide the big words |
 | P | Pause or move the scene |
