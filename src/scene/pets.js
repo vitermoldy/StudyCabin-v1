@@ -165,3 +165,4 @@ function applyPose(m, state, name, dt, t, walking) {
     m.links.forEach((link, i) => {
       link.rotation.z = (i === 0 ? j.tail * 2.2 : j.tail * 0.6) + Math.sin(t * 1.3 + i) * 0.06;
       link.rotation.y = j.wrap * (i + 1) * 0.5;
+    });
