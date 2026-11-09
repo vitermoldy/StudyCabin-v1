@@ -50,4 +50,4 @@ function frame() {
 }
 
 function makeDog() {
-  const fur
+  const fur =
