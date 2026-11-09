@@ -168,4 +168,4 @@ function applyPose(m, state, name, dt, t, walking) {
     });
   } else {
     m.tail.rotation.z = j.tail;
-    m.tail.rotation.y = Math.sin(t * (walking ? 9 : 6)) *
+    m.tail.rotation.y = Math.sin(t * (walking ? 9 : 6)) * j.wag;
