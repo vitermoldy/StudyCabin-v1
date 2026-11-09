@@ -476,3 +476,4 @@ export class Pets {
     c.pose = CAT_SPOTS[c.spot].pose;
     const m = this.catModel;
     m.root.position.copy(c.pos);
+    m.root.rotation.y
