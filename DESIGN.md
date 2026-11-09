@@ -54,7 +54,7 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Every wall of the main room is glass in thin dark frames, the gables too; the annex stays solid | Asked for by the owner: the rooms and the resident show from every side, daylight falls in from all of them. The annex is the one closed room. |
 | The camera moves like a map: drag moves across the land, right-drag turns, scroll zooms toward the pointer | Asked for by the owner ("like moving a map, not stuck on the house"); the reach covers the beach, the dunes and the near sea. |
 | Dragging down past level ground tips the gaze up, to about 75 degrees | Asked for by the owner, to see the sky; the camera itself stays above the ground. The Milky Way and the aurora were reworked so nothing pinches or streaks at the zenith. |
-| − and + buttons beside the pause disc | Asked for by the owner; the same two glyphs as the keys, round chips like the pause disc, so the header stays one row (it fits at 320
+| − and + buttons beside the pause disc | Asked for by the owner; the same two glyphs as the keys, round chips like the pause disc, so the header stays one row (it fits at 320 px).
 
 ## Motion and why
 
