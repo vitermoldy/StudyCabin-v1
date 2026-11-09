@@ -84,6 +84,7 @@ export function approachPath(spotId, spots = SPOTS) {
  * the pets pass their own, laid out on the same hub lines.
  */
 export function route(fromSpot, toSpot, from = null, spots = SPOTS) {
+  const
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
