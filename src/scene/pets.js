@@ -259,3 +259,4 @@ function walkPath(m, budget, dt) {
     if (d <= budget) {
       m.pos.set(target.x, target.y, target.z);
       budget -= d;
+      m.idx++;
