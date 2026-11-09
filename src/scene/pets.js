@@ -284,4 +284,4 @@ export class Pets {
     this.catModel = makeCat();
     this.group.add(this.dogModel.root, this.catModel.root);
     this.dog = { pos: new THREE.Vector3(), facing: 0, mode: 'follow', crumbs: [], path: null, idx: 1, step: 0, pose: 'sit' };
-    this.cat = { pos: new THREE.Vector3(), facing: 0, spot: null, path: null, idx: 1, step:
+    this.cat = { pos: new THREE.Vector3(), facing: 0, spot: null, path: null, idx: 1, step: 0,
