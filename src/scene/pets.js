@@ -187,3 +187,4 @@ const CAT_SPOTS = {
 };
 
 // Footprints the pets keep out of (x0, x1, z0, z1): furniture inside, chairs and the fire bowl
+//
