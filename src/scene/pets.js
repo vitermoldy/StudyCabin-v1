@@ -10,4 +10,4 @@ import { FLOOR, SPINE_Z, DECK_Z, route, approachPath } from '../sim/layout.js';
 // in between. Both are a few soft shapes, lit and shadowed like everything else.
 
 const ball = new THREE.SphereGeometry(1, 14, 10);
-const p = (x, z, y = FLOOR) => ({
+const p = (x, z, y = FLOOR) => ({ x,
