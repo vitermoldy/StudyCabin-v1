@@ -136,4 +136,4 @@ function makeCat() {
     return l;
   });
   const poses = {
-    stand: { y: 0.2, pitch: 0, neck: 0.1,
+    stand: { y: 0.2, pitch: 0, neck: 0.1, turn:
