@@ -197,9 +197,7 @@ export class Cabin {
     this._bx(trim, -0.95, -0.92, FLOOR + 0.05, GLASS_TOP - 0.06, -0.02, 0.02, { parent: this.door });
     this._bx(trim, 0.92, 0.95, FLOOR + 0.05, GLASS_TOP - 0.06, -0.02, 0.02, { parent: this.door });
     this._bx(trim, 0.78, 0.82, FLOOR + 0.9, FLOOR + 1.3, 0.02, 0.05, { parent: this.door });
-    // porch light beside the door
-    this._bx(trim, 1.15, 1.31, GLASS_TOP + 0.08, GLASS_TOP + 0.3, 3.13, 3.2);
-    this._bx(this.shades.porch, 1.17, 1.29, GLASS_TOP + 0.1, GLASS_TOP + 0.2, 3.2, 3.24, { cast: false });
+    //
   }
 
   _roof() {
