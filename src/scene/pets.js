@@ -271,3 +271,4 @@ function walkPath(m, budget, dt) {
       m.pos.y = from.y + rise * along + (Math.abs(rise) > 0.2 ? Math.sin(Math.PI * along) * 0.18 : 0);
       m.facing = turn(m.facing, Math.atan2(target.x - m.pos.x, target.z - m.pos.z), 8 * dt);
       budget = 0;
+    }
