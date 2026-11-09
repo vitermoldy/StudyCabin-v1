@@ -469,4 +469,4 @@ export class Pets {
       walkPath(c, 0.7 * speedUp * dt, dt);
       const moved = before.distanceTo(c.pos);
       walking = moved > 1e-4;
-      c.step +=
+      c.step += (moved
