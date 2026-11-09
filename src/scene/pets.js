@@ -117,4 +117,4 @@ function makeCat() {
     head.add(ear);
   }
   // The tail: four links, each bending a little, so it can stand up, hang or wrap round the feet.
-  const
+  const tail
