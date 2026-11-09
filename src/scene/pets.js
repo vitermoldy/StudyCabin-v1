@@ -321,3 +321,5 @@ export class Pets {
     this._dog(dt, t, res, jumped, speedUp);
     this._cat(dt, t, minutes, conditions, res.spot, jumped, speedUp);
   }
+
+  _dog(dt,
