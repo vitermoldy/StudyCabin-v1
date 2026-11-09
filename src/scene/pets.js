@@ -428,3 +428,4 @@ export class Pets {
             budget -= dd;
             d.crumbs.shift();
           } else {
+            const
