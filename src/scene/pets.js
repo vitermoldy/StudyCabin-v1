@@ -230,4 +230,4 @@ function pointBack(path, dist) {
   let left = dist;
   for (let i = path.length - 1; i > 0; i--) {
     const a = path[i - 1];
-    const
+    const b
