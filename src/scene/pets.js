@@ -289,4 +289,4 @@ export class Pets {
     this._things();
   }
 
-  /** Food
+  /** Food and
