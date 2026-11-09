@@ -84,6 +84,7 @@ export class CameraRig {
   /** Turn and tilt by angles (radians), as orbit() does for a drag. */
   rotateBy(yaw, tilt) {
     this.user.yaw += yaw;
+    this.user.tilt
   pan(dx, dy) {
     const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
     const k = dist * 0.0016;
