@@ -151,4 +151,4 @@ function applyPose(m, state, name, dt, t, walking) {
   const j = state.j || (state.j = { ...target });
   const k = dt > 0 ? 1 - Math.exp(-dt * 5) : 1;
   for (const key of Object.keys(target)) j[key] += (target[key] - j[key]) * k;
-  m.body.position.y =
+  m.body.position.y = j.y
