@@ -258,4 +258,4 @@ function walkPath(m, budget, dt) {
     const d = dist2(m.pos, target);
     if (d <= budget) {
       m.pos.set(target.x, target.y, target.z);
-      budget
+      budget -=
