@@ -240,3 +240,5 @@ function pointBack(path, dist) {
   }
   return { at: { ...path[0] }, rest: path.slice(1) };
 }
+
+function
