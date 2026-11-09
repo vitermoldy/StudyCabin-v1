@@ -125,3 +125,4 @@ function makeCat() {
   for (let i = 0; i < 4; i++) {
     const link = new THREE.Group();
     if (i) link.position.set(-0.075, 0, 0);
+    parent.add(link);
