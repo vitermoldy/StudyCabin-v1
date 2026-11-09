@@ -310,3 +310,5 @@ export class Pets {
   get doorDistance() {
     return Math.min(Math.hypot(this.dog.pos.x, this.dog.pos.z - 3.0), Math.hypot(this.cat.pos.x, this.cat.pos.z - 3.0));
   }
+
+  /**
