@@ -376,4 +376,4 @@ export class Pets {
         prev = c;
       }
       remaining += dist2(prev, R);
-      // The
+      // The resident
