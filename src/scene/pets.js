@@ -408,4 +408,4 @@ export class Pets {
           d.pos.z += ((d.settle.z - d.pos.z) / dd) * step;
           d.facing = turn(d.facing, Math.atan2(d.settle.x - d.pos.x, d.settle.z - d.pos.z), 8 * dt);
           d.step += (step / this.dogModel.stride) * Math.PI * 2;
-          walking =
+          walking = true;
