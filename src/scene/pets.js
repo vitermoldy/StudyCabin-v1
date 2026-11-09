@@ -404,4 +404,4 @@ export class Pets {
         const dd = dist2(d.pos, d.settle);
         if (dd > 0.03) {
           const step = Math.min(dd, 0.7 * speedUp * dt);
-          d.pos.x +=
+          d.pos.x += ((d.settle.x
