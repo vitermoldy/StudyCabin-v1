@@ -70,7 +70,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
       // up or down tilt.
       const d = spread();
       const m = middle();
-      w.rig.zoomBy(pinchDist / d, w.groundAt(m.x,
+      w.rig.zoomBy(pinchDist / d, w.groundAt(m.x, m.y));
       pinchMid = m;
       onRender();
       return;
