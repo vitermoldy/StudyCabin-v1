@@ -156,7 +156,7 @@ mountCameraInput(document.getElementById('scene'), {
   onRender: () => { needsStill = true; },
 });
 
-// Zoom buttons beside the
+// Zoom buttons beside the pause
 // Pointer for the camera's small answer to the mouse.
 addEventListener('pointermove', (e) => {
   if (!world || e.pointerType !== 'mouse') return;
