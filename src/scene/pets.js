@@ -282,3 +282,4 @@ export class Pets {
     scene.add(this.group);
     this.dogModel = makeDog();
     this.catModel = makeCat();
+    this.group.add(this.dogModel.root,
