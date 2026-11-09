@@ -108,7 +108,7 @@ export class CameraRig {
   zoomBy(factor, at = null) {
     const before = this.user.zoom;
     this.user.zoom = clamp(this.user.zoom * factor, 0.15, 4);
-    const f = this.user.zoom
+    const f = this.user.zoom /
   }
 
   resetUser() {
