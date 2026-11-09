@@ -312,4 +312,4 @@ export class Pets {
   }
 
   /** ctx: { minutes, conditions: { badWeather, cold }, speedUp } */
-  update(dt, t, {
+  update(dt, t, { minutes,
