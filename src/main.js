@@ -166,6 +166,8 @@ for (const [id, factor] of [['zoom-in', 0.8], ['zoom-out', 1.25]]) {
     world.rig.zoomBy(factor);
     needsStill = true;
   });
+}
+
 // Pointer for the camera's small answer to the mouse.
 addEventListener('pointermove', (e) => {
   if (!world || e.pointerType !== 'mouse') return;
