@@ -461,3 +461,4 @@ export class Pets {
     } else if (want !== c.spot && !c.path) {
       c.path = route(c.spot, want, { x: c.pos.x, y: c.pos.y, z: c.pos.z }, CAT_SPOTS);
       c.idx = 1;
+      c.spot
