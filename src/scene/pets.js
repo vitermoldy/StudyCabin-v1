@@ -287,3 +287,4 @@ export class Pets {
     this.cat = { pos: new THREE.Vector3(), facing: 0, spot: null, path: null, idx: 1, step: 0, pose: 'sit' };
     this.last = null;
     this._things();
+  }
