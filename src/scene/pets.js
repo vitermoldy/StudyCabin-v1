@@ -49,4 +49,4 @@ function frame() {
   return { root, body };
 }
 
-function
+function makeDog()
