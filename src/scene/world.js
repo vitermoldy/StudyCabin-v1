@@ -187,6 +187,7 @@ export class World {
     this._house({ minutes, climate, activity });
     this.cabin.update(dt, t);
     this.resident.update(dt, t, state.residentOptions);
+    this.pets.update(dt,
     this.fx.update({
       time: t,
       params: p,
