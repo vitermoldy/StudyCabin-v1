@@ -197,4 +197,4 @@ const BLOCKS = [
   [4.5, 5.2, 4.7, 5.4], [-7.95, -6.85, 4.7, 5.8],
 ];
 
-/** True when the dog (about 0.35 m round) fits at x, z in the same
+/** True when the dog (about 0.35 m round) fits at x, z in the same room
