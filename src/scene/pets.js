@@ -131,4 +131,4 @@ function makeCat() {
     parent = link;
   }
   const legs = [[0.12, 0.04], [0.12, -0.04], [-0.12, 0.04], [-0.12, -0.04]].map(([x, z]) => {
-    const
+    const l
