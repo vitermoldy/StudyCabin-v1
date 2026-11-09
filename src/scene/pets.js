@@ -420,4 +420,4 @@ export class Pets {
         let budget = Math.min(speed * dt, remaining - GAP);
         d.step += (budget / this.dogModel.stride) * Math.PI * 2;
         walking = true;
-        while (budget > 1e-5 &&
+        while (budget > 1e-5 && d.crumbs.length)
