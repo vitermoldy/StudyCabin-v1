@@ -167,3 +167,4 @@ function applyPose(m, state, name, dt, t, walking) {
       link.rotation.y = j.wrap * (i + 1) * 0.5;
     });
   } else {
+    m.tail.rotation.z
