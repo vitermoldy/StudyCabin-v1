@@ -124,7 +124,7 @@ export class Cabin {
     }
   }
 
-  /** A thin pane of glass: across
+  /** A thin pane of glass: across x
   // ------------------------------------------------------------ shell
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
