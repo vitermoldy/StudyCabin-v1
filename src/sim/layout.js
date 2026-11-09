@@ -73,7 +73,7 @@ function hubOf(area, point) {
   return BEACH_HUB;
 }
 
-/** The
+/** The way
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
