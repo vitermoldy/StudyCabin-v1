@@ -81,7 +81,7 @@ export class CameraRig {
     this.rotateBy(-dx * 0.0055, -dy * 0.0045);
   }
 
-  /** Turn and tilt by angles
+  /** Turn and tilt by angles (radians),
   pan(dx, dy) {
     const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
     const k = dist * 0.0016;
