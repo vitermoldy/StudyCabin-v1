@@ -102,4 +102,4 @@ function makeCat() {
   const neck = new THREE.Group();
   neck.position.set(0.17, 0.04, 0);
   body.add(neck);
-  const head =
+  const head = new
