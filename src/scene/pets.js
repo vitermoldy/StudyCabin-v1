@@ -254,4 +254,4 @@ const dist2 = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 function walkPath(m, budget, dt) {
   while (budget > 1e-5 && m.path) {
     const target = m.path[m.idx];
-    const from = m.path[m.idx
+    const from = m.path[m.idx -
