@@ -211,6 +211,7 @@ export class World {
   groundAt(x, y) {
     const ndc = new THREE.Vector2((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
     this.raycaster.setFromCamera(ndc, this.camera);
+    const
   /** Mouse position over the scene (CSS pixels), for the grass that parts round it. */
   setPointer(x, y, on = true) {
     this.pointerNdc.set((x / this.width) * 2 - 1, -(y / this.height) * 2 + 1);
