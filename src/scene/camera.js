@@ -85,6 +85,7 @@ export class CameraRig {
   rotateBy(yaw, tilt) {
     this.user.yaw += yaw;
     this.user.tilt = clamp(this.user.tilt + tilt, -2.9, 1.2);
+  }
   pan(dx, dy) {
     const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
     const k = dist * 0.0016;
