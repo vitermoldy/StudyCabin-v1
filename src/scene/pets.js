@@ -265,4 +265,4 @@ function walkPath(m, budget, dt) {
       const k = budget / d;
       m.pos.x += (target.x - m.pos.x) * k;
       m.pos.z += (target.z - m.pos.z) * k;
-      const
+      const segLen
