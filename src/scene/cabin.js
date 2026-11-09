@@ -161,7 +161,7 @@ export class Cabin {
       this._bx(trim, ...xs, WALL_TOP - 0.06, WALL_TOP, -3.15, 3.12);
       const zs = [-3.02, -1.05, 1.05, 2.98];
       for (const z of [-1.05, 1.05]) this._bx(trim, ...xs, FLOOR, WALL_TOP, z - 0.035, z + 0.035);
-      for (let i = 0; i < zs.length
+      for (let i = 0; i < zs.length -
       geo.rotateY(-Math.PI / 2);
       geo.translate(side > 0 ? 7.12 : -7.0, 0, 0);
       this._m(geo, siding);
