@@ -273,3 +273,4 @@ function walkPath(m, budget, dt) {
       budget = 0;
     }
   }
+}
