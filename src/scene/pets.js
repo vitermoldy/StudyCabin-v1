@@ -248,4 +248,4 @@ function turn(current, target, maxStep) {
   return current + Math.max(-maxStep, Math.min(maxStep, d));
 }
 
-const dist2 = (a, b) => Math.hypot(a.x -
+const dist2 = (a, b) => Math.hypot(a.x - b.x,
