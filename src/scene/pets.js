@@ -354,3 +354,4 @@ export class Pets {
     }
 
     let walking = false;
+    if
