@@ -24,7 +24,7 @@ export class CameraRig {
     this.reduced = false;
     // How far the visitor may wander from the view's own target, and pull the camera back.
     this.panLimit = 150;
-    this.maxRadius
+    this.maxRadius =
     // The visitor's own turn, tilt, zoom and slide on top of the chosen view.
     this.user = { yaw: 0, tilt: 0, zoom: 1, panX: 0, panZ: 0 };
     this.userS = { ...this.user };
