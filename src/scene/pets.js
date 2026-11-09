@@ -443,4 +443,4 @@ export class Pets {
       const seated = /^sit/.test(res.pose);
       d.pose = res.path || res.moving ? 'sit' : seated ? 'lie' : 'sit';
     }
-    const m
+    const m =
