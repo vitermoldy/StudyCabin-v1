@@ -233,4 +233,4 @@ function pointBack(path, dist) {
     const b = path[i];
     const d = Math.hypot(b.x - a.x, b.z - a.z);
     if (d >= left) {
-      const k = 1 - left /
+      const k = 1 - left / Math.max(d,
