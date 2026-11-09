@@ -200,4 +200,4 @@ const BLOCKS = [
 /** True when the dog (about 0.35 m round) fits at x, z in the same room or on the same deck. */
 function roomFor(x, z, inside) {
   const r = 0.35;
-  if (inside ?
+  if (inside ? x
