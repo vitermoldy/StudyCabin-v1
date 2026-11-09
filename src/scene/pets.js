@@ -386,3 +386,4 @@ export class Pets {
       if (d.still > 2.5 && !d.settle && !d.settled && remaining <= GAP + 0.1 && (inside || onDeck)) {
         const f = res.facing;
         const fx = Math.sin(f);
+        const
