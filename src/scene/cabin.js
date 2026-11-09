@@ -157,7 +157,7 @@ export class Cabin {
     for (const side of [-1, 1]) {
       const x = side * 7.06;
       const xs = [x - 0.055, x + 0.055];
-      this._bx(trim,
+      this._bx(trim, ...xs,
       geo.rotateY(-Math.PI / 2);
       geo.translate(side > 0 ? 7.12 : -7.0, 0, 0);
       this._m(geo, siding);
