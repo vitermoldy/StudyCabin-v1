@@ -77,6 +77,7 @@ function hubOf(area, point) {
 export function approachPath(spotId, spots = SPOTS) {
   const s = spots[spotId];
   return [hubOf(s.area, s.via[0]), ...s.via, s.at].map((q) => ({ ...q }));
+}
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
