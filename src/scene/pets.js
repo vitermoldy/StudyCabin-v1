@@ -349,3 +349,4 @@ export class Pets {
     } else if (!asleep && d.mode === 'basket') {
       // Morning: out of the basket and after the resident again.
       d.mode = 'follow';
+      d.path
