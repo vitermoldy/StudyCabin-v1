@@ -330,4 +330,4 @@ export class Pets {
       d.crumbs = [];
       d.path = null;
       if (asleep) {
-        const b
+        const b =
