@@ -77,4 +77,4 @@ function makeDog() {
   body.add(tail);
   tail.add(blob(fur, [0.15, 0.035, 0.035], [-0.13, 0.05, 0], 0.4));
   const legs = [[0.18, 0.075], [0.18, -0.075], [-0.2, 0.075], [-0.2, -0.075]].map(([x, z]) => {
-    const l =
+    const l = leg(fur,
