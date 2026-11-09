@@ -201,7 +201,7 @@ addEventListener('keydown', (e) => {
     e.preventDefault();
     // Arrows move across the land like a map; with Shift they turn and tilt (down looks up).
     const [dx, dy] = { arrowleft: [1, 0], arrowright: [-1, 0], arrowup: [0, 1], arrowdown: [0, -1] }[k];
-    if (e.shiftKey) world.rig.orbit(-dx
+    if (e.shiftKey) world.rig.orbit(-dx *
     needsStill = true;
   } else if (world && (k === '+' || k === '=' || k === '-' || k === '_')) {
     world.rig.zoomBy(k === '+' || k === '=' ? 0.85 : 1.18);
