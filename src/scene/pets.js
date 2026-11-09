@@ -392,4 +392,4 @@ export class Pets {
         for (const side of [1, -1]) {
           const x = R.x + rx * side * 0.8 + fx * 0.2;
           const z = R.z + rz * side * 0.8 + fz * 0.2;
-          if (roomFor(x, z, inside))
+          if (roomFor(x, z, inside)) {
