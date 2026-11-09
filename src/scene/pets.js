@@ -160,4 +160,4 @@ function applyPose(m, state, name, dt, t, walking) {
     const swing = walking ? Math.sin(state.step + (i === 0 || i === 3 ? 0 : Math.PI)) * m.swing : 0;
     l.rotation.z = (front ? j.front : j.rear) + swing;
   });
-  if (m.links)
+  if (m.links) {
