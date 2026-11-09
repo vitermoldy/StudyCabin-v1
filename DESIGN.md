@@ -50,7 +50,7 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Clear water with caustics and a ripple simulation; calm long swells, soft glints | The owner's water references (madebyevan WebGL Water, a glassy calm sea): see-through in the shallows, smooth on the surface. |
 | Pines and broadleaf trees behind the cabin, crowns following the season | Asked for by the owner; they frame the cabin against the hills and show the season. |
 | Northern lights green to teal with a rose top, galaxy band, two star layers | Asked for by the owner. The reference's violet is left out (taste-skill: never violet); green aurora is the natural colour. |
-| Move, turn and zoom the camera by hand, double-click to reset | Asked for by the owner;
+| Move, turn and zoom the camera by hand, double-click to reset | Asked for by the owner; the
 
 ## Motion and why
 
