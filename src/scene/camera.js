@@ -78,7 +78,7 @@ export class CameraRig {
    * on past it tips the gaze up, to the sky.
    */
   orbit(dx, dy) {
-    this.rotateBy(-dx * 0.0055, -dy
+    this.rotateBy(-dx * 0.0055, -dy *
   }
 
   /** Drag to slide the view over the ground: pixels moved. */
