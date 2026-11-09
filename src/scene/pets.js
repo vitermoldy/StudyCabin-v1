@@ -411,4 +411,4 @@ export class Pets {
           walking = true;
         } else {
           // Lying beside the resident, facing the way they face.
-          d.facing
+          d.facing =
