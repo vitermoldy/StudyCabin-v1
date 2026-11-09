@@ -319,4 +319,4 @@ export class Pets {
     const jumped = !this.last || dist2(this.last, R) > 2.5;
     this.last = { x: R.x, y: R.y, z: R.z };
     this._dog(dt, t, res, jumped, speedUp);
-    this._cat(dt, t, minutes,
+    this._cat(dt, t, minutes, conditions,
