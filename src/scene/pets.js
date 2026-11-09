@@ -168,3 +168,4 @@ function applyPose(m, state, name, dt, t, walking) {
     });
   } else {
     m.tail.rotation.z = j.tail;
+    m.tail.rotation.y
