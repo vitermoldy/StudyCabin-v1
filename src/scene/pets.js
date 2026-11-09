@@ -407,4 +407,4 @@ export class Pets {
           d.pos.x += ((d.settle.x - d.pos.x) / dd) * step;
           d.pos.z += ((d.settle.z - d.pos.z) / dd) * step;
           d.facing = turn(d.facing, Math.atan2(d.settle.x - d.pos.x, d.settle.z - d.pos.z), 8 * dt);
-          d.step
+          d.step +=
