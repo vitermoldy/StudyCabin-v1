@@ -422,4 +422,4 @@ export class Pets {
         walking = true;
         while (budget > 1e-5 && d.crumbs.length) {
           const c = d.crumbs[0];
-          const
+          const dd
