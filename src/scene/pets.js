@@ -295,4 +295,4 @@ export class Pets {
       const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color, roughness: 0.6 }));
       m.position.set(x, y, z);
       m.castShadow = true;
-      m.receiveShadow =
+      m.receiveShadow = true;
