@@ -447,3 +447,4 @@ export class Pets {
     m.root.position.copy(d.pos);
     m.root.rotation.y = d.facing;
     applyPose(m, d, d.pose, dt, t, walking);
+  }
