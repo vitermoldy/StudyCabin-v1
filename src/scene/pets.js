@@ -37,3 +37,5 @@ function leg(material, length, top, bottom, [x, y, z]) {
   pivot.add(mesh);
   return pivot;
 }
+
+/**
