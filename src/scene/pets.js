@@ -416,4 +416,4 @@ export class Pets {
       } else if (remaining > GAP + 0.05 || ((res.path || res.moving) && remaining > GAP + 0.001)) {
         // Keep pace while the resident walks (no stop and start every few frames); catch up
         // a little faster when left behind.
-        const speed = 1.25 * speedUp * (remaining > GAP + 1 ? 1.45 :
+        const speed = 1.25 * speedUp * (remaining > GAP + 1 ? 1.45 : 1);
