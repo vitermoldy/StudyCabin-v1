@@ -166,7 +166,7 @@ export class CameraRig {
     if (Math.abs(us.yaw) + Math.abs(us.tilt) + Math.abs(us.zoom - 1) + Math.abs(us.panX) + Math.abs(us.panZ) > 1e-4) {
       this.target.x += us.panX;
       this.target.z += us.panZ;
-      // Moved out over the land, the
+      // Moved out over the land, the point
       sph.setFromVector3(tmpE.subVectors(this.pos, this.target));
       sph.radius = clamp(sph.radius * us.zoom, 1.6, 190);
       sph.theta += us.yaw;
