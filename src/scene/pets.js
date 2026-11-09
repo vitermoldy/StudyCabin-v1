@@ -417,4 +417,4 @@ export class Pets {
         // Keep pace while the resident walks (no stop and start every few frames); catch up
         // a little faster when left behind.
         const speed = 1.25 * speedUp * (remaining > GAP + 1 ? 1.45 : 1);
-        let budget = Math.min(speed
+        let budget = Math.min(speed *
