@@ -17,4 +17,4 @@ function coat(hex) {
   return new THREE.MeshStandardMaterial({ color: hex, roughness: 0.9, metalness: 0 });
 }
 
-function
+function blob(material,
