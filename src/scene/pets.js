@@ -368,4 +368,4 @@ export class Pets {
       // Follow the resident's own steps.
       const last = d.crumbs[d.crumbs.length - 1] || d.pos;
       if (dist2(last, R) > 0.2) d.crumbs.push({ x: R.x, y: R.y, z: R.z });
-      if (d.crumbs.length > 600) d.crumbs.splice(0, d.crumbs.length -
+      if (d.crumbs.length > 600) d.crumbs.splice(0, d.crumbs.length - 600);
