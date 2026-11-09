@@ -84,4 +84,4 @@ function makeDog() {
   // Standing height of the body's centre, and each pose as targets for the joints. Leg angles are
   // relative to the body; the body's pitch tips its front end up (+).
   const poses = {
-    stand: { y: 0.42, pitch: 0, neck: 0, turn: 0, front: 0,
+    stand: { y: 0.42, pitch: 0, neck: 0, turn: 0, front: 0, rear:
