@@ -365,4 +365,4 @@ export class Pets {
       }
       d.pose = 'sleep';
     } else {
-      // Follow the resident's own
+      // Follow the resident's own steps.
