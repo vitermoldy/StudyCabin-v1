@@ -160,7 +160,7 @@ mountCameraInput(document.getElementById('scene'), {
 for (const [id, factor] of [['zoom-in', 0.8], ['zoom-out', 1.25]]) {
   document.getElementById(id).addEventListener('click', () => {
     if (!world) {
-      toast('Zoom needs the 3D scene,
+      toast('Zoom needs the 3D scene, which
 // Pointer for the camera's small answer to the mouse.
 addEventListener('pointermove', (e) => {
   if (!world || e.pointerType !== 'mouse') return;
