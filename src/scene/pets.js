@@ -186,4 +186,4 @@ const CAT_SPOTS = {
   deck: { area: 'deck', via: [p(2.6, DECK_Z)], at: p(2.6, 5.3), pose: 'loaf', face: 0.6 },
 };
 
-// Footprints the pets keep out of (x0, x1, z0, z1): furniture inside, chairs and the
+// Footprints the pets keep out of (x0, x1, z0, z1): furniture inside, chairs and the fire
