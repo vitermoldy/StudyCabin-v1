@@ -438,3 +438,4 @@ export class Pets {
         }
       } else {
         // Arrived: look at the resident; lie down while they sit, sit while they stand.
+        d.facing
