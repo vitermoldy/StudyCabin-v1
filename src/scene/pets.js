@@ -355,4 +355,4 @@ export class Pets {
 
     let walking = false;
     if (d.mode === 'basket') {
-      if (d.path)
+      if (d.path) {
