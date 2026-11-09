@@ -432,3 +432,4 @@ export class Pets {
             d.pos.x += (c.x - d.pos.x) * k;
             d.pos.z += (c.z - d.pos.z) * k;
             d.pos.y += (c.y - d.pos.y) * k;
+            d.facing
