@@ -154,4 +154,4 @@ function applyPose(m, state, name, dt, t, walking) {
   m.body.position.y = j.y + (walking ? Math.abs(Math.sin(state.step)) * 0.012 : 0);
   m.body.rotation.z = j.pitch;
   m.neck.rotation.z = j.neck;
-  m.neck.rotation.y =
+  m.neck.rotation.y = j.turn;
