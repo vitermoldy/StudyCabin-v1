@@ -164,7 +164,7 @@ export class Cabin {
       for (let i = 0; i < zs.length - 1; i++) this._pane(zs[i] + 0.035, zs[i + 1] - 0.035, FLOOR + 0.05, WALL_TOP - 0.06, 'x', x);
       const geo = new THREE.ExtrudeGeometry(tri, { depth: 0.02, bevelEnabled: false });
       geo.rotateY(-Math.PI / 2);
-      geo.translate(x + 0.01, 0,
+      geo.translate(x + 0.01, 0, 0);
       // dark corner boards
       this._bx(trim, side * 7.0 - (side > 0 ? 0 : 0.16), side * 7.0 + (side > 0 ? 0.16 : 0), 0.05, WALL_TOP, 2.98, 3.16);
       this._bx(trim, side * 7.0 - (side > 0 ? 0 : 0.16), side * 7.0 + (side > 0 ? 0.16 : 0), 0.05, WALL_TOP, -3.18, -3.02);
