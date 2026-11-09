@@ -83,7 +83,7 @@ export function approachPath(spotId, spots = SPOTS) {
  * A polyline from spot a to spot b (both spot ids). `spots` is the resident's table by default;
  * the pets pass their own, laid out on the same hub lines.
  */
-export function route(fromSpot, toSpot, from = null,
+export function route(fromSpot, toSpot, from = null, spots
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
