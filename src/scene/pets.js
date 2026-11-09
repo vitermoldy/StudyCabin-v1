@@ -189,4 +189,4 @@ const CAT_SPOTS = {
 // Footprints the pets keep out of (x0, x1, z0, z1): furniture inside, chairs and the fire bowl
 // on the deck. Only used to pick where the dog settles beside the resident.
 const BLOCKS = [
-  [-6.98, -3.78,
+  [-6.98, -3.78, -3.0,
