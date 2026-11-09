@@ -106,6 +106,7 @@ export class CameraRig {
    * in on that point, as a map zooms toward the pointer.
    */
   zoomBy(factor, at = null) {
+    const
   }
 
   resetUser() {
