@@ -98,7 +98,7 @@ export class CameraRig {
     const fz = Math.cos(theta);
     const L = this.panLimit;
     this.user.panX = clamp(this.user.panX - dx * k * rx - dy * k * fx, -L, L);
-    this.user.panZ
+    this.user.panZ =
   }
 
   /** factor > 1 moves away, < 1 moves closer. */
