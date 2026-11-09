@@ -38,4 +38,4 @@ function leg(material, length, top, bottom, [x, y, z]) {
   return pivot;
 }
 
-/** A model is built facing +x;
+/** A model is built facing +x; `inner`
