@@ -116,4 +116,4 @@ function makeCat() {
     ear.castShadow = true;
     head.add(ear);
   }
-  // The tail: four
+  // The tail: four links,
