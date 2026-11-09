@@ -76,4 +76,4 @@ function makeDog() {
   tail.position.set(-0.28, 0.05, 0);
   body.add(tail);
   tail.add(blob(fur, [0.15, 0.035, 0.035], [-0.13, 0.05, 0], 0.4));
-  const legs = [[0.18, 0.075], [0.18, -0.075],
+  const legs = [[0.18, 0.075], [0.18, -0.075], [-0.2,
