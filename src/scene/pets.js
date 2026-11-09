@@ -243,3 +243,4 @@ function pointBack(path, dist) {
 
 function turn(current, target, maxStep) {
   let d = target - current;
+  while
