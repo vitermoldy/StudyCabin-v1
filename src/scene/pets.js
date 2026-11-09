@@ -68,4 +68,4 @@ function makeDog() {
   head.add(blob(dark, [0.022, 0.02, 0.025], [0.19, -0.02, 0]));
   for (const side of [-1, 1]) {
     head.add(blob(dark, [0.013, 0.013, 0.013], [0.07, 0.03, side * 0.05]));
-    const ear
+    const ear =
