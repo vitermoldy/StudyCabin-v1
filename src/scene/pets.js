@@ -458,4 +458,4 @@ export class Pets {
       c.path = null;
       c.pos.set(s.at.x, s.at.y, s.at.z);
       c.facing = s.face;
-    } else
+    } else if
