@@ -26,4 +26,4 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
   return mesh;
 }
 
-// A leg hanging from its hip or shoulder; rotating
+// A leg hanging from its hip or shoulder; rotating the
