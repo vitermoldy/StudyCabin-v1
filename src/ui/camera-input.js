@@ -67,7 +67,7 @@ export function mountCameraInput(canvas, { getWorld, onRender }) {
     if (!w) return;
     if (mode === 'pinch' && pointers.size >= 2) {
       // Pinch zooms toward the point between the fingers, a twist turns, both fingers sliding
-      //
+      // up
       const d = spread();
       w.rig.zoomBy(pinchDist / d);
       pinchDist = d;
