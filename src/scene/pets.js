@@ -387,4 +387,4 @@ export class Pets {
         const f = res.facing;
         const fx = Math.sin(f);
         const fz = Math.cos(f);
-        const rx =
+        const rx = Math.cos(f);
