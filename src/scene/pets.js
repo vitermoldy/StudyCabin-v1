@@ -42,4 +42,4 @@ function leg(material, length, top, bottom, [x, y, z]) {
 function frame() {
   const root = new THREE.Group();
   const inner = new THREE.Group();
-  inner.rotation.y = -Math.PI
+  inner.rotation.y = -Math.PI /
