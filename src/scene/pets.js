@@ -463,3 +463,4 @@ export class Pets {
       c.idx = 1;
       c.spot = want;
     }
+    let
