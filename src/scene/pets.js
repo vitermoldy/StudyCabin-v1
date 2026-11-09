@@ -16,3 +16,5 @@ const GAP = 1.1; // how far behind the resident the dog keeps
 function coat(hex) {
   return new THREE.MeshStandardMaterial({ color: hex, roughness: 0.9, metalness: 0 });
 }
+
+function
