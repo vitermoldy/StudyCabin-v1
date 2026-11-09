@@ -455,3 +455,4 @@ export class Pets {
     if (jumped || !c.spot) {
       const s = CAT_SPOTS[want];
       c.spot = want;
+      c.path
