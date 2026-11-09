@@ -112,4 +112,4 @@ function makeCat() {
     head.add(blob(dark, [0.011, 0.011, 0.011], [0.055, 0.02, side * 0.03]));
     const ear = new THREE.Mesh(new THREE.ConeGeometry(0.024, 0.05, 5), fur);
     ear.position.set(-0.005, 0.06, side * 0.035);
-    ear.rotation.x = side
+    ear.rotation.x = side *
