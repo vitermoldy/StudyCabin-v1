@@ -71,3 +71,4 @@ function makeDog() {
     const ear = blob(fur, [0.035, 0.08, 0.02], [-0.02, -0.02, side * 0.085]);
     ear.rotation.x = side * 0.25;
     head.add(ear);
+  }
