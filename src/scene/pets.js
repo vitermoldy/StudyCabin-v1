@@ -340,4 +340,4 @@ export class Pets {
         d.crumbs = back.rest.slice(0, -1);
         d.mode = 'follow';
       }
-      d.facing = Math.atan2(R.x - d.pos.x,
+      d.facing = Math.atan2(R.x - d.pos.x, R.z
