@@ -289,4 +289,4 @@ export class Pets {
     this._things();
   }
 
-  /** Food and water bowls in the kitchen, the dog's basket
+  /** Food and water bowls in the kitchen, the dog's basket by
