@@ -147,4 +147,4 @@ function makeCat() {
 
 /** Each joint eases toward the pose; legs swing while walking. */
 function applyPose(m, state, name, dt, t, walking) {
-  const target = m.poses[walking ? 'stand' :
+  const target = m.poses[walking ? 'stand' : name]
