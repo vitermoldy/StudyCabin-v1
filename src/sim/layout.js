@@ -80,6 +80,7 @@ export function approachPath(spotId, spots = SPOTS) {
 }
 
 /**
+ *
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
