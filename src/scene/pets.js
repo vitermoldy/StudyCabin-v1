@@ -221,4 +221,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   else id = 'bed';
   // The resident's seat wins.
   if (id === 'armchair' && residentSpot === 'armchair') id = 'sofa';
-  if (id === 'deskWindow' && residentSpot === 'deskWindow') id =
+  if (id === 'deskWindow' && residentSpot === 'deskWindow') id = 'window';
