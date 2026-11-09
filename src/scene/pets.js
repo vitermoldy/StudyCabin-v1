@@ -46,4 +46,4 @@ function frame() {
   root.add(inner);
   const body = new THREE.Group();
   inner.add(body);
-  return {
+  return { root,
