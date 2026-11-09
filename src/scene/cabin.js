@@ -128,7 +128,7 @@ export class Cabin {
   _pane(a0, a1, y0, y1, axis, at) {
     const pane = axis === 'z'
       ? this._bx(this.mat.glass, a0, a1, y0, y1, at - 0.01, at + 0.01, { cast: false, receive: false })
-      : this._bx(this.mat.glass, at - 0.01,
+      : this._bx(this.mat.glass, at - 0.01, at
   // ------------------------------------------------------------ shell
   _shell() {
     const { siding, panel, floor, ceiling, found, trim } = this.mat;
