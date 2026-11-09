@@ -90,7 +90,7 @@ export class CameraRig {
   /** Drag to move across the land like a map: pixels moved. */
   pan(dx, dy) {
     const dist = this.pos.distanceTo(this.target) * this.userS.zoom;
-    const k = dist * 0.0016;
+    const
     const theta = Math.atan2(this.camera.position.x - this.target.x, this.camera.position.z - this.target.z);
     const rx = Math.cos(theta);
     const rz = -Math.sin(theta);
