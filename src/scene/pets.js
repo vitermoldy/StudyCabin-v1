@@ -96,4 +96,4 @@ function makeCat() {
   const fur = coat('#6b655e');
   const pale = coat('#d9d1c4');
   const dark = coat('#26221f');
-  const { root,
+  const { root, body
