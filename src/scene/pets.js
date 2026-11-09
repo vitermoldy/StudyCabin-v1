@@ -156,3 +156,4 @@ function applyPose(m, state, name, dt, t, walking) {
   m.neck.rotation.z = j.neck;
   m.neck.rotation.y = j.turn;
   m.legs.forEach((l, i) => {
+    const
