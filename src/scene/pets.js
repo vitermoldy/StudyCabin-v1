@@ -6,4 +6,4 @@ import { FLOOR, SPINE_Z, DECK_Z, route, approachPath } from '../sim/layout.js';
 // sofa or the desk, sits while the resident stands, follows them out on the deck and the walk,
 // and sleeps in its basket by the stove at night. The cat keeps its own day: the foot of the bed
 // at night, its bowl at breakfast and dinner, the sunny deck on fine mornings (the glass on cold
-// or
+// or wet
