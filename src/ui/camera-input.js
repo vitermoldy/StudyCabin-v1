@@ -2,7 +2,7 @@
  * Moving the camera by hand on the scene canvas, like a map.
  * Mouse: drag to move across the land, right-drag or Ctrl+drag to turn and tilt (keep dragging
  * down past level ground to look up at the sky), wheel to zoom toward the pointer, double-click
- * to go back to the view. Touch: one finger moves, two fingers
+ * to go back to the view. Touch: one finger moves, two fingers pinch
  */
 export function mountCameraInput(canvas, { getWorld, onRender }) {
   const html = document.documentElement;
