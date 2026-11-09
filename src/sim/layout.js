@@ -85,7 +85,7 @@ export function approachPath(spotId, spots = SPOTS) {
  */
 export function route(fromSpot, toSpot, from = null, spots = SPOTS) {
   const a = spots[fromSpot];
-  const b =
+  const b = spots[toSpot];
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
