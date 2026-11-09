@@ -326,3 +326,4 @@ export class Pets {
     const d = this.dog;
     const R = res.pos;
     const asleep = res.pose === 'sleep' && !res.path;
+    if
