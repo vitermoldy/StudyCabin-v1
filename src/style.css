@@ -417,7 +417,7 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
   .add__row .btn { width: 100%; }
   .top { left: var(--edge); justify-content: flex-end; }
   /* room for the three round chips (zoom out, zoom in, pause) beside "Add music" */
-  .chip { max-width: calc(100vw - 2
+  .chip { max-width: calc(100vw - 2 *
   .toast { top: calc(var(--edge) + 52px); max-width: calc(100vw - 2 * var(--edge)); }
 }
 @media (prefers-reduced-motion: reduce) {
