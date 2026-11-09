@@ -113,4 +113,4 @@ function makeCat() {
     const ear = new THREE.Mesh(new THREE.ConeGeometry(0.024, 0.05, 5), fur);
     ear.position.set(-0.005, 0.06, side * 0.035);
     ear.rotation.x = side * -0.25;
-    ear.castShadow
+    ear.castShadow =
