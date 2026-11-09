@@ -382,4 +382,4 @@ export class Pets {
       d.still = still ? (d.still || 0) + dt : 0;
       if (!still) d.settle = null;
       const inside = R.z < 3.0 && Math.abs(R.x) < 7;
-      const onDeck = R.z >= 3.0
+      const onDeck = R.z >= 3.0 &&
