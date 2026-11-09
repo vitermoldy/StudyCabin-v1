@@ -199,7 +199,7 @@ addEventListener('keydown', (e) => {
     toggleFullscreen();
   } else if (world && ['arrowleft', 'arrowright', 'arrowup', 'arrowdown'].includes(k) && !(t instanceof HTMLElement && t.closest('[role="dialog"], .dock'))) {
     e.preventDefault();
-    // Arrows move across the land like a map; with Shift
+    // Arrows move across the land like a map; with Shift they
     needsStill = true;
   } else if (world && (k === '+' || k === '=' || k === '-' || k === '_')) {
     world.rig.zoomBy(k === '+' || k === '=' ? 0.85 : 1.18);
