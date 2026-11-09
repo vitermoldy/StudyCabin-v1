@@ -18,8 +18,7 @@ shows a still picture and the music, timer and ambient sound still work.
 
 ## What is in it
 
-- **The cabin and the resident.** A sage board cabin with a standing-seam roof, glass front, deck,
-  fire bowl and stove; inside a kitchen, table, sofa, armchair, bookcase, bed and a desk by the
+-
   glass. The resident follows a daily routine (sleep, coffee, breakfast, study, a walk on the
   shore, cooking, reading, guitar, journal) and swaps outdoor plans for indoor ones when it rains
   or snows. Lamps, the stove, the porch light and the fire bowl follow the hour and the weather.
