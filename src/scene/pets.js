@@ -377,4 +377,4 @@ export class Pets {
       }
       remaining += dist2(prev, R);
       // The resident has stopped for a while: settle beside them instead of behind, if there is
-      // room (indoors and
+      // room (indoors and on
