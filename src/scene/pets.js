@@ -328,4 +328,4 @@ export class Pets {
     const asleep = res.pose === 'sleep' && !res.path;
     if (jumped) {
       d.crumbs = [];
-      d.path
+      d.path =
