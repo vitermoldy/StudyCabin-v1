@@ -102,7 +102,7 @@ export class CameraRig {
   }
 
   /**
-   * factor > 1 moves away, < 1 moves closer. With `at` (a point
+   * factor > 1 moves away, < 1 moves closer. With `at` (a point on
   }
 
   resetUser() {
