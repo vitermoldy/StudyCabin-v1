@@ -80,3 +80,4 @@ function makeDog() {
     const l = leg(fur, 0.37, 0.035, 0.025, [x, -0.04, z]);
     body.add(l);
     return l;
+  });
