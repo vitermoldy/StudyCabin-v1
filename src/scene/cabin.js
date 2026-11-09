@@ -143,7 +143,7 @@ export class Cabin {
     this._bx(ceiling, CABIN.x0, CABIN.x1, WALL_TOP, WALL_TOP + 0.06, CABIN.z0, FRONT, { cast: false });
     // back wall: a sill, a head and posts, glass between
     const backZ = [-3.13, -3.02];
-    this._bx(trim, -7.0, 7.0,
+    this._bx(trim, -7.0, 7.0, FLOOR,
     for (const side of [-1, 1]) {
       const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.12, bevelEnabled: false });
       geo.rotateY(-Math.PI / 2);
