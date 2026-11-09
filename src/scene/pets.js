@@ -457,3 +457,4 @@ export class Pets {
       c.spot = want;
       c.path = null;
       c.pos.set(s.at.x, s.at.y, s.at.z);
+      c.facing
