@@ -158,3 +158,4 @@ function applyPose(m, state, name, dt, t, walking) {
   m.legs.forEach((l, i) => {
     const front = i < 2;
     const swing = walking ? Math.sin(state.step + (i === 0 || i === 3 ? 0 : Math.PI)) * m.swing : 0;
+    l.rotation.z
