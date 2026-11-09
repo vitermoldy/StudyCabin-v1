@@ -228,4 +228,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
 /** The point `dist` metres back from the end of a polyline, and the rest of the line after it. */
 function pointBack(path, dist) {
   let left = dist;
-  for (let i = path.length - 1; i > 0;
+  for (let i = path.length - 1; i > 0; i--)
