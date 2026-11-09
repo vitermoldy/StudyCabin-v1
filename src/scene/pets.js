@@ -91,3 +91,5 @@ function makeDog() {
   };
   return { root, body, neck, head, tail, legs, poses, stride: 0.75, swing: 0.5 };
 }
+
+function
