@@ -225,4 +225,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   return id;
 }
 
-/** The point `dist` metres back from the end
+/** The point `dist` metres back from the end of
