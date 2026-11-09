@@ -50,7 +50,7 @@ shows a still picture and the music, timer and ambient sound still work.
   it runs and takes a break with you. A bell at the end of each block.
 - **Ambient sound.** Waves, rain, wind, birds and crickets, stove fire and thunder, made in the
   browser from the weather and the hour, with a mixer. It turns down while music plays.
-- **Camera.** Five views (shore, deck, window, water, follow the resident), plus your own,
+- **Camera.** Five views (shore, deck, window, water, follow the resident), plus your own, moved
 
 ## Keys
 
