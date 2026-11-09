@@ -357,3 +357,4 @@ export class Pets {
     if (d.mode === 'basket') {
       if (d.path) {
         const before = d.pos.clone();
+        walkPath(d,
