@@ -116,3 +116,4 @@ function makeCat() {
     ear.castShadow = true;
     head.add(ear);
   }
+  //
