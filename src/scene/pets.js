@@ -441,4 +441,4 @@ export class Pets {
         d.facing = turn(d.facing, Math.atan2(R.x - d.pos.x, R.z - d.pos.z), 3 * dt);
       }
       const seated = /^sit/.test(res.pose);
-      d.pose
+      d.pose =
