@@ -252,4 +252,4 @@ const dist2 = (a, b) => Math.hypot(a.x - b.x, a.z - b.z);
 
 /** Walk a mover along a polyline by `budget` metres; a step up or down onto furniture is a hop. */
 function walkPath(m, budget, dt) {
-  while (budget
+  while (budget >
