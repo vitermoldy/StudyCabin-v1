@@ -350,4 +350,4 @@ export class Pets {
       // Morning: out of the basket and after the resident again.
       d.mode = 'follow';
       d.path = null;
-      d.crumbs
+      d.crumbs =
