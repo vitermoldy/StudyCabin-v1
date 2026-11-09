@@ -199,7 +199,7 @@ export class Cabin {
     this._bx(trim, 0.78, 0.82, FLOOR + 0.9, FLOOR + 1.3, 0.02, 0.05, { parent: this.door });
     // porch light on the post beside the door
     this._bx(trim, 0.9, 1.06, GLASS_TOP + 0.08, GLASS_TOP + 0.3, 3.08, 3.15);
-    this._bx(this.shades.porch, 0.92, 1.04, GLASS_TOP + 0.1, GLASS_TOP + 0.2, 3.15, 3.19, {
+    this._bx(this.shades.porch, 0.92, 1.04, GLASS_TOP + 0.1, GLASS_TOP + 0.2, 3.15, 3.19, { cast:
   }
 
   _roof() {
