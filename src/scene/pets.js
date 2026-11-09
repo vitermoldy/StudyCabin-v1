@@ -89,4 +89,4 @@ function makeDog() {
     lie: { y: 0.15, pitch: 0, neck: -0.4, turn: 0, front: 1.45, rear: 1.2, tail: -0.4, wag: 0.15 },
     sleep: { y: 0.15, pitch: 0, neck: -0.85, turn: 0.5, front: 1.45, rear: 1.2, tail: -0.6, wag: 0 },
   };
-  return { root, body, neck,
+  return { root, body, neck, head,
