@@ -145,4 +145,4 @@ function makeCat() {
   return { root, body, neck, head, tail, links, legs, poses, stride: 0.35, swing: 0.6 };
 }
 
-/** Each joint eases
+/** Each joint eases toward
