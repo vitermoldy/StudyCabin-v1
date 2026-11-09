@@ -212,4 +212,4 @@ function catSpot(minutes, { bad, cold, residentSpot }) {
   let id;
   if (m < h(6, 45)) id = 'bed';
   else if (m < h(7, 25)) id = 'bowl';
-  else if (m < h(10, 30)) id = bad
+  else if (m < h(10, 30)) id = bad ||
