@@ -53,7 +53,7 @@ screen for hours, in a cinematic misty-coast style taken from the owner's screen
 | Move, turn and zoom the camera by hand, double-click to reset | Asked for by the owner; the five views stay as starting points. |
 | Every wall of the main room is glass in thin dark frames, the gables too; the annex stays solid | Asked for by the owner: the rooms and the resident show from every side, daylight falls in from all of them. The annex is the one closed room. |
 | The camera moves like a map: drag moves across the land, right-drag turns, scroll zooms toward the pointer | Asked for by the owner ("like moving a map, not stuck on the house"); the reach covers the beach, the dunes and the near sea. |
-| Dragging down past level ground tips the gaze up, to about 75 degrees | Asked for by the owner, to see the sky; the camera itself stays above the ground. The Milky Way
+| Dragging down past level ground tips the gaze up, to about 75 degrees | Asked for by the owner, to see the sky; the camera itself stays above the ground. The Milky Way and
 
 ## Motion and why
 
