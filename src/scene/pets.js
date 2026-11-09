@@ -12,3 +12,5 @@ import { FLOOR, SPINE_Z, DECK_Z, route, approachPath } from '../sim/layout.js';
 const ball = new THREE.SphereGeometry(1, 14, 10);
 const p = (x, z, y = FLOOR) => ({ x, y, z });
 const GAP = 1.1; // how far behind the resident the dog keeps
+
+function
