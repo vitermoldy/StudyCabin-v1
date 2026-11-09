@@ -72,4 +72,4 @@ function makeDog() {
     ear.rotation.x = side * 0.25;
     head.add(ear);
   }
-  const
+  const tail
