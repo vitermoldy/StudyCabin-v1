@@ -109,4 +109,4 @@ function makeCat() {
   head.add(blob(pale, [0.035, 0.025, 0.035], [0.055, -0.02, 0]));
   head.add(blob(dark, [0.012, 0.01, 0.012], [0.09, -0.01, 0]));
   for (const side of [-1, 1]) {
-    head.add(blob(dark,
+    head.add(blob(dark, [0.011,
