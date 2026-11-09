@@ -459,4 +459,4 @@ export class Pets {
       c.pos.set(s.at.x, s.at.y, s.at.z);
       c.facing = s.face;
     } else if (want !== c.spot && !c.path) {
-      c.path = route(c.spot, want, { x: c.pos.x, y: c.pos.y, z: c.pos.z },
+      c.path = route(c.spot, want, { x: c.pos.x, y: c.pos.y, z: c.pos.z }, CAT_SPOTS);
