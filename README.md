@@ -54,7 +54,7 @@ shows a still picture and the music, timer and ambient sound still work.
   like a map: drag to move across the land (well beyond the cabin), right-drag or Ctrl+drag to
   turn, and keep dragging down past level ground to look up at the sky; scroll or pinch to zoom
   toward the pointer, or use the − and + buttons at the top; double-click to reset. On a phone:
-  one finger moves, two fingers pinch, twist to turn
+  one finger moves, two fingers pinch, twist to turn and
 
 ## Keys
 
