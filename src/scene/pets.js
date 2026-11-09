@@ -361,4 +361,4 @@ export class Pets {
         walking = before.distanceTo(d.pos) > 1e-4;
         d.step += (before.distanceTo(d.pos) / this.dogModel.stride) * Math.PI * 2;
       } else {
-        d.facing = turn(d.facing, DOG_SPOTS.basket.face, 2
+        d.facing = turn(d.facing, DOG_SPOTS.basket.face, 2 *
