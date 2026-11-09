@@ -178,4 +178,4 @@ const DOG_SPOTS = {
 };
 const CAT_SPOTS = {
   bed: { area: 'in', via: [p(5.3, SPINE_Z), p(5.3, -0.55)], at: p(5.1, -1.05, FLOOR + 0.69), pose: 'curl', face: 2.4 },
-  sofa: { area: 'in', via: [p(-0.4, SPINE_Z), p(-0.4, -1.05), p(-0.85, -1.05)], at: p(-0.85, -1.72, FLOOR + 0.5), pose:
+  sofa: { area: 'in', via: [p(-0.4, SPINE_Z), p(-0.4, -1.05), p(-0.85, -1.05)], at: p(-0.85, -1.72, FLOOR + 0.5), pose: 'curl',
