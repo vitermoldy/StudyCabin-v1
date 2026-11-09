@@ -291,4 +291,4 @@ export class Pets {
 
   /** Food and water bowls in the kitchen, the dog's basket by the stove. */
   _things() {
-    const add = (geo, color, x,
+    const add = (geo, color, x, y,
