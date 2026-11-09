@@ -380,3 +380,4 @@ export class Pets {
       // room (indoors and on the deck only).
       const still = !res.path && !res.moving;
       d.still = still ? (d.still || 0) + dt : 0;
+      if
