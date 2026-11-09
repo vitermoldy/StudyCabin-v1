@@ -367,3 +367,4 @@ export class Pets {
     } else {
       // Follow the resident's own steps.
       const last = d.crumbs[d.crumbs.length - 1] || d.pos;
+      if
