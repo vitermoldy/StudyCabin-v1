@@ -155,4 +155,4 @@ function applyPose(m, state, name, dt, t, walking) {
   m.body.rotation.z = j.pitch;
   m.neck.rotation.z = j.neck;
   m.neck.rotation.y = j.turn;
-  m.legs.forEach((l, i)
+  m.legs.forEach((l, i) =>
