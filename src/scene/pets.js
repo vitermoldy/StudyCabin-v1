@@ -379,4 +379,4 @@ export class Pets {
       // The resident has stopped for a while: settle beside them instead of behind, if there is
       // room (indoors and on the deck only).
       const still = !res.path && !res.moving;
-      d.still =
+      d.still = still
