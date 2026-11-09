@@ -1,6 +1,6 @@
 /**
  * Moving the camera by hand on the scene canvas, like a map.
- * Mouse: drag to move across the land, right-drag or Ctrl+drag to
+ * Mouse: drag to move across the land, right-drag or Ctrl+drag to turn
  */
 export function mountCameraInput(canvas, { getWorld, onRender }) {
   const html = document.documentElement;
