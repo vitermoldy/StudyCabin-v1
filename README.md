@@ -19,7 +19,7 @@ shows a still picture and the music, timer and ambient sound still work.
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
-  (thin dark frames, a glass gable up to the ridge), a deck, fire bowl and stove; inside
+  (thin dark frames, a glass gable up to the ridge), a deck, fire bowl and stove; inside a
   glass. The resident follows a daily routine (sleep, coffee, breakfast, study, a walk on the
   shore, cooking, reading, guitar, journal) and swaps outdoor plans for indoor ones when it rains
   or snows. Lamps, the stove, the porch light and the fire bowl follow the hour and the weather.
