@@ -177,7 +177,7 @@ export class Cabin {
     const { trim, glass } = this.mat;
     this._bx(trim, -7.0, 7.0, FLOOR, FLOOR + 0.05, 2.95, 3.1);
     this._bx(trim, -7.0, 7.0, GLASS_TOP - 0.06, GLASS_TOP, 2.95, 3.1);
-    this._bx(trim, -7.0,
+    this._bx(trim, -7.0, 7.0,
     this._bx(trim, -7.0, 7.0, 0.1, FLOOR - 0.03, 3.0, 3.06); // skirting under the glass line
     const posts = [-6.98, -3.62, -0.98, 0.98, 3.62, 6.98];
     for (const x of posts) this._bx(trim, x - 0.035, x + 0.035, FLOOR, GLASS_TOP, 2.97, 3.08);
