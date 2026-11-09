@@ -453,3 +453,4 @@ export class Pets {
     const c = this.cat;
     const want = catSpot(minutes, { bad: conditions.badWeather, cold: conditions.cold, residentSpot });
     if (jumped || !c.spot) {
+      const
