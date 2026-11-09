@@ -122,4 +122,4 @@ function makeCat() {
   body.add(tail);
   const links = [];
   let parent = tail;
-  for (let i =
+  for (let i = 0;
