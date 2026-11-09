@@ -428,4 +428,4 @@ export class Pets {
             budget -= dd;
             d.crumbs.shift();
           } else {
-            const k = budget /
+            const k = budget / dd;
