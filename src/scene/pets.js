@@ -183,4 +183,4 @@ const CAT_SPOTS = {
   deskWindow: { area: 'in', via: [p(2.9, SPINE_Z)], at: p(2.9, 2.62), pose: 'sit', face: 0 },
   bowl: { area: 'in', via: [p(-3.6, SPINE_Z), p(-3.6, -1.6)], at: p(-3.6, -1.92), pose: 'eat', face: Math.PI },
   armchair: { area: 'in', via: [p(1.6, SPINE_Z), p(1.6, 0.95)], at: p(0.95, 0.15, FLOOR + 0.42), pose: 'loaf', face: -0.42 },
-  deck: { area: 'deck', via: [p(2.6, DECK_Z)], at: p(2.6, 5.3),
+  deck: { area: 'deck', via: [p(2.6, DECK_Z)], at: p(2.6, 5.3), pose:
