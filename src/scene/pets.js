@@ -54,4 +54,4 @@ function makeDog() {
   const pale = coat('#ecd9b4');
   const dark = coat('#2e221a');
   const { root, body } = frame();
-  body.add(blob(fur, [0.3, 0.14, 0.13], [0, 0,
+  body.add(blob(fur, [0.3, 0.14, 0.13], [0, 0, 0]));
