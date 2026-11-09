@@ -280,4 +280,4 @@ export class Pets {
     this.resident = resident;
     this.group = new THREE.Group();
     scene.add(this.group);
-    this.dogModel =
+    this.dogModel = makeDog();
