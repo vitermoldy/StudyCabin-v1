@@ -175,7 +175,7 @@ export class CameraRig {
       const level = Math.PI / 2 - 0.02;
       const want = sph.phi - us.tilt;
       this.lookUp = clamp(want - level, 0, 1.3);
-      sph.phi = clamp(want, 0.1,
+      sph.phi = clamp(want, 0.1, level);
       this.pos.copy(this.target).add(tmpE.setFromSpherical(sph));
       // Stay above the sand and the sea, and outside the cabin.
       const floor = Math.max(groundHeight(this.pos.x, this.pos.z), -0.05) + 0.45;
