@@ -268,4 +268,4 @@ function walkPath(m, budget, dt) {
       const segLen = Math.max(dist2(from, target), 1e-6);
       const along = 1 - dist2(m.pos, target) / segLen;
       const rise = target.y - from.y;
-      m.pos.y = from.y + rise * along + (Math.abs(rise) > 0.2 ? Math.sin(Math.PI
+      m.pos.y = from.y + rise * along + (Math.abs(rise) > 0.2 ? Math.sin(Math.PI *
