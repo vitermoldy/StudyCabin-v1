@@ -423,3 +423,4 @@ export class Pets {
         while (budget > 1e-5 && d.crumbs.length) {
           const c = d.crumbs[0];
           const dd = dist2(d.pos, c);
+          if
