@@ -80,7 +80,7 @@ export function approachPath(spotId, spots = SPOTS) {
 }
 
 /**
- * A polyline from spot
+ * A polyline from spot a
   const pts = [];
   if (from) pts.push({ ...from });
   else if (a) pts.push({ ...a.at });
