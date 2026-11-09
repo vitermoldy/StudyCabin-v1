@@ -298,3 +298,4 @@ export class Pets {
       m.receiveShadow = true;
       this.group.add(m);
       return m;
+    };
