@@ -405,4 +405,4 @@ export class Pets {
         if (dd > 0.03) {
           const step = Math.min(dd, 0.7 * speedUp * dt);
           d.pos.x += ((d.settle.x - d.pos.x) / dd) * step;
-          d.pos.z += ((d.settle.z - d.pos.z) / dd) *
+          d.pos.z += ((d.settle.z - d.pos.z) / dd) * step;
