@@ -83,4 +83,4 @@ function makeDog() {
   });
   // Standing height of the body's centre, and each pose as targets for the joints. Leg angles are
   // relative to the body; the body's pitch tips its front end up (+).
-  const poses =
+  const poses = {
