@@ -267,4 +267,4 @@ function walkPath(m, budget, dt) {
       m.pos.z += (target.z - m.pos.z) * k;
       const segLen = Math.max(dist2(from, target), 1e-6);
       const along = 1 - dist2(m.pos, target) / segLen;
-      const
+      const rise
