@@ -126,4 +126,4 @@ function makeCat() {
     const link = new THREE.Group();
     if (i) link.position.set(-0.075, 0, 0);
     parent.add(link);
-    link.add(blob(fur, [0.045, 0.017, 0.017], [-0.037, 0,
+    link.add(blob(fur, [0.045, 0.017, 0.017], [-0.037, 0, 0]));
