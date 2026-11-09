@@ -172,4 +172,4 @@ function applyPose(m, state, name, dt, t, walking) {
   }
 }
 
-// The
+// The dog's
