@@ -302,4 +302,4 @@ export class Pets {
     add(new THREE.CylinderGeometry(0.085, 0.07, 0.045, 18), '#b8614a', -3.6, FLOOR + 0.023, -2.18);
     add(new THREE.CylinderGeometry(0.085, 0.07, 0.045, 18), '#56798a', -3.88, FLOOR + 0.023, -2.18);
     const b = DOG_SPOTS.basket.at;
-    add(new THREE.CylinderGeometry(0.46, 0.48,
+    add(new THREE.CylinderGeometry(0.46, 0.48, 0.12,
