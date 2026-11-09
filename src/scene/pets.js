@@ -332,4 +332,4 @@ export class Pets {
       if (asleep) {
         const b = DOG_SPOTS.basket.at;
         d.pos.set(b.x, b.y, b.z);
-        d.mode
+        d.mode =
