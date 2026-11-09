@@ -59,7 +59,7 @@ const FRAG = /* glsl */ `
     vec3 n = normalize(vec3(0.42, 0.5, 0.76));
     float g = dot(d, n);
     float band = exp(-g * g / 0.018);
-    // Coordinates along the band itself, not round the zenith, so
+    // Coordinates along the band itself, not round the zenith, so looking
     float cloud = fbm(q * 2.0 + 3.0);
     float dust = smoothstep(0.45, 0.7, fbm(q * 3.4 + 11.0)) * exp(-g * g / 0.004);
     float core = exp(-pow(length(d - normalize(vec3(-0.55, 0.32, -0.77))), 2.0) * 4.0);
