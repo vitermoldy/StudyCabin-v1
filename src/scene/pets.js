@@ -152,4 +152,4 @@ function applyPose(m, state, name, dt, t, walking) {
   const k = dt > 0 ? 1 - Math.exp(-dt * 5) : 1;
   for (const key of Object.keys(target)) j[key] += (target[key] - j[key]) * k;
   m.body.position.y = j.y + (walking ? Math.abs(Math.sin(state.step)) * 0.012 : 0);
-  m.body.rotation.z =
+  m.body.rotation.z = j.pitch;
