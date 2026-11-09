@@ -347,3 +347,4 @@ export class Pets {
       d.path = route(null, 'basket', { x: d.pos.x, y: d.pos.y, z: d.pos.z }, DOG_SPOTS);
       d.idx = 1;
     } else if (!asleep && d.mode === 'basket') {
+      //
