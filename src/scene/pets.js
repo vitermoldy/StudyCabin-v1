@@ -360,4 +360,4 @@ export class Pets {
         walkPath(d, 1.1 * speedUp * dt, dt);
         walking = before.distanceTo(d.pos) > 1e-4;
         d.step += (before.distanceTo(d.pos) / this.dogModel.stride) * Math.PI * 2;
-      } else
+      } else {
