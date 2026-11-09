@@ -25,3 +25,5 @@ function blob(material, [sx, sy, sz], [x, y, z], tilt = 0) {
   mesh.castShadow = true;
   return mesh;
 }
+
+//
