@@ -241,4 +241,4 @@ function pointBack(path, dist) {
   return { at: { ...path[0] }, rest: path.slice(1) };
 }
 
-function turn(current, target, maxStep)
+function turn(current, target, maxStep) {
