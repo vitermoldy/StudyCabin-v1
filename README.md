@@ -22,6 +22,8 @@ A small server (Express and MySQL) keeps the focus history shown under History i
 of the settings and music queue. Without it the page works as before: finished focus blocks wait in the
 browser and go out once the server answers.
 
+```bash
+cp .env.example .env   # fill in DB_USER and DB_PASSWORD of your MySQL account
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
