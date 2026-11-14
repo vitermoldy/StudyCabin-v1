@@ -23,6 +23,7 @@ function readAll() {
 let timer = 0;
 function flush() {
   timer = 0;
+  if (frozen) return;
   try {
     localStorage.setItem(KEY, JSON.stringify(cache));
   } catch {
