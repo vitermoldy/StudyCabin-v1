@@ -5,6 +5,8 @@ const KEY = 'studycabin:v1';
 import { mirrorSave } from './cloud.js';
 
 let cache = null;
+// Set by replaceAll: a restored save must not be overwritten by this page on its way out.
+let frozen = false;
 
 function readAll() {
   if (cache) return cache;
