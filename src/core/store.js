@@ -27,6 +27,7 @@ function flush() {
   try {
     const text = JSON.stringify(cache);
     localStorage.setItem(KEY, text);
+    mirrorSave(text);
   } catch {
     /* storage unavailable: settings live for this visit only */
   }
