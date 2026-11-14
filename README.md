@@ -24,6 +24,8 @@ browser and go out once the server answers.
 
 ```bash
 cp .env.example .env   # fill in DB_USER and DB_PASSWORD of your MySQL account
+npm run server         # API on http://localhost:8794; creates the studycabin_v1 database and its tables
+npm run dev            # /api is forwarded to the server
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
