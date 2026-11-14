@@ -22,6 +22,8 @@ const reduced = prefersReducedMotion();
 const clock = new Clock();
 const climate = new Climate(clock);
 const focus = new FocusTimer();
+// Focus blocks that ran to the end go to the server's history (they wait in the browser while it is off).
+if (focus.finishedAway) logEvent('focus', { minutes: focus.finishedAway, preset: focus.preset });
 const ambient = new Ambient();
 const music = new MusicPlayer(document.getElementById('yt-host'));
 const overlay = new Overlay({ reducedMotion: reduced });
