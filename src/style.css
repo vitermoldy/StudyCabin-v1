@@ -299,6 +299,8 @@ html.is-clear .big, html.is-clear .story, html.is-clear .lines { opacity: 0; vis
 
 /* History in the focus panel: fourteen days of focus as bars, the recovery code in a monospace box. */
 .days { display: grid; grid-template-columns: repeat(14, minmax(0, 1fr)); align-items: end; gap: 3px; height: 48px; margin-top: var(--s-3); }
+.days__bar { display: block; height: calc(4px + var(--h, 0) * 44px); border-radius: 2px; background: var(--p-accent); }
+.days__bar.is-empty { background: var(--line-strong); }
 .player { margin-top: var(--s-4); padding-top: var(--s-4); border-top: 1px solid var(--line); }
 .player__screen {
   position: relative; aspect-ratio: 16 / 9; width: 100%; overflow: hidden;
