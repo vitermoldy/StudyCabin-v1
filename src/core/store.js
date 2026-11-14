@@ -63,4 +63,6 @@ export function replaceAll(text) {
   try {
     localStorage.setItem(KEY, text);
   } catch {
+    /* storage unavailable: nothing to restore into */
+  }
 addEventListener('pagehide', saveNow);
