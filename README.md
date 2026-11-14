@@ -32,6 +32,8 @@ The server needs Node 22 or newer and MySQL 8. After `npm run build`, `npm start
 API on one port.
 
 There are no accounts. Each browser gets a 12-character recovery code, under History; typed into another
+browser, it brings the settings and queue there. Tables: `devices` (one row per code), `saves` (the latest
+settings copy) and `events` (one row per finished focus block, including a block that ended while the tab
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
