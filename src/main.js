@@ -129,6 +129,7 @@ function toggleFullscreen() {
 }
 
 focus.on('finished', (phase) => {
+  if (phase === 'focus') logEvent('focus', { minutes: PRESETS[focus.preset].focus, preset: focus.preset });
   ambient.chime();
   toast(phase === 'focus' ? 'Focus block done. Time for a break.' : 'Break over. Back to the desk.');
   refreshActivity();
