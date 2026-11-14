@@ -99,6 +99,7 @@ const updateDay = mountDay({ clock, onJump: jumpTo });
 const updateWeather = mountWeather({ climate });
 mountSound({ ambient });
 const renderFocus = mountFocus({ focus });
+mountCloud();
 mountMusic(music, panels, { onPlayingChange: (on) => ambient.setMusicPlaying(on) });
 
 const pauseBtn = document.getElementById('scene-pause');
