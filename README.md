@@ -29,6 +29,9 @@ npm run dev            # /api is forwarded to the server
 ```
 
 The server needs Node 22 or newer and MySQL 8. After `npm run build`, `npm start` serves `dist/` and the
+API on one port.
+
+There are no accounts. Each browser gets a 12-character recovery code, under History; typed into another
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
