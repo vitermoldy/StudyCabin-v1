@@ -25,7 +25,8 @@ function flush() {
   timer = 0;
   if (frozen) return;
   try {
-    localStorage.setItem(KEY, JSON.stringify(cache));
+    const text = JSON.stringify(cache);
+    localStorage.setItem(KEY, text);
   } catch {
     /* storage unavailable: settings live for this visit only */
   }
