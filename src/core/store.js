@@ -55,4 +55,6 @@ export function saveNow() {
   }
 }
 
+/** Replaces the whole save with another browser's (a restore by recovery code); reload after. */
+export function replaceAll(text) {
 addEventListener('pagehide', saveNow);
