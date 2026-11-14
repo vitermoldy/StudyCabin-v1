@@ -65,4 +65,6 @@ export function replaceAll(text) {
   } catch {
     /* storage unavailable: nothing to restore into */
   }
+}
+
 addEventListener('pagehide', saveNow);
