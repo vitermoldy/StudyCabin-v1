@@ -2,6 +2,8 @@
 // blocked storage or a full quota must never break the app.
 const KEY = 'studycabin:v1';
 
+import { mirrorSave } from './cloud.js';
+
 let cache = null;
 
 function readAll() {
