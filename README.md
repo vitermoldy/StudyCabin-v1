@@ -37,6 +37,8 @@ settings copy) and `events` (one row per finished focus block, including a block
 was closed).
 
 v1 and v2 each have their own port and database (8794 with `studycabin_v1`, 8795 with `studycabin_v2`), so
+both run side by side.
+
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
