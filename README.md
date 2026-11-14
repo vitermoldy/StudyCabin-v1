@@ -16,6 +16,9 @@ npm run preview    # serves dist/
 Needs a browser with WebGL 2 (any current Chrome, Edge, Firefox or Safari). Without it the page
 shows a still picture and the music, timer and ambient sound still work.
 
+## Server and database
+
+A small server (Express and MySQL) keeps the focus history shown under History in the Focus panel, and a copy
 ## What is in it
 
 - **The cabin and the resident.** A cabin with a standing-seam roof and glass on all four sides
