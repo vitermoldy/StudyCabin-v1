@@ -24,6 +24,8 @@ export class FocusTimer extends Emitter {
     this.doneDate = s.doneDate || today();
     this.done = s.doneDate === today() && Number.isInteger(s.done) ? s.done : 0;
     // A block that ended while the page was closed is simply finished.
+    /** Minutes of a focus block that ran out while the page was closed, for the history. */
+    this.finishedAway = this.running && Date.now() >= this.endAt && this.phase === 'focus' ? this.config.focus : 0;
     if (this.running && Date.now() >= this.endAt) {
       this.running = false;
       this._advancePhase(false);
